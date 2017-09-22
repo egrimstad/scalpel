@@ -8,7 +8,7 @@ import EventIcon from 'material-ui-icons/Event'
 import SupervisorAccountIcon from 'material-ui-icons/SupervisorAccount'
 import './MenuDrawer.css'
 
-class MenuDrawer extends Component{
+class MenuDrawer extends Component {
 	render() {
 		return (
 			<Drawer 

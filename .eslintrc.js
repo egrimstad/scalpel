@@ -33,6 +33,7 @@ module.exports = {
             "error",
             "never"
         ],
+        "space-before-blocks": "error",
         "react/react-in-jsx-scope": 2,
         "react/jsx-uses-vars": 2,
         "react/jsx-uses-react": 2

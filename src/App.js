@@ -10,7 +10,7 @@ import Timeline from './components/Timeline/Timeline'
 import Patients from './components/Patients/Patients'
 
 class App extends Component {
-	constructor(props){
+	constructor(props) {
 		super(props)
 
 		this.state = {
@@ -37,10 +37,12 @@ class App extends Component {
 				<Router>
 					<div>
 						<MenuDrawer open={this.state.menuOpen} onRequestClose={this.closeMenu}/>
-						<Header onMenuButtonClick={this.openMenu}  />
+						<Header onMenuButtonClick={this.openMenu} />
 
-						<Route exact path="/" component={Timeline}/>
-						<Route path="/patients" component={Patients}/>
+						<div className="App-content">
+							<Route exact path="/" component={Timeline}/>
+							<Route path="/patients" component={Patients}/>
+						</div>
 					</div>
 				</Router>
 			</MuiThemeProvider>

@@ -9,13 +9,13 @@ import MenuIcon from 'material-ui-icons/Menu'
 class Header extends Component {
 	render() {
 		return (
-			<AppBar position="static">
+			<AppBar position="fixed">
 				<Toolbar>
 					<IconButton onClick={this.props.onMenuButtonClick}>
 						<MenuIcon />
 					</IconButton>
 					<Typography type="title" color="inherit" noWrap>
-				Scalpel
+						Scalpel
 					</Typography>
 				</Toolbar>
 			</AppBar>
