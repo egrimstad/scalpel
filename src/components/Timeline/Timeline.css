@@ -1,6 +1,12 @@
-.Timeline-container {
+.Timeline-axis path {
+	opacity: 0.3;
+}
+  
+.Timeline-axis line {
+stroke-opacity: 0.3;
+shape-rendering: crispEdges;
 }
 
-.Timeline-item {
-	background: black;
+.Timeline-view {
+	fill: url(#gradient);
 }
