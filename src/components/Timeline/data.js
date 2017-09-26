@@ -79,7 +79,7 @@ const data = {
 				{
 					id: 9,
 					patient: 'Marius',
-					startTime: '2017-09-20 17:11',
+					startTime: '2017-09-20 16:38',
 					endTime: '2017-09-20 18:45'
 				}
 			] 

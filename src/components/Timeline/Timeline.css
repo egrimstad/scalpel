@@ -1,22 +1,6 @@
 .Timeline-container {
-	width: 100%;
-	display: grid;
-	grid-template-columns: 50px auto;
-	grid-template-rows: 50px auto;
 }
 
-.Timeline-timeaxis {
-	grid-column: 1;
-	grid-row: 2;
-}
-
-.Timeline-theateraxis {
-	grid-column: 2;
-	grid-row: 1;
-}
-
-.Timeline-operations {
-	grid-column: 2;
-	grid-row: 2;
-	overflow: hidden;
+.Timeline-item {
+	background: black;
 }
