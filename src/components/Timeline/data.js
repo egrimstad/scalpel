@@ -59,6 +59,30 @@ const data = {
 					endTime: '2017-09-20 20:55'
 				}
 			] 
+		},
+		{
+			id: 3,
+			name: 'Theater4',
+			operations: [
+				{
+					id: 7,
+					patient: 'Rune',
+					startTime: '2017-09-20 11:30',
+					endTime: '2017-09-20 14:40'
+				},
+				{
+					id: 8,
+					patient: 'Øyvind',
+					startTime: '2017-09-20 15:23',
+					endTime: '2017-09-20 16:37'
+				},
+				{
+					id: 9,
+					patient: 'Marius',
+					startTime: '2017-09-20 17:11',
+					endTime: '2017-09-20 18:45'
+				}
+			] 
 		}
 	]
 }

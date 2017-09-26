@@ -39,8 +39,8 @@ class App extends Component {
 						<MenuDrawer open={this.state.menuOpen} onRequestClose={this.closeMenu}/>
 						<Header onMenuButtonClick={this.openMenu} />
 
-						<div className="App-content">
-							<Route exact path="/" component={Timeline}/>
+						<div className="App-content" onScroll={this.handleScoll}>
+							<Route exact path="/" component={Timeline} />
 							<Route path="/patients" component={Patients}/>
 						</div>
 					</div>
