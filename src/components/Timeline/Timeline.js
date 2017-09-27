@@ -8,7 +8,6 @@ import './Timeline.css'
 const TODAY = '2017-09-20'
 const OPERATIONWIDTH = 80
 const OPERATIONPADDING = 10
-const HEIGHT = 1000
 
 class Timeline extends Component {
 	constructor(props) {
@@ -25,59 +24,61 @@ class Timeline extends Component {
 
 		const height = window.innerHeight - this.container.offsetTop - 50
 		const svg = d3.select(this.container).append('svg')
-			.attr('width', '100%')
+			.attr('width', xDomain)
 			.attr('height', height)
 		
 		const width = xDomain
 
-		var zoom = d3.zoom()
+		const zoom = d3.zoom()
 			.scaleExtent([1, 40])
 			.translateExtent([[0, 0], [width, height]])
 			.on('zoom', zoomed)
 		
-		var x = d3.scaleLinear()
-			.domain([0, theaters.length])
-			.range([0, width])
+		const x = d3.scaleBand()
+			.domain(theaters.map(theater => theater.id))
+			.rangeRound([0, width-1])
+			.paddingInner(0.1)
+			.paddingOuter(0.6)
 		
-		var y = d3.scaleTime()
+		const y = d3.scaleTime()
 			.domain([moment(TODAY).startOf('day'), moment(TODAY).endOf('day')])
-			.range([-1, height + 1])
+			.range([0, height-1])
 		
-		var xAxis = d3.axisTop(x)
-			.ticks(theaters.length)
-			.tickSize(-height)
+		const xAxis = d3.axisTop(x)
 			.tickPadding(-20)
-			.tickFormat(val => {
-				return val < theaters.length ? theaters[val].name : ''
-			})
+			.tickSize(-height)
+			.tickFormat(val => theaters.find(theater => theater.id === val).name)
 		
-		var yAxis = d3.axisRight(y)
-			.ticks(10)
+		const yAxis = d3.axisRight(y)
+			.ticks(20)
 			.tickSize(width)
 			.tickPadding(8 - width)
 		
+		const rects = svg.append('g')
+			.selectAll('rect')
+			.data(operations)
+			.enter()
+			.append('rect')
+			.attr('x', data => x(data.theater))
+			.attr('y', data => y(moment(data.startTime)))
+			.attr('width', x.bandwidth())
+			.attr('height', data => (y(moment(data.endTime)) - y(moment(data.startTime))))
+			.attr('fill', 'green')
 		
-		var gX = svg.append('g')
+		svg.append('g')
 			.attr('class', 'Timeline-axis axis--x')
 			.call(xAxis)
 			.selectAll('text')
-			.attr('dx', OPERATIONWIDTH/2)
 		
-		var gY = svg.append('g')
+		const gY = svg.append('g')
 			.attr('class', 'Timeline-axis axis--y')
 			.call(yAxis)
 		
-		//gX.call(xAxis.scale(width/xDomain))
 		svg.call(zoom)
 		
 		function zoomed() {
+			rects.attr('transform', d3.event.transform)
 			gY.call(yAxis.scale(d3.event.transform.rescaleY(y)))
-		}
-		
-		function resetted() {
-			svg.transition()
-				.duration(750)
-				.call(zoom.transform, d3.zoomIdentity)
 		}
 	}
 
