@@ -6,8 +6,14 @@ import moment from 'moment'
 import './Timeline.css'
 
 const TODAY = '2017-09-20'
-const OPERATIONWIDTH = 80
-const OPERATIONPADDING = 10
+const OPERATIONWIDTH = 100
+const OPERATIONPADDING = 0.1
+const THEATERBARHEIGHT = 30
+const TIMEBARWIDTH = 50
+
+const translate = (x, y) => {
+	return 'translate('+x+','+y+')'
+}
 
 class Timeline extends Component {
 	constructor(props) {
@@ -20,41 +26,63 @@ class Timeline extends Component {
 		const theaters = data.theaters
 		const operations = transformData(data)
 
-		const xDomain = theaters.length *(OPERATIONWIDTH + OPERATIONPADDING)
+		let xDomain = theaters.length *(OPERATIONWIDTH + OPERATIONWIDTH*OPERATIONPADDING)
 
-		const height = window.innerHeight - this.container.offsetTop - 50
+		const height = window.innerHeight - this.container.offsetTop - THEATERBARHEIGHT
 		const svg = d3.select(this.container).append('svg')
-			.attr('width', xDomain)
+			.attr('width', '100%')
 			.attr('height', height)
 		
-		const width = xDomain
-
-		const zoom = d3.zoom()
-			.scaleExtent([1, 40])
-			.translateExtent([[0, 0], [width, height]])
-			.on('zoom', zoomed)
+		let canScrollX = true
 		
+		const width = svg.node().getBoundingClientRect().width
+
+		// If screen is big enough to fit all the operations, strech to fit
+		if(xDomain < width - TIMEBARWIDTH) {
+			xDomain = width + TIMEBARWIDTH
+			canScrollX = false
+		}
+
+		// x-axis zoom
+		const xZoom = d3.zoom()
+			.extent([[0, 0], [(width), height]])
+			.scaleExtent([1, 1])
+			.translateExtent([[0, 0], [xDomain-TIMEBARWIDTH, 0]])
+			.on('zoom', xZoomed)
+
+		// x-axis scale
 		const x = d3.scaleBand()
 			.domain(theaters.map(theater => theater.id))
-			.rangeRound([0, width-1])
-			.paddingInner(0.1)
-			.paddingOuter(0.6)
-		
-		const y = d3.scaleTime()
-			.domain([moment(TODAY).startOf('day'), moment(TODAY).endOf('day')])
-			.range([0, height-1])
-		
+			.rangeRound([TIMEBARWIDTH, xDomain-TIMEBARWIDTH])
+			.paddingInner(OPERATIONPADDING)
+			.paddingOuter(0.2)
+
+		// x-axis
 		const xAxis = d3.axisTop(x)
 			.tickPadding(-20)
-			.tickSize(-height)
+			.tickSizeInner(0)
 			.tickFormat(val => theaters.find(theater => theater.id === val).name)
 		
-		const yAxis = d3.axisRight(y)
+		// y-axis zoom
+		const yZoom = d3.zoom()
+			.extent([[0, 0], [(width), height]])
+			.scaleExtent([1, 15])
+			.translateExtent([[0, 0], [0, height]])
+			.on('zoom', yZoomed)
+	
+		// y-axis scale
+		const y = d3.scaleTime()
+			.domain([moment(TODAY).startOf('day'), moment(TODAY).endOf('day')])
+			.range([0, height-THEATERBARHEIGHT-10])
+	
+		// y-axis
+		const yAxis = d3.axisLeft(y)
 			.ticks(20)
-			.tickSize(width)
-			.tickPadding(8 - width)
+			.tickFormat(d3.timeFormat('%H:%M'))
 		
-		const rects = svg.append('g')
+		// rectangles representing operations
+		const operationRects = svg.append('g')
+			.attr('transform', translate(0, THEATERBARHEIGHT))
 			.selectAll('rect')
 			.data(operations)
 			.enter()
@@ -64,21 +92,62 @@ class Timeline extends Component {
 			.attr('width', x.bandwidth())
 			.attr('height', data => (y(moment(data.endTime)) - y(moment(data.startTime))))
 			.attr('fill', 'green')
-		
-		svg.append('g')
-			.attr('class', 'Timeline-axis axis--x')
+	
+		// x-axis group
+		const xGroup = svg.append('g')
+			.attr('class', 'Timeline-axis Timeline-axis--x')
+		// overlay
+		xGroup.append('rect')
+			.attr('width', width)
+			.attr('height', THEATERBARHEIGHT)
+			.attr('fill', 'white')
+			.attr('opacity', 1)
+		// axis
+		xGroup
 			.call(xAxis)
 			.selectAll('text')
+			.attr('font-size', '15px')
+		// hook to zoom
+		if(canScrollX) {
+			xGroup.call(xZoom)
+			xGroup.attr('cursor', 'grab')
+		}
 		
-		const gY = svg.append('g')
+		// y-axis group
+		const yGroup = svg.append('g')
 			.attr('class', 'Timeline-axis axis--y')
-			.call(yAxis)
+			.attr('transform', translate(TIMEBARWIDTH, THEATERBARHEIGHT))
+		// overlay
+		yGroup.append('rect')
+			.attr('transform', translate(-TIMEBARWIDTH, -THEATERBARHEIGHT))
+			.attr('width', TIMEBARWIDTH)
+			.attr('height', height)
+			.attr('fill', 'white')
+			.attr('opacity', 1)
+		//axis
+		yGroup.call(yAxis)
+
+		// y-axis zoom hook directly on svg
+		svg.call(yZoom)
 		
-		svg.call(zoom)
-		
-		function zoomed() {
-			rects.attr('transform', d3.event.transform)
-			gY.call(yAxis.scale(d3.event.transform.rescaleY(y)))
+		function yZoomed() {
+			const transform = d3.event.transform
+			const newY = transform.rescaleY(y)
+
+			operationRects
+				.attr('y', data => newY(moment(data.startTime)))
+				.attr('height', data => (newY(moment(data.endTime)) - newY(moment(data.startTime))))
+			
+			yAxis.scale(newY)
+			yGroup.call(yAxis)
+		}
+
+		function xZoomed() {
+			const transform = d3.event.transform
+			var newX = x.rangeRound([transform.x+TIMEBARWIDTH, (xDomain+transform.x-TIMEBARWIDTH)])
+			operationRects.attr('x', data => newX(data.theater))
+			xAxis.scale(newX)
+			xGroup.call(xAxis)
 		}
 	}
 

@@ -1,12 +1,12 @@
 .Timeline-axis path {
 	opacity: 0.3;
 }
+
+.Timeline-axis--x path {
+	opacity: 0;
+}
   
 .Timeline-axis line {
-stroke-opacity: 0.3;
-shape-rendering: crispEdges;
-}
-
-.Timeline-view {
-	fill: url(#gradient);
+	stroke-opacity: 0.1;
+	shape-rendering: crispEdges;
 }
