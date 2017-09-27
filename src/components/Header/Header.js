@@ -5,6 +5,7 @@ import Toolbar from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import MenuIcon from 'material-ui-icons/Menu'
+import MoreMenu from '../MoreMenu/MoreMenu'
 
 class Header extends Component {
 	render() {
@@ -15,8 +16,11 @@ class Header extends Component {
 						<MenuIcon />
 					</IconButton>
 					<Typography type="title" color="inherit" noWrap>
-				Scalpel
+						Scalpel
 					</Typography>
+					<IconButton>
+						<MoreMenu />
+					</IconButton>
 				</Toolbar>
 			</AppBar>
 		)
