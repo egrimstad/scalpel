@@ -25,8 +25,7 @@ const data = {
 				{
 					id: 2,
 					patient: 'Nina',
-					startTime: '2017-09-20 15:58',
-					endTime: '2017-09-20 18:07'
+					startTime: '2017-09-20 14:49'
 				},
 				{
 					id: 3,
@@ -55,8 +54,7 @@ const data = {
 				{
 					id: 6,
 					patient: 'Magnus',
-					startTime: '2017-09-20 18:11',
-					endTime: '2017-09-20 20:55'
+					startTime: '2017-09-20 15:11'
 				}
 			] 
 		},
@@ -73,14 +71,7 @@ const data = {
 				{
 					id: 8,
 					patient: 'Øyvind',
-					startTime: '2017-09-20 15:23',
-					endTime: '2017-09-20 16:37'
-				},
-				{
-					id: 9,
-					patient: 'Marius',
-					startTime: '2017-09-20 16:38',
-					endTime: '2017-09-20 18:45'
+					startTime: '2017-09-20 15:23'
 				}
 			] 
 		}

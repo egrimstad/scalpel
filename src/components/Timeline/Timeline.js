@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import data , { transformData } from './data'
 import * as d3 from 'd3'
 import moment from 'moment'
+import theme from '../../theme/theme'
 
 import './Timeline.css'
 
-const TODAY = '2017-09-20'
+const NOW = '2017-09-20 15:59'
 const OPERATIONWIDTH = 100
 const OPERATIONPADDING = 0.1
 const THEATERBARHEIGHT = 30
@@ -20,6 +21,7 @@ class Timeline extends Component {
 		super(props)
 
 		this.container = null
+		console.log(theme)
 	}
 
 	componentDidMount() {
@@ -72,7 +74,7 @@ class Timeline extends Component {
 	
 		// y-axis scale
 		const y = d3.scaleTime()
-			.domain([moment(TODAY).startOf('day'), moment(TODAY).endOf('day')])
+			.domain([moment(NOW).startOf('day'), moment(NOW).endOf('day')])
 			.range([0, height-THEATERBARHEIGHT-10])
 	
 		// y-axis
@@ -90,7 +92,7 @@ class Timeline extends Component {
 			.attr('x', data => x(data.theater))
 			.attr('y', data => y(moment(data.startTime)))
 			.attr('width', x.bandwidth())
-			.attr('height', data => (y(moment(data.endTime)) - y(moment(data.startTime))))
+			.attr('height', data => (y(moment(data.endTime || NOW)) - y(moment(data.startTime))))
 			.attr('fill', 'green')
 	
 		// x-axis group
@@ -129,6 +131,17 @@ class Timeline extends Component {
 
 		// y-axis zoom hook directly on svg
 		svg.call(yZoom)
+
+		// Add line representing current time
+		const nowLine = svg.append('line')
+			.attr('transform', translate(0, THEATERBARHEIGHT))
+			.attr('x1', TIMEBARWIDTH)
+			.attr('y1', y(moment(NOW)))
+			.attr('x2', x(theaters.length-1)+x.bandwidth())
+			.attr('y2', y(moment(NOW)))
+			.attr('stroke-width', 2)
+			.attr('stroke', 'red')
+
 		
 		function yZoomed() {
 			const transform = d3.event.transform
@@ -136,7 +149,11 @@ class Timeline extends Component {
 
 			operationRects
 				.attr('y', data => newY(moment(data.startTime)))
-				.attr('height', data => (newY(moment(data.endTime)) - newY(moment(data.startTime))))
+				.attr('height', data => (newY(moment(data.endTime || NOW)) - newY(moment(data.startTime))))
+			
+			nowLine
+				.attr('y1', newY(moment(NOW)))
+				.attr('y2', newY(moment(NOW)))
 			
 			yAxis.scale(newY)
 			yGroup.call(yAxis)
