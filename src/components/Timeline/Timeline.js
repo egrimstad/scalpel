@@ -8,6 +8,8 @@ import './Timeline.css'
 
 const NOW = '2017-09-20 15:59'
 const OPERATIONWIDTH = 100
+const PLANNEDWIDTH = 10
+const STROKEWIDTH = 2
 const OPERATIONPADDING = 0.1
 const THEATERBARHEIGHT = 30
 const TIMEBARWIDTH = 50
@@ -21,7 +23,6 @@ class Timeline extends Component {
 		super(props)
 
 		this.container = null
-		console.log(theme)
 	}
 
 	componentDidMount() {
@@ -55,7 +56,7 @@ class Timeline extends Component {
 		// x-axis scale
 		const x = d3.scaleBand()
 			.domain(theaters.map(theater => theater.id))
-			.rangeRound([TIMEBARWIDTH, xDomain-TIMEBARWIDTH])
+			.rangeRound([TIMEBARWIDTH, xDomain-TIMEBARWIDTH-10])
 			.paddingInner(OPERATIONPADDING)
 			.paddingOuter(0.2)
 
@@ -83,17 +84,26 @@ class Timeline extends Component {
 			.tickFormat(d3.timeFormat('%H:%M'))
 		
 		// rectangles representing operations
-		const operationRects = svg.append('g')
+		const operationGroup = svg.append('g')
 			.attr('transform', translate(0, THEATERBARHEIGHT))
 			.selectAll('rect')
 			.data(operations)
 			.enter()
-			.append('rect')
+		const actualRects = operationGroup.append('rect')
 			.attr('x', data => x(data.theater))
 			.attr('y', data => y(moment(data.startTime)))
 			.attr('width', x.bandwidth())
 			.attr('height', data => (y(moment(data.endTime || NOW)) - y(moment(data.startTime))))
 			.attr('fill', 'green')
+		
+		const plannedRects = operationGroup.append('rect')
+			.attr('x', data => x(data.theater) + x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH/2)
+			.attr('y', data => y(moment(data.plannedStartTime)))
+			.attr('width', PLANNEDWIDTH)
+			.attr('height', data => (y(moment(data.plannedEndTime)) - y(moment(data.plannedStartTime))))
+			.attr('fill', 'white')
+			.attr('stroke-width', STROKEWIDTH)
+			.attr('stroke', 'lightgrey')
 	
 		// x-axis group
 		const xGroup = svg.append('g')
@@ -147,9 +157,13 @@ class Timeline extends Component {
 			const transform = d3.event.transform
 			const newY = transform.rescaleY(y)
 
-			operationRects
+			actualRects
 				.attr('y', data => newY(moment(data.startTime)))
 				.attr('height', data => (newY(moment(data.endTime || NOW)) - newY(moment(data.startTime))))
+			
+			plannedRects
+				.attr('y', data => newY(moment(data.plannedStartTime)))
+				.attr('height', data => (newY(moment(data.plannedEndTime)) - newY(moment(data.plannedStartTime))))
 			
 			nowLine
 				.attr('y1', newY(moment(NOW)))
@@ -161,8 +175,9 @@ class Timeline extends Component {
 
 		function xZoomed() {
 			const transform = d3.event.transform
-			var newX = x.rangeRound([transform.x+TIMEBARWIDTH, (xDomain+transform.x-TIMEBARWIDTH)])
-			operationRects.attr('x', data => newX(data.theater))
+			var newX = x.rangeRound([transform.x+TIMEBARWIDTH, (xDomain+transform.x-TIMEBARWIDTH - 10)])
+			actualRects.attr('x', data => newX(data.theater))
+			plannedRects.attr('x', data => x(data.theater) + x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH/2)
 			xAxis.scale(newX)
 			xGroup.call(xAxis)
 		}
