@@ -7,7 +7,7 @@ import theme from './theme/theme'
 import Header from './components/Header/Header'
 import MenuDrawer from './components/MenuDrawer/MenuDrawer'
 import Timeline from './components/Timeline/Timeline'
-import Patients from './components/Patients/Patients'
+import ListView from './components/Patients/ListView'
 
 class App extends Component {
 	constructor(props) {
@@ -41,7 +41,7 @@ class App extends Component {
 
 						<div className="App-content">
 							<Route exact path="/" component={Timeline}/>
-							<Route path="/patients" component={Patients}/>
+							<Route path="/patients" component={ListView}/>
 						</div>
 					</div>
 				</Router>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import data , { transformData } from './data'
+import data , { transformData } from './../../data'
 import * as d3 from 'd3'
 import moment from 'moment'
 
