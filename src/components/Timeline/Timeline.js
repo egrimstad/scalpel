@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import data , { transformData } from './data'
 import * as d3 from 'd3'
 import moment from 'moment'
-import theme from '../../theme/theme'
 
 import './Timeline.css'
 
@@ -12,7 +11,7 @@ const PLANNEDWIDTH = 10
 const STROKEWIDTH = 2
 const OPERATIONPADDING = 0.1
 const THEATERBARHEIGHT = 30
-const TIMEBARWIDTH = 50
+const TIMEBARWIDTH = 40
 
 const translate = (x, y) => {
 	return 'translate('+x+','+y+')'
@@ -76,12 +75,17 @@ class Timeline extends Component {
 		// y-axis scale
 		const y = d3.scaleTime()
 			.domain([moment(NOW).startOf('day'), moment(NOW).endOf('day')])
-			.range([0, height-THEATERBARHEIGHT-10])
+			.range([0, height-THEATERBARHEIGHT-1])
 	
 		// y-axis
 		const yAxis = d3.axisLeft(y)
 			.ticks(20)
 			.tickFormat(d3.timeFormat('%H:%M'))
+		
+		const yLines = d3.axisLeft(y)
+			.ticks(20)
+			.tickFormat('')
+			.tickSize(-width)
 		
 		// rectangles representing operations
 		const operationGroup = svg.append('g')
@@ -89,6 +93,8 @@ class Timeline extends Component {
 			.selectAll('rect')
 			.data(operations)
 			.enter()
+		
+		// Actual time spend
 		const actualRects = operationGroup.append('rect')
 			.attr('x', data => x(data.theater))
 			.attr('y', data => y(moment(data.startTime)))
@@ -96,6 +102,7 @@ class Timeline extends Component {
 			.attr('height', data => (y(moment(data.endTime || NOW)) - y(moment(data.startTime))))
 			.attr('fill', 'green')
 		
+		// Planned time
 		const plannedRects = operationGroup.append('rect')
 			.attr('x', data => x(data.theater) + x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH/2)
 			.attr('y', data => y(moment(data.plannedStartTime)))
@@ -119,6 +126,7 @@ class Timeline extends Component {
 			.call(xAxis)
 			.selectAll('text')
 			.attr('font-size', '15px')
+		
 		// hook to zoom
 		if(canScrollX) {
 			xGroup.call(xZoom)
@@ -136,8 +144,17 @@ class Timeline extends Component {
 			.attr('height', height)
 			.attr('fill', 'white')
 			.attr('opacity', 1)
+		
 		//axis
 		yGroup.call(yAxis)
+		
+		const yLinesGroup = svg.append('g')
+			.attr('class', 'Timeline-axis axis--y')
+			.attr('transform', translate(TIMEBARWIDTH, THEATERBARHEIGHT))
+		
+		yLinesGroup
+			.call(yLines)
+		
 
 		// y-axis zoom hook directly on svg
 		svg.call(yZoom)
@@ -170,7 +187,9 @@ class Timeline extends Component {
 				.attr('y2', newY(moment(NOW)))
 			
 			yAxis.scale(newY)
+			yLines.scale(newY)
 			yGroup.call(yAxis)
+			yLinesGroup.call(yLines)
 		}
 
 		function xZoomed() {
