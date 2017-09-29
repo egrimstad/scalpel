@@ -33,6 +33,10 @@ module.exports = {
             "error",
             "never"
         ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
         "space-before-blocks": "error",
         "react/react-in-jsx-scope": 2,
         "react/jsx-uses-vars": 2,
