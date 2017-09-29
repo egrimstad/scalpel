@@ -72,7 +72,7 @@ class Timeline extends Component {
 		
 		// Find generated with and update state
 		const width = timeline.node().getBBox().width + SIDEPADDING
-		this.setState(() => { ({timelineWidth: width })})
+		this.setState({timelineWidth: width })
 	}
 
 	render() {
