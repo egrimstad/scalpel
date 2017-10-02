@@ -6,10 +6,10 @@ import moment from 'moment'
 import './Timeline.css'
 
 const NOW = '2017-09-20 15:59'
-const OPERATIONWIDTH = 100
-const PLANNEDWIDTH = 10
+const OPERATIONWIDTH = 32
+const PLANNEDWIDTH = 8
 const STROKEWIDTH = 2
-const OPERATIONPADDING = 0.1
+const OPERATIONPADDING = 0.25
 const THEATERBARHEIGHT = 30
 const TIMEBARWIDTH = 40
 
@@ -28,7 +28,7 @@ class Timeline extends Component {
 		const theaters = data.theaters
 		const operations = transformData(data)
 
-		let xDomain = theaters.length *(OPERATIONWIDTH + OPERATIONWIDTH*OPERATIONPADDING)
+		let xDomain = theaters.length*(OPERATIONWIDTH)
 
 		const height = window.innerHeight - this.container.offsetTop - THEATERBARHEIGHT
 		const svg = d3.select(this.container).append('svg')
@@ -98,13 +98,13 @@ class Timeline extends Component {
 		const actualRects = operationGroup.append('rect')
 			.attr('x', data => x(data.theater))
 			.attr('y', data => y(moment(data.startTime)))
-			.attr('width', x.bandwidth())
+			.attr('width', OPERATIONWIDTH)
 			.attr('height', data => (y(moment(data.endTime || NOW)) - y(moment(data.startTime))))
 			.attr('fill', 'green')
 		
 		// Planned time
 		const plannedRects = operationGroup.append('rect')
-			.attr('x', data => x(data.theater) + x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH/2)
+			.attr('x', data => x(data.theater) + OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH/2)
 			.attr('y', data => y(moment(data.plannedStartTime)))
 			.attr('width', PLANNEDWIDTH)
 			.attr('height', data => (y(moment(data.plannedEndTime)) - y(moment(data.plannedStartTime))))
@@ -125,7 +125,7 @@ class Timeline extends Component {
 		xGroup
 			.call(xAxis)
 			.selectAll('text')
-			.attr('font-size', '15px')
+			.attr('font-size', '10px')
 		
 		// hook to zoom
 		if(canScrollX) {
