@@ -7,6 +7,8 @@ import Typography from 'material-ui/Typography'
 import MenuIcon from 'material-ui-icons/Menu'
 import MoreMenu from '../MoreMenu/MoreMenu'
 import MoreVert from 'material-ui-icons/MoreVert'
+import DateRange from'material-ui-icons/DateRange'
+import DatePicker from '../DatePicker/DatePicker'
 
 class Header extends Component {
 	constructor(props) {
@@ -37,9 +39,13 @@ class Header extends Component {
 					<IconButton onClick={this.props.onMenuButtonClick}>
 						<MenuIcon />
 					</IconButton>
-					<Typography type="title" color="inherit" noWrap>
+					<Typography type="title" color="inherit" noWrap style={{flex: 1}}>
 						Scalpel
 					</Typography>
+					<IconButton type="range">
+						<DateRange />
+						<DatePicker />
+					</IconButton>
 					<IconButton
 						aria-owns={this.state.open ? 'more-menu' : null}
 						aria-haspopup="true"
