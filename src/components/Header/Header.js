@@ -16,11 +16,13 @@ class Header extends Component {
 
 		this.state = {
 			open: false,
-			anchorEl: null
+			anchorEl: null,
+			pickerOpen: false
 		}
 
 		this.handleClick = this.handleClick.bind(this)
 		this.handleRequestClose = this.handleRequestClose.bind(this)
+		this.toggleDatePicker = this.toggleDatePicker.bind(this)
 	}
 
 
@@ -30,6 +32,10 @@ class Header extends Component {
 
 	handleRequestClose() {
 		this.setState({ open: false })
+	}
+
+	toggleDatePicker() {
+		this.setState({ pickerOpen: !this.pickerOpen})
 	}
 
 	render() {
@@ -42,10 +48,10 @@ class Header extends Component {
 					<Typography type="title" color="inherit" noWrap style={{flex: 1}}>
 						Scalpel
 					</Typography>
-					<IconButton type="range">
+					<IconButton type="range" onClick={this.toggleDatePicker}>
 						<DateRange />
-						<DatePicker />
 					</IconButton>
+					<DatePicker open={this.state.pickerOpen} today={new Date()} />
 					<IconButton
 						aria-owns={this.state.open ? 'more-menu' : null}
 						aria-haspopup="true"
