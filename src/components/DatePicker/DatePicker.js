@@ -9,18 +9,21 @@ class DatePicker extends Component {
 
 	render() {
 		const today = this.props.today
-		const open = this.props.open
-		var calendar = null
+		const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7)
 
-		if (open) {
-			calendar = <InfiniteCalendar width={400} height={600} selected={today} disabledDays={[0,6]} /*minDate={this.lastWeek}*/ />
+		if (this.props.open) {
+			return (
+				<div>
+					<InfiniteCalendar width={300} height={300} selected={today} disabledDays={[0,6]} minDate={lastWeek} /> {/* Sizes are not relative, needs to be fixed */}
+				</div>
+			)
 		}
-		
-		return (
-			<div>
-				{calendar}
-			</div>
-		)
+
+		else {
+			return(
+				null
+			)
+		}
 	}
 }
 

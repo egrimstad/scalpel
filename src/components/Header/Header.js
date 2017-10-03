@@ -35,33 +35,37 @@ class Header extends Component {
 	}
 
 	toggleDatePicker() {
-		this.setState({ pickerOpen: !this.pickerOpen})
+		this.setState((prevState) => ({ pickerOpen: !prevState.pickerOpen}))
 	}
 
 	render() {
 		return (
-			<AppBar position="fixed">
-				<Toolbar>
-					<IconButton onClick={this.props.onMenuButtonClick}>
-						<MenuIcon />
-					</IconButton>
-					<Typography type="title" color="inherit" noWrap style={{flex: 1}}>
-						Scalpel
-					</Typography>
-					<IconButton type="range" onClick={this.toggleDatePicker}>
-						<DateRange />
-					</IconButton>
+			<div>
+				<AppBar position="fixed">
+					<Toolbar>
+						<IconButton onClick={this.props.onMenuButtonClick}>
+							<MenuIcon />
+						</IconButton>
+						<Typography type="title" color="inherit" noWrap style={{flex: 1}}>
+							Scalpel
+						</Typography>
+						<IconButton type="range" onClick={this.toggleDatePicker}>
+							<DateRange />
+						</IconButton>
+						<IconButton
+							aria-owns={this.state.open ? 'more-menu' : null}
+							aria-haspopup="true"
+							onClick={this.handleClick}
+						>
+							<MoreVert />
+						</IconButton>
+						<MoreMenu open={this.state.open} anchorEl={this.state.anchorEl} handleRequestClose={this.handleRequestClose}/>
+					</Toolbar>
+				</AppBar>
+				<div style={{position: 'absolute', margin: 'auto', left: 0, right: 0, display: 'flex', justifyContent: 'center', margin: 'auto'}}>
 					<DatePicker open={this.state.pickerOpen} today={new Date()} />
-					<IconButton
-						aria-owns={this.state.open ? 'more-menu' : null}
-						aria-haspopup="true"
-						onClick={this.handleClick}
-					>
-						<MoreVert />
-					</IconButton>
-					<MoreMenu open={this.state.open} anchorEl={this.state.anchorEl} handleRequestClose={this.handleRequestClose}/>
-				</Toolbar>
-			</AppBar>
+				</div>
+			</div>
 		)
 	}
 }
