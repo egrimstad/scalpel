@@ -37,9 +37,10 @@ class Header extends Component {
 					<IconButton onClick={this.props.onMenuButtonClick}>
 						<MenuIcon />
 					</IconButton>
-					<Typography type="title" color="inherit" noWrap>
+					<Typography type="title" color="inherit" noWrap style={{flex:1}}>
 						Scalpel
 					</Typography>
+					{this.props.headerItems}
 					<IconButton
 						aria-owns={this.state.open ? 'more-menu' : null}
 						aria-haspopup="true"
@@ -55,7 +56,8 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-	onMenuButtonClick: PropTypes.func
+	onMenuButtonClick: PropTypes.func,
+	headerItems: PropTypes.array
 }
 
 export default Header

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import data , { transformData } from './data'
 import * as d3 from 'd3'
 import moment from 'moment'
@@ -72,7 +73,7 @@ class Timeline extends Component {
 		
 		// Find generated with and update state
 		const width = timeline.node().getBBox().width + SIDEPADDING
-		this.setState(() => { ({timelineWidth: width })})
+		this.setState(() => ({timelineWidth: width }))
 	}
 
 	render() {
@@ -82,6 +83,10 @@ class Timeline extends Component {
 			</div>
 		)
 	}
+}
+
+Timeline.propTypes = {
+	setHeaderItems: PropTypes.func
 }
 
 export default Timeline
