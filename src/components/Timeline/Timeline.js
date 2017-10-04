@@ -12,6 +12,8 @@ const STROKEWIDTH = 2
 const OPERATIONPADDING = 0.25
 const THEATERBARHEIGHT = 30
 const TIMEBARWIDTH = 40
+let pressTimer
+let pressed
 
 const translate = (x, y) => {
 	return 'translate('+x+','+y+')'
@@ -22,6 +24,30 @@ class Timeline extends Component {
 		super(props)
 
 		this.container = null
+
+		this.click = this.click.bind(this)
+		this.press = this.press.bind(this)
+	}
+
+	// tried calling these functions but they weren't recognized :/
+	click(d, i) {
+		if (pressed) {
+			console.log('Released')
+			pressed = false
+		}
+		else {
+			console.log('Clicked')
+		}
+		clearTimeout(pressTimer)
+	}
+
+	press(d, i) {
+		console.log('mouse down')
+		console.log(i)
+		pressTimer = setTimeout(function() {
+			console.log('Pressed')
+			pressed = true
+		}, 2000)
 	}
 
 	componentDidMount() {
@@ -101,8 +127,26 @@ class Timeline extends Component {
 			.attr('width', OPERATIONWIDTH)
 			.attr('height', data => (y(moment(data.endTime || NOW)) - y(moment(data.startTime))))
 			.attr('fill', 'green')
-			.on('click', function(d, i) {  // Clicks prints the i of a svg element, the connected white bar is not clickable
+			.on('click', function(d, i) {
+				//this.click(d, i)
+				if (pressed) {
+					console.log('Released')
+					pressed = false
+				}
+				else {
+					console.log('Clicked')
+				}
+				clearTimeout(pressTimer)
+			})  // Clicks prints the i of a svg element, the connected white bar is not clickable
+
+			.on('mousedown', function(d, i) {
+				//this.press(d, i)
+				console.log('mouse down')
 				console.log(i)
+				pressTimer = setTimeout(function() {
+					console.log('Pressed')
+					pressed = true
+				}, 2000)
 			})
 		
 		// Planned time
