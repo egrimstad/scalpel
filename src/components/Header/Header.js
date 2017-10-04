@@ -6,8 +6,30 @@ import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import MenuIcon from 'material-ui-icons/Menu'
 import MoreMenu from '../MoreMenu/MoreMenu'
+import MoreVert from 'material-ui-icons/MoreVert'
 
 class Header extends Component {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			open: false,
+			anchorEl: null
+		}
+
+		this.handleClick = this.handleClick.bind(this)
+		this.handleRequestClose = this.handleRequestClose.bind(this)
+	}
+
+
+	handleClick(event) {
+		this.setState({ open: true, anchorEl: event.currentTarget })
+	}
+
+	handleRequestClose() {
+		this.setState({ open: false })
+	}
+
 	render() {
 		return (
 			<AppBar position="fixed">
@@ -15,12 +37,18 @@ class Header extends Component {
 					<IconButton onClick={this.props.onMenuButtonClick}>
 						<MenuIcon />
 					</IconButton>
-					<Typography type="title" color="inherit" noWrap>
+					<Typography type="title" color="inherit" noWrap style={{flex:1}}>
 						Scalpel
 					</Typography>
-					<IconButton>
-						<MoreMenu />
+					{this.props.headerItems}
+					<IconButton
+						aria-owns={this.state.open ? 'more-menu' : null}
+						aria-haspopup="true"
+						onClick={this.handleClick}
+					>
+						<MoreVert />
 					</IconButton>
+					<MoreMenu open={this.state.open} anchorEl={this.state.anchorEl} handleRequestClose={this.handleRequestClose}/>
 				</Toolbar>
 			</AppBar>
 		)
@@ -28,7 +56,8 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-	onMenuButtonClick: PropTypes.func
+	onMenuButtonClick: PropTypes.func,
+	headerItems: PropTypes.array
 }
 
 export default Header
