@@ -7,7 +7,7 @@ import theme from './theme/theme'
 import Header from './components/Header/Header'
 import MenuDrawer from './components/MenuDrawer/MenuDrawer'
 import Timeline from './components/Timeline/Timeline'
-import Patients from './components/Patients/Patients'
+import ListView from './components/Patients/ListView'
 
 class App extends Component {
 	constructor(props) {
@@ -50,7 +50,7 @@ class App extends Component {
 								<Timeline setHeaderItems={this.setHeaderItems}/>
 							} />
 							<Route exact path="/" render={() => 
-								<Patients setHeaderItems={this.setHeaderItems}/>
+								<ListView setHeaderItems={this.setHeaderItems}/>
 							} />
 						</div>
 					</div>
