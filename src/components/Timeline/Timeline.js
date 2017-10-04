@@ -101,6 +101,9 @@ class Timeline extends Component {
 			.attr('width', OPERATIONWIDTH)
 			.attr('height', data => (y(moment(data.endTime || NOW)) - y(moment(data.startTime))))
 			.attr('fill', 'green')
+			.on('click', function(d, i) {
+				console.log(i)
+			})
 		
 		// Planned time
 		const plannedRects = operationGroup.append('rect')
