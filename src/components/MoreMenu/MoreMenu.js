@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 import Menu, { MenuItem } from 'material-ui/Menu'
 
 class MoreMenu extends Component {
-	constructor(props) {
-		super(props)
-	}
-
 	render() {
 		return (
 			<div>
