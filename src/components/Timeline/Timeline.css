@@ -10,3 +10,8 @@
 	stroke-opacity: 0.1;
 	shape-rendering: crispEdges;
 }
+
+.Timeline-operation-selected {
+	stroke: 'red';
+	stroke-width: 2;
+}

@@ -15,6 +15,7 @@ const THEATERBARHEIGHT = 30
 const TIMEBARWIDTH = 40
 let pressTimer
 let longpress = false
+let pressTarget = null
 
 const translate = (x, y) => {
 	return 'translate('+x+','+y+')'
@@ -31,7 +32,6 @@ class Timeline extends Component {
 		this.cancel = this.cancel.bind(this)
 	}
 
-	// tried calling these functions but they weren't recognized :/
 	click(operation) {
 		if(pressTimer) {
 			clearTimeout(pressTimer)
@@ -39,7 +39,9 @@ class Timeline extends Component {
 		
 		}
 		if(!longpress) {
-			console.log('regular click on ' + operation.patient)
+			d3.select(pressTarget).classed('Timeline-operation-selected', false)
+			pressTimer = null
+
 		}
 
 		return false
@@ -49,14 +51,15 @@ class Timeline extends Component {
 	start(operation) {
 		if(pressTimer) return
 		
+		pressTarget = d3.event.currentTarget
 		longpress = false
 
-		pressTimer = setTimeout(function() {
-			console.log('long click on ' + operation.patient)
+		d3.select(pressTarget).classed('Timeline-operation-selected', true)
+
+		pressTimer = setTimeout(() => {
 			longpress = true
-			if(navigator.vibrate) {
-				navigator.vibrate(100)
-			}
+			d3.select(pressTarget).classed('Timeline-operation-selected', false)
+			pressTimer = null
 		}, 1000)
 
 		return false
@@ -66,6 +69,7 @@ class Timeline extends Component {
 		if(pressTimer) {
 			clearTimeout(pressTimer)
 			pressTimer = null
+			d3.select(pressTarget).classed('Timeline-operation-selected', false)
 		}
 		return false
 	}
@@ -74,7 +78,7 @@ class Timeline extends Component {
 		const theaters = data.theaters
 		const operations = transformData(data)
 
-		let xDomain = theaters.length*(OPERATIONWIDTH)
+		let xDomain = theaters.length*(OPERATIONWIDTH + OPERATIONWIDTH*OPERATIONPADDING)
 
 		const height = window.innerHeight - this.container.offsetTop - THEATERBARHEIGHT
 		const svg = d3.select(this.container).append('svg')
@@ -85,9 +89,7 @@ class Timeline extends Component {
 		
 		const width = svg.node().getBoundingClientRect().width
 
-		// If screen is big enough to fit all the operations, strech to fit
-		if(xDomain < width - TIMEBARWIDTH) {
-			xDomain = width + TIMEBARWIDTH
+		if(width > xDomain) {
 			canScrollX = false
 		}
 
@@ -95,13 +97,13 @@ class Timeline extends Component {
 		const xZoom = d3.zoom()
 			.extent([[0, 0], [(width), height]])
 			.scaleExtent([1, 1])
-			.translateExtent([[0, 0], [xDomain-TIMEBARWIDTH, 0]])
+			.translateExtent([[0, 0], [xDomain, 0]])
 			.on('zoom', xZoomed)
 
 		// x-axis scale
 		const x = d3.scaleBand()
 			.domain(theaters.map(theater => theater.id))
-			.rangeRound([TIMEBARWIDTH, xDomain-TIMEBARWIDTH-10])
+			.rangeRound([TIMEBARWIDTH, xDomain])
 			.paddingInner(OPERATIONPADDING)
 			.paddingOuter(0.2)
 
@@ -156,13 +158,13 @@ class Timeline extends Component {
 		const actualRects = operation.append('rect')
 			.attr('x', data => x(data.theater))
 			.attr('y', data => y(moment(data.startTime)))
-			.attr('width', OPERATIONWIDTH)
+			.attr('width', x.bandwidth())
 			.attr('height', data => (y(moment(data.endTime || NOW)) - y(moment(data.startTime))))
 			.attr('fill', 'green')
 		
 		// Planned time
 		const plannedRects = operation.append('rect')
-			.attr('x', data => x(data.theater) + OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH/2)
+			.attr('x', data => x(data.theater) + x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH/2)
 			.attr('y', data => y(moment(data.plannedStartTime)))
 			.attr('width', PLANNEDWIDTH)
 			.attr('height', data => (y(moment(data.plannedEndTime)) - y(moment(data.plannedStartTime))))
@@ -252,7 +254,7 @@ class Timeline extends Component {
 
 		function xZoomed() {
 			const transform = d3.event.transform
-			var newX = x.rangeRound([transform.x+TIMEBARWIDTH, (xDomain+transform.x-TIMEBARWIDTH - 10)])
+			var newX = x.rangeRound([transform.x+TIMEBARWIDTH, transform.x + xDomain])
 			actualRects.attr('x', data => newX(data.theater))
 			plannedRects.attr('x', data => x(data.theater) + x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH/2)
 			xAxis.scale(newX)
