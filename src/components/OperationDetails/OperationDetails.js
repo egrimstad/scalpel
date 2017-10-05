@@ -1,12 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import data from './../../data'
-import List, { ListItem, ListItemText } from 'material-ui/List'
 import SwipeableViews from 'react-swipeable-views'
-import { Link } from 'react-router-dom'
 
 function TabContainer(props) {
 	return <div style={{ padding: 20 }}>{props.children}</div>
@@ -25,10 +22,35 @@ const styles = theme => ({
 	}
 })
 
-class ListView extends React.Component {
+const tabContent = {
+	tabs: [
+		{
+			name: 'Overview',
+			fields: [
+				'11field',
+				'12field'
+			]
+		},
+		{
+			name: 'Operation',
+			fields: [
+				'21field',
+				'22field'
+				]
+		},
+		{
+			name: 'Anesthesia',
+			fields: [
+				'31field',
+				'32field'
+			]
+		}]
+}
 
+class OperationDetails extends Component {
 	constructor(props) {
 		super(props)
+		console.log(this.props.params)
 		this.state = {
 			value: 0
 		}
@@ -58,37 +80,27 @@ class ListView extends React.Component {
 						scrollable
 						scrollButtons="auto"
 					>
-						{data.theaters.map((theatre, tIndex) => {
-							return <Tab label={theatre.name} key={tIndex}/>
+						{tabContent.tabs.map((tab, tIndex) => {
+							return <Tab label={tab.name} key={tIndex}/>
 						})}
 					</Tabs>
 				</AppBar>
 				<SwipeableViews index={this.state.value} onChangeIndex={this.handleChangeIndex}>
-					{data.theaters.map((theatre, tIndex) =>
+					{tabContent.tabs.map((tab, tIndex) =>
 						tIndex === this.state.value ?
 							<TabContainer key={tIndex}>
 								<div>
-									<List>
-										{theatre.operations.map((operation, oIndex) =>
-											<div key={oIndex}>
-												<Link to={"/operationDetails/"+operation.id}>
-													<ListItem button>
-														<ListItemText primary={operation.patient}/>
-													</ListItem>
-												</Link>
-											</div>
-										)}
-									</List>
+									{tab.fields}
 								</div>
-							</TabContainer> : <div key={tIndex}></div>)}
+							</TabContainer>:<div key={tIndex}></div>)}
 				</SwipeableViews>
 			</div>
 		)
 	}
 }
 
-ListView.propTypes = {
+OperationDetails.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(ListView)
+export default withStyles(styles)(OperationDetails)

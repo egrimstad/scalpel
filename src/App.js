@@ -8,6 +8,7 @@ import Header from './components/Header/Header'
 import MenuDrawer from './components/MenuDrawer/MenuDrawer'
 import Timeline from './components/Timeline/Timeline'
 import ListView from './components/Patients/ListView'
+import OperationDetails from './components/OperationDetails/OperationDetails'
 
 class App extends Component {
 	constructor(props) {
@@ -51,6 +52,9 @@ class App extends Component {
 							} />
 							<Route exact path="/patients" render={() =>
 								<ListView setHeaderItems={this.setHeaderItems}/>
+							} />
+							<Route exact path="/operationDetails/:operationId" render={() =>
+								<OperationDetails setHeaderItems={this.setHeaderItems}/>
 							} />
 						</div>
 					</div>
