@@ -7,14 +7,14 @@ import moment from 'moment'
 import './Timeline.css'
 
 const NOW = '2017-09-20 15:59'
-const OPERATIONWIDTH = 32
+const OPERATIONWIDTH = 64
 const PLANNEDWIDTH = 8
 const STROKEWIDTH = 2
 const OPERATIONPADDING = 0.25
 const THEATERBARHEIGHT = 30
 const TIMEBARWIDTH = 40
 let pressTimer
-let pressed
+let longpress = false
 
 const translate = (x, y) => {
 	return 'translate('+x+','+y+')'
@@ -27,28 +27,47 @@ class Timeline extends Component {
 		this.container = null
 
 		this.click = this.click.bind(this)
-		this.press = this.press.bind(this)
+		this.start = this.start.bind(this)
+		this.cancel = this.cancel.bind(this)
 	}
 
 	// tried calling these functions but they weren't recognized :/
-	click(d, i) {
-		if (pressed) {
-			console.log('Released')
-			pressed = false
+	click(operation) {
+		if(pressTimer) {
+			clearTimeout(pressTimer)
+			pressTimer == null
+		
 		}
-		else {
-			console.log('Clicked')
+		if(!longpress) {
+			console.log('regular click on ' + operation.patient)
 		}
-		clearTimeout(pressTimer)
+
+		return false
+		
 	}
 
-	press(d, i) {
-		console.log('mouse down')
-		console.log(i)
+	start(operation) {
+		if(pressTimer) return
+		
+		longpress = false
+
 		pressTimer = setTimeout(function() {
-			console.log('Pressed')
-			pressed = true
-		}, 2000)
+			console.log('long click on ' + operation.patient)
+			longpress = true
+			if(navigator.vibrate) {
+				navigator.vibrate(100)
+			}
+		}, 1000)
+
+		return false
+	}
+
+	cancel() {
+		if(pressTimer) {
+			clearTimeout(pressTimer)
+			pressTimer = null
+		}
+		return false
 	}
 
 	componentDidMount() {
@@ -115,43 +134,34 @@ class Timeline extends Component {
 			.tickSize(-width)
 		
 		// rectangles representing operations
-		const operationGroup = svg.append('g')
+		const operationsGroup = svg.append('g')
 			.attr('transform', translate(0, THEATERBARHEIGHT))
 			.selectAll('rect')
 			.data(operations)
 			.enter()
 		
+		const operation = operationsGroup.append('g')
+			.on('click', this.click)
+			.on('mousedown', this.start)
+			.on('touchstart', this.start)
+			.on('mouseout', this.cancel)
+			.on('touchend', this.cancel)
+			.on('touchleave', this.cancel)
+			.on('touchmove', this.cancel)
+			.on('touchcancel', this.cancel)
+			.on('dragstart', this.cancel)
+			.on('contextmenu', () => d3.event.preventDefault())
+		
 		// Actual time spend
-		const actualRects = operationGroup.append('rect')
+		const actualRects = operation.append('rect')
 			.attr('x', data => x(data.theater))
 			.attr('y', data => y(moment(data.startTime)))
 			.attr('width', OPERATIONWIDTH)
 			.attr('height', data => (y(moment(data.endTime || NOW)) - y(moment(data.startTime))))
 			.attr('fill', 'green')
-			.on('click', function(d, i) {
-				//this.click(d, i)
-				if (pressed) {
-					console.log('Released')
-					pressed = false
-				}
-				else {
-					console.log('Clicked')
-				}
-				clearTimeout(pressTimer)
-			})  // Clicks prints the i of a svg element, the connected white bar is not clickable
-
-			.on('mousedown', function(d, i) {
-				//this.press(d, i)
-				console.log('mouse down')
-				console.log(i)
-				pressTimer = setTimeout(function() {
-					console.log('Pressed')
-					pressed = true
-				}, 2000)
-			})
 		
 		// Planned time
-		const plannedRects = operationGroup.append('rect')
+		const plannedRects = operation.append('rect')
 			.attr('x', data => x(data.theater) + OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH/2)
 			.attr('y', data => y(moment(data.plannedStartTime)))
 			.attr('width', PLANNEDWIDTH)
@@ -205,7 +215,7 @@ class Timeline extends Component {
 		
 
 		// y-axis zoom hook directly on svg
-		svg.call(yZoom)
+		svg.call(yZoom).style('user-select', 'none')
 
 		// Add line representing current time
 		const nowLine = svg.append('line')
