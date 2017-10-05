@@ -71,7 +71,7 @@ class ListView extends React.Component {
 									<List>
 										{theatre.operations.map((operation, oIndex) =>
 											<div key={oIndex}>
-												<Link to={"/operationDetails/"+operation.id}>
+												<Link to={"/operationDetails/"+operation.id} params={{"operationId": operation.id}}>
 													<ListItem button>
 														<ListItemText primary={operation.patient}/>
 													</ListItem>
