@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import data , { transformData } from './data'
+import data , { transformData } from '../../data'
 import * as d3 from 'd3'
 import moment from 'moment'
 
@@ -42,7 +42,7 @@ class Timeline extends Component {
 		const timeScale = d3.scaleTime()
 			.domain([moment(today).startOf('day'), moment(today).endOf('day')])
 			.range([PADDING, svgHeight-PADDING])
-		
+
 		const yAxis = d3.axisRight().tickFormat(d3.timeFormat('%H-%M')).scale(timeScale)
 		timeline.append('g').call(yAxis)
 
@@ -70,10 +70,10 @@ class Timeline extends Component {
 			.attr('fill', 'green')
 			.attr('stroke', 'grey')
 			.attr('stroke-width', '3')
-		
+
 		// Find generated with and update state
 		const width = timeline.node().getBBox().width + SIDEPADDING
-		this.setState(() => ({timelineWidth: width }))
+		this.setState({timelineWidth: width })
 	}
 
 	render() {

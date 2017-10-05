@@ -7,7 +7,7 @@ import theme from './theme/theme'
 import Header from './components/Header/Header'
 import MenuDrawer from './components/MenuDrawer/MenuDrawer'
 import Timeline from './components/Timeline/Timeline'
-import Patients from './components/Patients/Patients'
+import ListView from './components/Patients/ListView'
 
 class App extends Component {
 	constructor(props) {
@@ -29,7 +29,7 @@ class App extends Component {
 	}
 
 	closeMenu() {
-		if (!this.state.menuOpen) return	
+		if (!this.state.menuOpen) return
 		this.setState(() => ({menuOpen: false}))
 	}
 
@@ -46,11 +46,11 @@ class App extends Component {
 						<Header onMenuButtonClick={this.openMenu} headerItems={this.state.headerItems} />
 
 						<div className="App-content">
-							<Route exact path="/" render={() => 
+							<Route exact path="/" render={() =>
 								<Timeline setHeaderItems={this.setHeaderItems}/>
 							} />
-							<Route exact path="/" render={() => 
-								<Patients setHeaderItems={this.setHeaderItems}/>
+							<Route exact path="/patients" render={() =>
+								<ListView setHeaderItems={this.setHeaderItems}/>
 							} />
 						</div>
 					</div>
