@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import data , { transformData } from '../../data'
-import { getOperationStartTime, getOperationEndTime } from '../../utils/operationMethods'
 import * as d3 from 'd3'
 import moment from 'moment'
 
@@ -148,13 +147,12 @@ class Timeline extends Component {
 			.tickSize(-width)
 		
 		// rectangles representing operations
-		const operationsGroup = svg.append('g')
+		const operation = svg.append('g')
 			.attr('transform', translate(0, THEATERBARHEIGHT))
-			.selectAll('rect')
+			.selectAll('g')
 			.data(operations)
-			.enter()
 		
-		const operation = operationsGroup.append('g')
+		const operationEnter = operation.enter().append('g')
 			.on('click', this.click)
 			.on('mousedown', this.start)
 			.on('touchstart', this.start)
@@ -167,16 +165,21 @@ class Timeline extends Component {
 			.on('contextmenu', () => d3.event.preventDefault())
 		
 		// Actual time spend
-		const actualRects = operation.append('rect')
-			.attr('x', op => x(op.theater))
-			.attr('y', op => y(getOperationStartTime(op)))
-			.attr('width', x.bandwidth())
-			.attr('height', op => y(getOperationEndTime(op) ||NOW) - y(getOperationStartTime(op)))			
-			.attr('fill', 'green')
+		const phase = operationEnter
+			.selectAll('rect')
+			.data(op => op.phases)
+			.enter()
+		
+		const phaseRects = phase.append('rect')
+			.attr('x', phase => x(phase.column))
+			.attr('y', phase => y(phase.start))
+			.attr('width', x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH)
+			.attr('height', phase => y(phase.end ||NOW) - y(phase.start))			
+			.attr('fill', phase => phase.color)
 			.attr('filter', null)
 	
 		// Planned time
-		const plannedRects = operation.append('rect')
+		const plannedRects = operationEnter.append('rect')
 			.attr('x', op => x(op.theater) + x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH/2)
 			.attr('y', op => y(moment(op.plannedStartTime)))
 			.attr('width', PLANNEDWIDTH)
@@ -247,9 +250,9 @@ class Timeline extends Component {
 			const transform = d3.event.transform
 			const newY = transform.rescaleY(y)
 
-			actualRects
-				.attr('y', op => newY(getOperationStartTime(op)))
-				.attr('height', op => newY(getOperationEndTime(op) || NOW) - newY(getOperationStartTime(op)))
+			phaseRects
+				.attr('y', phase => newY(phase.start))
+				.attr('height', phase => newY(phase.end || NOW) - newY(phase.start))
 			
 			plannedRects
 				.attr('y', op => newY(moment(op.plannedStartTime)))
@@ -268,7 +271,7 @@ class Timeline extends Component {
 		function xZoomed() {
 			const transform = d3.event.transform
 			var newX = x.rangeRound([transform.x+TIMEBARWIDTH, transform.x + xDomain])
-			actualRects.attr('x', data => newX(data.theater))
+			phaseRects.attr('x', phase => newX(phase.column))
 			plannedRects.attr('x', data => x(data.theater) + x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH/2)
 			xAxis.scale(newX)
 			xGroup.call(xAxis)
