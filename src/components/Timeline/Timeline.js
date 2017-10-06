@@ -202,7 +202,7 @@ class Timeline extends Component {
 		
 		// hook to zoom
 		if(canScrollX) {
-			xGroup.call(xZoom)
+			xGroup.call(xZoom).on('dblclick.zoom', null)
 			xGroup.attr('cursor', 'grab')
 		}
 		
@@ -230,7 +230,7 @@ class Timeline extends Component {
 		
 
 		// y-axis zoom hook directly on svg
-		svg.call(yZoom).style('user-select', 'none')
+		svg.call(yZoom).on('dblclick.zoom', null).style('user-select', 'none')
 
 		// Add line representing current time
 		const nowLine = svg.append('line')
