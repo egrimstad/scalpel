@@ -40,7 +40,7 @@ class Timeline extends Component {
 		
 		}
 		if(!longpress) {
-			d3.select(pressTarget).classed('Timeline-operation-selected', false).attr('filter', null)
+			d3.select(pressTarget).attr('filter', null)
 			pressTimer = null
 		}
 
@@ -54,11 +54,11 @@ class Timeline extends Component {
 		pressTarget = d3.event.currentTarget
 		longpress = false
 
-		d3.select(pressTarget).classed('Timeline-operation-selected', true).attr('filter', 'url(#filter)')
+		d3.select(pressTarget).attr('filter', 'url(#filter)')
 
 		pressTimer = setTimeout(() => {
 			longpress = true
-			d3.select(pressTarget).classed('Timeline-operation-selected', false).attr('filter', null)
+			d3.select(pressTarget).attr('filter', null)
 			pressTimer = null
 		}, 1000)
 
@@ -69,7 +69,7 @@ class Timeline extends Component {
 		if(pressTimer) {
 			clearTimeout(pressTimer)
 			pressTimer = null
-			d3.select(pressTarget).classed('Timeline-operation-selected', false).attr('filter', null)
+			d3.select(pressTarget).attr('filter', null)
 		}
 		return false
 	}
