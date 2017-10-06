@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import data , { transformData } from '../../data'
+import { getOperationStartTime, getOperationEndTime } from '../../utils/operationMethods'
 import * as d3 from 'd3'
 import moment from 'moment'
 
 import './Timeline.css'
 
-const NOW = '2017-09-20 15:59'
+const NOW = moment('2017-09-20 15:59')
 const OPERATIONWIDTH = 64
 const PLANNEDWIDTH = 8
 const STROKEWIDTH = 2
@@ -35,7 +36,7 @@ class Timeline extends Component {
 	click(operation) {
 		if(pressTimer) {
 			clearTimeout(pressTimer)
-			pressTimer == null
+			pressTimer = null
 		
 		}
 		if(!longpress) {
@@ -156,18 +157,18 @@ class Timeline extends Component {
 		
 		// Actual time spend
 		const actualRects = operation.append('rect')
-			.attr('x', data => x(data.theater))
-			.attr('y', data => y(moment(data.startTime)))
+			.attr('x', op => x(op.theater))
+			.attr('y', op => y(getOperationStartTime(op)))
 			.attr('width', x.bandwidth())
-			.attr('height', data => (y(moment(data.endTime || NOW)) - y(moment(data.startTime))))
+			.attr('height', op => y(getOperationEndTime(op) ||NOW) - y(getOperationStartTime(op)))			
 			.attr('fill', 'green')
 		
 		// Planned time
 		const plannedRects = operation.append('rect')
-			.attr('x', data => x(data.theater) + x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH/2)
-			.attr('y', data => y(moment(data.plannedStartTime)))
+			.attr('x', op => x(op.theater) + x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH/2)
+			.attr('y', op => y(moment(op.plannedStartTime)))
 			.attr('width', PLANNEDWIDTH)
-			.attr('height', data => (y(moment(data.plannedEndTime)) - y(moment(data.plannedStartTime))))
+			.attr('height', op => (y(moment(op.plannedEndTime)) - y(moment(op.plannedStartTime))))
 			.attr('fill', 'white')
 			.attr('stroke-width', STROKEWIDTH)
 			.attr('stroke', 'lightgrey')
@@ -235,12 +236,12 @@ class Timeline extends Component {
 			const newY = transform.rescaleY(y)
 
 			actualRects
-				.attr('y', data => newY(moment(data.startTime)))
-				.attr('height', data => (newY(moment(data.endTime || NOW)) - newY(moment(data.startTime))))
+				.attr('y', op => newY(getOperationStartTime(op)))
+				.attr('height', op => newY(getOperationEndTime(op) || NOW) - newY(getOperationStartTime(op)))
 			
 			plannedRects
-				.attr('y', data => newY(moment(data.plannedStartTime)))
-				.attr('height', data => (newY(moment(data.plannedEndTime)) - newY(moment(data.plannedStartTime))))
+				.attr('y', op => newY(moment(op.plannedStartTime)))
+				.attr('height', op => (newY(moment(op.plannedEndTime)) - newY(moment(op.plannedStartTime))))
 			
 			nowLine
 				.attr('y1', newY(moment(NOW)))
