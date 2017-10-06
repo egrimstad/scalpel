@@ -5,6 +5,7 @@ import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import SwipeableViews from 'react-swipeable-views'
 import PhoneList from './PhoneList'
+import Overview from './Overview'
 
 function TabContainer(props) {
 	return <div style={{ padding: 20 }}>{props.children}</div>
@@ -27,10 +28,7 @@ const tabContent = {
 	tabs: [
 		{
 			name: 'Overview',
-			fields: [
-				'11field',
-				'12field'
-			]
+			fields: <Overview/>
 		},
 		{
 			name: 'Operation',
@@ -45,7 +43,7 @@ const tabContent = {
 		},
 		{
 			name: 'Contact',
-			fields: <PhoneList></PhoneList>
+			fields: <PhoneList/>
 		}
 
 	]
