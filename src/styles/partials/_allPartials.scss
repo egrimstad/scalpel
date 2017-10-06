@@ -1,0 +1,14 @@
+/*
+
+### BASE FILE - Imports all files in the partials folder ###
+
+In the folder we might want to add _buttons.scss, _grids.scss etc.
+They should in general be added in this file.
+
+This file can then be included to import all partials,
+instead of having to import all individual files.
+
+Partials vs Shared: Partials are element specific, while shared is
+more Scalpel specifc.
+*/
+
