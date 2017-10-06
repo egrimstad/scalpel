@@ -17,6 +17,7 @@ const TIMEBARWIDTH = 40
 let pressTimer
 let longpress = false
 let pressTarget = null
+let filter = null
 
 const translate = (x, y) => {
 	return 'translate('+x+','+y+')'
@@ -37,9 +38,9 @@ class Timeline extends Component {
 		if(pressTimer) {
 			clearTimeout(pressTimer)
 			pressTimer = null
-		
 		}
 		if(!longpress) {
+			filter.transition().select('feMorphology').attr('radius','3')
 			d3.select(pressTarget).attr('filter', null)
 			pressTimer = null
 		}
@@ -53,11 +54,12 @@ class Timeline extends Component {
 		
 		pressTarget = d3.event.currentTarget
 		longpress = false
-
 		d3.select(pressTarget).attr('filter', 'url(#filter)')
-
+		filter.transition().duration(1000).select('feMorphology').attr('radius', '10')
 		pressTimer = setTimeout(() => {
 			longpress = true
+			// console.log(filter.select('feMorphology').attr('radius'))  // can read out the current radius value
+			filter.transition().select('feMorphology').attr('radius','3')
 			d3.select(pressTarget).attr('filter', null)
 			pressTimer = null
 		}, 1000)
@@ -69,6 +71,7 @@ class Timeline extends Component {
 		if(pressTimer) {
 			clearTimeout(pressTimer)
 			pressTimer = null
+			filter.transition().select('feMorphology').attr('radius','3')
 			d3.select(pressTarget).attr('filter', null)
 		}
 		return false
@@ -85,7 +88,7 @@ class Timeline extends Component {
 			.attr('width', '100%')
 			.attr('height', height)
 
-		var filter = svg.append('defs')
+		filter = svg.append('defs')
 			.append('filter')
 			.attr('id', 'filter')
 		
@@ -173,7 +176,6 @@ class Timeline extends Component {
 			.attr('width', x.bandwidth())
 			.attr('height', op => y(getOperationEndTime(op) ||NOW) - y(getOperationStartTime(op)))			
 			.attr('fill', 'green')
-			.attr('filter', null)
 	
 		// Planned time
 		const plannedRects = operation.append('rect')
