@@ -39,9 +39,8 @@ class Timeline extends Component {
 		
 		}
 		if(!longpress) {
-			d3.select(pressTarget).classed('Timeline-operation-selected', false)
+			d3.select(pressTarget).classed('Timeline-operation-selected', false).attr('filter', null)
 			pressTimer = null
-
 		}
 
 		return false
@@ -54,11 +53,11 @@ class Timeline extends Component {
 		pressTarget = d3.event.currentTarget
 		longpress = false
 
-		d3.select(pressTarget).classed('Timeline-operation-selected', true)
+		d3.select(pressTarget).classed('Timeline-operation-selected', true).attr('filter', 'url(#filter)')
 
 		pressTimer = setTimeout(() => {
 			longpress = true
-			d3.select(pressTarget).classed('Timeline-operation-selected', false)
+			d3.select(pressTarget).classed('Timeline-operation-selected', false).attr('filter', null)
 			pressTimer = null
 		}, 1000)
 
@@ -69,7 +68,7 @@ class Timeline extends Component {
 		if(pressTimer) {
 			clearTimeout(pressTimer)
 			pressTimer = null
-			d3.select(pressTarget).classed('Timeline-operation-selected', false)
+			d3.select(pressTarget).classed('Timeline-operation-selected', false).attr('filter', null)
 		}
 		return false
 	}
@@ -84,6 +83,18 @@ class Timeline extends Component {
 		const svg = d3.select(this.container).append('svg')
 			.attr('width', '100%')
 			.attr('height', height)
+
+		var filter = svg.append('defs')
+			.append('filter')
+			.attr('id', 'filter')
+		
+		filter.append('feMorphology')  // Adds a dilation filter
+			.attr('operator', 'dilate')
+			.attr('radius', '3')
+		
+		filter.append('feColorMatrix')  // Adds a saturation filter
+			.attr('type', 'saturate')
+			.attr('values', '0.5')
 		
 		let canScrollX = true
 		
@@ -161,7 +172,8 @@ class Timeline extends Component {
 			.attr('width', x.bandwidth())
 			.attr('height', data => (y(moment(data.endTime || NOW)) - y(moment(data.startTime))))
 			.attr('fill', 'green')
-		
+			.attr('filter', null)
+	
 		// Planned time
 		const plannedRects = operation.append('rect')
 			.attr('x', data => x(data.theater) + x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH/2)
