@@ -6,7 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import theme from './theme/theme'
 import Header from './components/Header/Header'
 import MenuDrawer from './components/MenuDrawer/MenuDrawer'
-import Timeline from './components/Timeline/Timeline'
+import TodayTimeline from './containers/TodayTimeline'
 import ListView from './components/Patients/ListView'
 
 class App extends Component {
@@ -47,7 +47,7 @@ class App extends Component {
 
 						<div className="App-content">
 							<Route exact path="/" render={() => 
-								<Timeline setHeaderItems={this.setHeaderItems}/>
+								<TodayTimeline setHeaderItems={this.setHeaderItems}/>
 							} />
 							<Route exact path="/patients" render={() => 
 								<ListView setHeaderItems={this.setHeaderItems}/>

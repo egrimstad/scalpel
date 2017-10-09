@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import data , { transformData } from '../../data'
 import * as d3 from 'd3'
 import moment from 'moment'
 
 import './Timeline.css'
 
-const NOW = moment('2017-09-20 15:59')
 const OPERATIONWIDTH = 64
 const PLANNEDWIDTH = 8
 const STROKEWIDTH = 2
@@ -78,8 +76,10 @@ class Timeline extends Component {
 	}
 
 	componentDidMount() {
-		const theaters = data.theaters
-		const operations = transformData(data)
+		const theaters = this.props.theaters
+		const operations = this.props.operations
+		const date = this.props.date
+		const now = moment()
 
 		let xDomain = theaters.length*(OPERATIONWIDTH + OPERATIONWIDTH*OPERATIONPADDING)
 
@@ -137,7 +137,7 @@ class Timeline extends Component {
 	
 		// y-axis scale
 		const y = d3.scaleTime()
-			.domain([moment(NOW).startOf('day'), moment(NOW).endOf('day')])
+			.domain([moment(date).startOf('day'), moment(date).endOf('day')])
 			.range([0, height-THEATERBARHEIGHT-1])
 	
 		// y-axis
@@ -176,9 +176,9 @@ class Timeline extends Component {
 		
 		const phaseRects = phase.append('rect')
 			.attr('x', phase => x(phase.column))
-			.attr('y', phase => y(phase.start))
+			.attr('y', phase => y(moment(phase.start)))
 			.attr('width', x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH)
-			.attr('height', phase => y(phase.end ||NOW) - y(phase.start))			
+			.attr('height', phase => y(moment(phase.end) || date) - y(moment(phase.start)))			
 			.attr('fill', phase => phase.color)
 	
 		// Planned time
@@ -242,9 +242,9 @@ class Timeline extends Component {
 		const nowLine = svg.append('line')
 			.attr('transform', translate(0, THEATERBARHEIGHT))
 			.attr('x1', TIMEBARWIDTH)
-			.attr('y1', y(moment(NOW)))
+			.attr('y1', y(now))
 			.attr('x2', x(theaters.length-1)+x.bandwidth())
-			.attr('y2', y(moment(NOW)))
+			.attr('y2', y(now))
 			.attr('stroke-width', 2)
 			.attr('stroke', 'red')
 
@@ -254,16 +254,16 @@ class Timeline extends Component {
 			const newY = transform.rescaleY(y)
 
 			phaseRects
-				.attr('y', phase => newY(phase.start))
-				.attr('height', phase => newY(phase.end || NOW) - newY(phase.start))
+				.attr('y', phase => newY(moment(phase.start)))
+				.attr('height', phase => newY(moment(phase.end) || date) - newY(moment(phase.start)))
 			
 			plannedRects
 				.attr('y', op => newY(moment(op.plannedStartTime)))
 				.attr('height', op => (newY(moment(op.plannedEndTime)) - newY(moment(op.plannedStartTime))))
 			
 			nowLine
-				.attr('y1', newY(moment(NOW)))
-				.attr('y2', newY(moment(NOW)))
+				.attr('y1', newY(now))
+				.attr('y2', newY(now))
 			
 			yAxis.scale(newY)
 			yLines.scale(newY)
@@ -292,6 +292,9 @@ class Timeline extends Component {
 }
 
 Timeline.propTypes = {
+	date: PropTypes.object,
+	operations: PropTypes.array,
+	theaters: PropTypes.array,
 	setHeaderItems: PropTypes.func
 }
 
