@@ -4,12 +4,10 @@ import './styles/App.css'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import theme from './theme/theme'
-import Header from './components/Header/Header'
+import Header from './containers/Header'
 import MenuDrawer from './components/MenuDrawer/MenuDrawer'
 import TodayTimeline from './containers/TodayTimeline'
 import ListView from './components/Patients/ListView'
-
-import moment from 'moment'
 
 class App extends Component {
 	constructor(props) {
@@ -48,9 +46,6 @@ class App extends Component {
 						<Header 
 							onMenuButtonClick={this.openMenu} 
 							headerItems={this.state.headerItems}
-							selectedDate={moment()}
-							setSelectedDate={date => console.log(date)}
-
 						/>
 
 						<div className="App-content">

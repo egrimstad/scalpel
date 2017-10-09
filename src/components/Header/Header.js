@@ -25,7 +25,7 @@ class Header extends Component {
 		this.handleClick = this.handleClick.bind(this)
 		this.handleRequestClose = this.handleRequestClose.bind(this)
 		this.toggleDatePicker = this.toggleDatePicker.bind(this)
-		this.setSelectedDate = this.setSelectedDate.bind(this)
+		this.onSelectDate = this.onSelectDate.bind(this)
 	}
 
 	handleClick(event) {
@@ -40,9 +40,9 @@ class Header extends Component {
 		this.setState((prevState) => ({ pickerOpen: !prevState.pickerOpen}))
 	}
 
-	setSelectedDate(date) {
+	onSelectDate(date) {
 		this.toggleDatePicker()
-		this.props.setSelectedDate(date)
+		this.props.onSelectDate(date)
 	}
 
 	render() {
@@ -78,7 +78,8 @@ class Header extends Component {
 					inline
 					withPortal
 					onClickOutside={this.toggleDatePicker}
-					onSelect={this.setSelectedDate}
+					onSelect={this.onSelectDate}
+					locale='nb'
 				/>
 				}
 			</AppBar>
@@ -89,7 +90,7 @@ class Header extends Component {
 Header.propTypes = {
 	onMenuButtonClick: PropTypes.func,
 	headerItems: PropTypes.array,
-	setSelectedDate: PropTypes.func,
+	onSelectDate: PropTypes.func,
 	selectedDate: PropTypes.object
 }
 

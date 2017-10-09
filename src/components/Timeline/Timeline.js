@@ -30,6 +30,8 @@ class Timeline extends Component {
 		this.click = this.click.bind(this)
 		this.start = this.start.bind(this)
 		this.cancel = this.cancel.bind(this)
+
+		this.buildTimeline = this.buildTimeline.bind(this)
 	}
 
 	click(operation) {
@@ -75,20 +77,33 @@ class Timeline extends Component {
 		return false
 	}
 
+	componentDidUpdate() {
+		this.buildTimeline()
+	}
+
 	componentDidMount() {
+		this.buildTimeline()
+	}
+
+	buildTimeline() {
+		const height = window.innerHeight - this.container.offsetTop - THEATERBARHEIGHT		
+
+		if(this.svg) {
+			this.svg.selectAll('*').remove()
+		}else {
+			this.svg = d3.select(this.container).append('svg')
+				.attr('width', '100%')
+				.attr('height', height)
+		}
+
 		const theaters = this.props.theaters
 		const operations = this.props.operations
 		const date = this.props.date
-		const now = moment()
+		const now = moment('2017-09-20 15:59')
 
 		let xDomain = theaters.length*(OPERATIONWIDTH + OPERATIONWIDTH*OPERATIONPADDING)
 
-		const height = window.innerHeight - this.container.offsetTop - THEATERBARHEIGHT
-		const svg = d3.select(this.container).append('svg')
-			.attr('width', '100%')
-			.attr('height', height)
-
-		this.filter = svg.append('defs')
+		this.filter = this.svg.append('defs')
 			.append('filter')
 			.attr('id', 'Timeline-click-filter')
 		
@@ -102,7 +117,7 @@ class Timeline extends Component {
 		
 		let canScrollX = true
 		
-		const width = svg.node().getBoundingClientRect().width
+		const width = this.svg.node().getBoundingClientRect().width
 
 		if(width > xDomain) {
 			canScrollX = false
@@ -151,7 +166,7 @@ class Timeline extends Component {
 			.tickSize(-width)
 		
 		// rectangles representing operations
-		const operation = svg.append('g')
+		const operation = this.svg.append('g')
 			.attr('transform', translate(0, THEATERBARHEIGHT))
 			.selectAll('g')
 			.data(operations)
@@ -178,7 +193,7 @@ class Timeline extends Component {
 			.attr('x', phase => x(phase.column))
 			.attr('y', phase => y(moment(phase.start)))
 			.attr('width', x.bandwidth() - PLANNEDWIDTH - STROKEWIDTH)
-			.attr('height', phase => y(moment(phase.end) || date) - y(moment(phase.start)))			
+			.attr('height', phase => y(moment(phase.end || now)) - y(moment(phase.start)))			
 			.attr('fill', phase => phase.color)
 	
 		// Planned time
@@ -192,7 +207,7 @@ class Timeline extends Component {
 			.attr('stroke', 'lightgrey')
 	
 		// x-axis group
-		const xGroup = svg.append('g')
+		const xGroup = this.svg.append('g')
 			.attr('class', 'Timeline-axis Timeline-axis--x')
 		// overlay
 		xGroup.append('rect')
@@ -213,7 +228,7 @@ class Timeline extends Component {
 		}
 		
 		// y-axis group
-		const yGroup = svg.append('g')
+		const yGroup = this.svg.append('g')
 			.attr('class', 'Timeline-axis axis--y')
 			.attr('transform', translate(TIMEBARWIDTH, THEATERBARHEIGHT))
 		// overlay
@@ -227,7 +242,7 @@ class Timeline extends Component {
 		//axis
 		yGroup.call(yAxis)
 		
-		const yLinesGroup = svg.append('g')
+		const yLinesGroup = this.svg.append('g')
 			.attr('class', 'Timeline-axis axis--y')
 			.attr('transform', translate(TIMEBARWIDTH, THEATERBARHEIGHT))
 		
@@ -236,17 +251,20 @@ class Timeline extends Component {
 		
 
 		// y-axis zoom hook directly on svg
-		svg.call(yZoom).on('dblclick.zoom', null).style('user-select', 'none')
+		this.svg.call(yZoom).on('dblclick.zoom', null).style('user-select', 'none')
 
 		// Add line representing current time
-		const nowLine = svg.append('line')
-			.attr('transform', translate(0, THEATERBARHEIGHT))
-			.attr('x1', TIMEBARWIDTH)
-			.attr('y1', y(now))
-			.attr('x2', x(theaters.length-1)+x.bandwidth())
-			.attr('y2', y(now))
-			.attr('stroke-width', 2)
-			.attr('stroke', 'red')
+		let nowLine = null
+		if(now.isSame(date, 'day')) {
+			nowLine = this.svg.append('line')
+				.attr('transform', translate(0, THEATERBARHEIGHT))
+				.attr('x1', TIMEBARWIDTH)
+				.attr('y1', y(now))
+				.attr('x2', x(theaters.length-1)+x.bandwidth())
+				.attr('y2', y(now))
+				.attr('stroke-width', 2)
+				.attr('stroke', 'red')
+		}
 
 		
 		function yZoomed() {
@@ -255,15 +273,17 @@ class Timeline extends Component {
 
 			phaseRects
 				.attr('y', phase => newY(moment(phase.start)))
-				.attr('height', phase => newY(moment(phase.end) || date) - newY(moment(phase.start)))
+				.attr('height', phase => newY(moment(phase.end || now)) - newY(moment(phase.start)))
 			
 			plannedRects
 				.attr('y', op => newY(moment(op.plannedStartTime)))
 				.attr('height', op => (newY(moment(op.plannedEndTime)) - newY(moment(op.plannedStartTime))))
 			
-			nowLine
-				.attr('y1', newY(now))
-				.attr('y2', newY(now))
+			if(nowLine) {
+				nowLine
+					.attr('y1', newY(now))
+					.attr('y2', newY(now))
+			}
 			
 			yAxis.scale(newY)
 			yLines.scale(newY)
