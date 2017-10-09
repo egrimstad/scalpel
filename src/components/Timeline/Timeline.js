@@ -39,7 +39,7 @@ class Timeline extends Component {
 			pressTimer = null
 		}
 		if(!longpress) {
-			filter.transition().select('feMorphology').attr('radius','3')
+			filter.transition().select('feMorphology').attr('radius','2')
 			d3.select(pressTarget).attr('filter', null)
 			pressTimer = null
 		}
@@ -54,11 +54,11 @@ class Timeline extends Component {
 		pressTarget = d3.event.currentTarget
 		longpress = false
 		d3.select(pressTarget).attr('filter', 'url(#filter)')
-		filter.transition().duration(1000).select('feMorphology').attr('radius', '10')
+		filter.transition().duration(1000).select('feMorphology').attr('radius', '5')
 		pressTimer = setTimeout(() => {
 			longpress = true
 			// console.log(filter.select('feMorphology').attr('radius'))  // can read out the current radius value
-			filter.transition().select('feMorphology').attr('radius','3')
+			filter.transition().select('feMorphology').attr('radius','2')
 			d3.select(pressTarget).attr('filter', null)
 			pressTimer = null
 		}, 1000)
@@ -70,7 +70,7 @@ class Timeline extends Component {
 		if(pressTimer) {
 			clearTimeout(pressTimer)
 			pressTimer = null
-			filter.transition().select('feMorphology').attr('radius','3')
+			filter.transition().select('feMorphology').attr('radius','2')
 			d3.select(pressTarget).attr('filter', null)
 		}
 		return false
@@ -93,7 +93,7 @@ class Timeline extends Component {
 		
 		filter.append('feMorphology')  // Adds a dilation filter
 			.attr('operator', 'dilate')
-			.attr('radius', '3')
+			.attr('radius', '2')
 		
 		filter.append('feColorMatrix')  // Adds a saturation filter
 			.attr('type', 'saturate')
