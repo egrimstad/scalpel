@@ -13,7 +13,7 @@ class DatePicker extends Component {
 
 		if (this.props.open) {
 			return (
-				<div>
+				<div style={{position: 'absolute', margin: 'auto', left: 0, right: 0, display: 'flex', justifyContent: 'center'}}>
 					<InfiniteCalendar width={300} height={300} selected={today} disabledDays={[0,6]} minDate={lastWeek} /> {/* Sizes are not relative, needs to be fixed */}
 				</div>
 			)
