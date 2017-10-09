@@ -49,7 +49,7 @@ class App extends Component {
 							<Route exact path="/" render={() => 
 								<Timeline setHeaderItems={this.setHeaderItems}/>
 							} />
-							<Route exact path="/" render={() => 
+							<Route exact path="/patients" render={() => 
 								<ListView setHeaderItems={this.setHeaderItems}/>
 							} />
 						</div>
