@@ -15,8 +15,6 @@ const OPERATIONPADDING = 0.25
 const THEATERBARHEIGHT = 30
 const TIMEBARWIDTH = 40
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
-
 const translate = (x, y) => {
 	return 'translate('+x+','+y+')'
 }
@@ -39,12 +37,12 @@ class Timeline extends Component {
 
 		this.state = {
 			open: false,
-			selectedValue: emails[1],
+			time: '10:00',
 		}
 	}
 
 	handleRequestClose = value => {
-		this.setState({ selectedValue: value, open: false })
+		this.setState({ time: value, open: false }, () => console.log(this.state.time))
 	  }
 
 	click(operation) {
@@ -303,7 +301,7 @@ class Timeline extends Component {
 				ref = {element => this.container = element}
 			>
 				<PhaseDialog
-					selectedValue={this.state.selectedValue}
+					time={this.state.time}
 					open={this.state.open}
 					onRequestClose={this.handleRequestClose}
 				/>

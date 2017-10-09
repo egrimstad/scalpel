@@ -1,39 +1,39 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import Avatar from 'material-ui/Avatar'
-import List, { ListItem, ListItemAvatar, ListItemText } from 'material-ui/List'
 import Dialog, { DialogActions, DialogTitle } from 'material-ui/Dialog'
-import PersonIcon from 'material-ui-icons/Person'
-import AddIcon from 'material-ui-icons/Add'
-import blue from 'material-ui/colors/blue'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button';
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
-const styles = {
-  avatar: {
-    background: blue[100],
-    color: blue[600],
-  },
-};
+class PhaseDialog extends React.Component {
+	constructor(props) {
+		super(props)
 
-class SimpleDialog extends React.Component {
-  handleRequestClose = () => {
-    this.props.onRequestClose(this.props.selectedValue);
+		this.state = {
+			time: props.time
+		}
+
+		this.handleRequestClose = this.handleRequestClose.bind(this)
+		this.handleEndPhaseClick = this.handleEndPhaseClick.bind(this)
+		this.handleChange = this.handleChange.bind(this)
+	}
+  handleRequestClose() {
+	this.setState({time: this.props.time})
+	this.props.onRequestClose(this.props.time);
+	console.log(this.state.time)
   };
 
-  handleListItemClick = value => {
-    this.props.onRequestClose(value);
-  };
-
-  handleEndPhaseClick = value => {
-	  //this.props.onRequestClose(value)
-	  console.log(value)
+  handleEndPhaseClick() {
+	  this.props.onRequestClose(this.state.time)
+	  console.log(this.state.time)
   }
 
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+	})
+}
+
   render() {
-    const { classes, onRequestClose, selectedValue, ...other } = this.props;
+    const { classes, onRequestClose, time, ...other } = this.props;
 
     return (
       <Dialog onRequestClose={this.handleRequestClose} {...other}>
@@ -42,35 +42,15 @@ class SimpleDialog extends React.Component {
 				id="time"
 				label="Alarm clock"
 				type="time"
-				defaultValue="08:00"
-				className={classes.textField}
+				defaultValue={this.state.time}
 				InputLabelProps={{
 				shrink: true,
 				}}
 				inputProps={{
 				step: 300, // 5 min
 				}}
+				onChange={this.handleChange('time')}
 			/>
-          	<List>
-            {emails.map(email => (
-              <ListItem button onClick={() => this.handleListItemClick(email)} key={email}>
-                <ListItemAvatar>
-                  <Avatar className={classes.avatar}>
-                    <PersonIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={email} />
-              </ListItem>
-            ))}
-            <ListItem button onClick={() => this.handleListItemClick('addAccount')}>
-              <ListItemAvatar>
-                <Avatar>
-                  <AddIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary="add account" />
-            </ListItem>
-          </List>
 		  <DialogActions>
 		  	<Button color="primary">
        			START NEW PHASE
@@ -78,7 +58,7 @@ class SimpleDialog extends React.Component {
 		  	<Button color="primary" onClick={this.handleRequestClose}>
        			CANCEL
       		</Button>
-		  	<Button color="primary">
+		  	<Button color="primary" onClick={this.handleEndPhaseClick}>
        			END PHASE
       		</Button>
 		</DialogActions>
@@ -86,13 +66,5 @@ class SimpleDialog extends React.Component {
     );
   }
 }
-
-SimpleDialog.propTypes = {
-  classes: PropTypes.object.isRequired,
-  onRequestClose: PropTypes.func,
-  selectedValue: PropTypes.string,
-};
-
-const PhaseDialog = withStyles(styles)(SimpleDialog);
 
 export default PhaseDialog;
