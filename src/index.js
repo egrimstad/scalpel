@@ -7,10 +7,10 @@ import 'typeface-roboto'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import scalpelReducer from './reducers'
-
 import moment from 'moment'
+import 'moment/locale/nb'
 
-moment.locale('no')
+moment.locale('nb')
 
 const store = createStore(
 	scalpelReducer,
