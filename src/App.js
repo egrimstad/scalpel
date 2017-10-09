@@ -9,6 +9,8 @@ import MenuDrawer from './components/MenuDrawer/MenuDrawer'
 import TodayTimeline from './containers/TodayTimeline'
 import ListView from './components/Patients/ListView'
 
+import moment from 'moment'
+
 class App extends Component {
 	constructor(props) {
 		super(props)
@@ -43,7 +45,13 @@ class App extends Component {
 				<Router>
 					<div>
 						<MenuDrawer open={this.state.menuOpen} onRequestClose={this.closeMenu}/>
-						<Header onMenuButtonClick={this.openMenu} headerItems={this.state.headerItems} />
+						<Header 
+							onMenuButtonClick={this.openMenu} 
+							headerItems={this.state.headerItems}
+							selectedDate={moment()}
+							setSelectedDate={date => console.log(date)}
+
+						/>
 
 						<div className="App-content">
 							<Route exact path="/" render={() => 

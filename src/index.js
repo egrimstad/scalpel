@@ -8,6 +8,10 @@ import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import scalpelReducer from './reducers'
 
+import moment from 'moment'
+
+moment.locale('no')
+
 const store = createStore(
 	scalpelReducer,
 	undefined, // Initial state in reducers

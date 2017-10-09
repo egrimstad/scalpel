@@ -11,9 +11,9 @@ class MoreMenu extends Component {
 					open={this.props.open}
 					onRequestClose={this.props.handleRequestClose}
 				>
-					<MenuItem onClick={this.props.handleRequestClose}>Profile</MenuItem>
-					<MenuItem onClick={this.props.handleRequestClose}>My account</MenuItem>
-					<MenuItem onClick={this.props.handleRequestClose}>Logout</MenuItem>
+					<MenuItem onClick={this.props.handleRequestClose}>Bar view</MenuItem>
+					<MenuItem onClick={this.props.handleRequestClose}>List view</MenuItem>
+					<MenuItem onClick={this.props.handleRequestClose}>Force update</MenuItem>
 				</Menu>
 			</div>
 		)
