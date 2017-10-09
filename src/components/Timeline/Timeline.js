@@ -5,6 +5,7 @@ import * as d3 from 'd3'
 import moment from 'moment'
 
 import './Timeline.css'
+import PhaseDialog from '../PhaseDialog/PhaseDialog'
 
 const NOW = moment('2017-09-20 15:59')
 const OPERATIONWIDTH = 64
@@ -13,6 +14,8 @@ const STROKEWIDTH = 2
 const OPERATIONPADDING = 0.25
 const THEATERBARHEIGHT = 30
 const TIMEBARWIDTH = 40
+
+const emails = ['username@gmail.com', 'user02@gmail.com'];
 
 const translate = (x, y) => {
 	return 'translate('+x+','+y+')'
@@ -32,10 +35,21 @@ class Timeline extends Component {
 		this.click = this.click.bind(this)
 		this.start = this.start.bind(this)
 		this.cancel = this.cancel.bind(this)
+		this.handleRequestClose = this.handleRequestClose.bind(this)
+
+		this.state = {
+			open: false,
+			selectedValue: emails[1],
+		}
 	}
+
+	handleRequestClose = value => {
+		this.setState({ selectedValue: value, open: false })
+	  }
 
 	click(operation) {
 		if(this.pressTimer) {
+			console.log('Long press')
 			clearTimeout(this.pressTimer)
 			this.pressTimer = null
 		}
@@ -58,6 +72,7 @@ class Timeline extends Component {
 		this.filter.transition().duration(1000).select('feMorphology').attr('radius', '5')
 		this.pressTimer = setTimeout(() => {
 			this.longpress = true
+			this.setState({ open: true })
 			// console.log(filter.select('feMorphology').attr('radius'))  // can read out the current radius value
 			this.filter.transition().select('feMorphology').attr('radius','2')
 			d3.select(this.pressTarget).attr('filter', null)
@@ -286,7 +301,13 @@ class Timeline extends Component {
 			<div
 				className="Timeline-container"
 				ref = {element => this.container = element}
-			/>
+			>
+				<PhaseDialog
+					selectedValue={this.state.selectedValue}
+					open={this.state.open}
+					onRequestClose={this.handleRequestClose}
+				/>
+			</div>
 		)
 	}
 }
