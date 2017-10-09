@@ -13,10 +13,6 @@ const STROKEWIDTH = 2
 const OPERATIONPADDING = 0.25
 const THEATERBARHEIGHT = 30
 const TIMEBARWIDTH = 40
-let pressTimer
-let longpress = false
-let pressTarget = null
-let filter = null
 
 const translate = (x, y) => {
 	return 'translate('+x+','+y+')'
@@ -28,20 +24,25 @@ class Timeline extends Component {
 
 		this.container = null
 
+		this.pressTimer = null
+		this.longpress = false
+		this.pressTarget = null
+		this.filter = null
+
 		this.click = this.click.bind(this)
 		this.start = this.start.bind(this)
 		this.cancel = this.cancel.bind(this)
 	}
 
 	click(operation) {
-		if(pressTimer) {
-			clearTimeout(pressTimer)
-			pressTimer = null
+		if(this.pressTimer) {
+			clearTimeout(this.pressTimer)
+			this.pressTimer = null
 		}
-		if(!longpress) {
-			filter.transition().select('feMorphology').attr('radius','2')
-			d3.select(pressTarget).attr('filter', null)
-			pressTimer = null
+		if(!this.longpress) {
+			this.filter.transition().select('feMorphology').attr('radius','2')
+			d3.select(this.pressTarget).attr('filter', null)
+			this.pressTimer = null
 		}
 
 		return false
@@ -49,29 +50,29 @@ class Timeline extends Component {
 	}
 
 	start(operation) {
-		if(pressTimer) return
+		if(this.pressTimer) return
 		
-		pressTarget = d3.event.currentTarget
-		longpress = false
-		d3.select(pressTarget).attr('filter', 'url(#filter)')
-		filter.transition().duration(1000).select('feMorphology').attr('radius', '5')
-		pressTimer = setTimeout(() => {
-			longpress = true
+		this.pressTarget = d3.event.currentTarget
+		this.longpress = false
+		d3.select(this.pressTarget).attr('filter', 'url(#Timeline-click-filter)')
+		this.filter.transition().duration(1000).select('feMorphology').attr('radius', '5')
+		this.pressTimer = setTimeout(() => {
+			this.longpress = true
 			// console.log(filter.select('feMorphology').attr('radius'))  // can read out the current radius value
-			filter.transition().select('feMorphology').attr('radius','2')
-			d3.select(pressTarget).attr('filter', null)
-			pressTimer = null
+			this.filter.transition().select('feMorphology').attr('radius','2')
+			d3.select(this.pressTarget).attr('filter', null)
+			this.pressTimer = null
 		}, 1000)
 
 		return false
 	}
 
 	cancel() {
-		if(pressTimer) {
-			clearTimeout(pressTimer)
-			pressTimer = null
-			filter.transition().select('feMorphology').attr('radius','2')
-			d3.select(pressTarget).attr('filter', null)
+		if(this.pressTimer) {
+			clearTimeout(this.pressTimer)
+			this.pressTimer = null
+			this.filter.transition().select('feMorphology').attr('radius','2')
+			d3.select(this.pressTarget).attr('filter', null)
 		}
 		return false
 	}
@@ -87,15 +88,15 @@ class Timeline extends Component {
 			.attr('width', '100%')
 			.attr('height', height)
 
-		filter = svg.append('defs')
+		this.filter = svg.append('defs')
 			.append('filter')
-			.attr('id', 'filter')
+			.attr('id', 'Timeline-click-filter')
 		
-		filter.append('feMorphology')  // Adds a dilation filter
+		this.filter.append('feMorphology')  // Adds a dilation filter
 			.attr('operator', 'dilate')
 			.attr('radius', '2')
 		
-		filter.append('feColorMatrix')  // Adds a saturation filter
+		this.filter.append('feColorMatrix')  // Adds a saturation filter
 			.attr('type', 'saturate')
 			.attr('values', '0.5')
 		
