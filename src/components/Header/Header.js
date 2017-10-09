@@ -8,7 +8,9 @@ import MenuIcon from 'material-ui-icons/Menu'
 import MoreMenu from '../MoreMenu/MoreMenu'
 import MoreVert from 'material-ui-icons/MoreVert'
 import DateRange from'material-ui-icons/DateRange'
-import DatePicker from '../DatePicker/DatePicker'
+
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 class Header extends Component {
 	constructor(props) {
@@ -23,8 +25,8 @@ class Header extends Component {
 		this.handleClick = this.handleClick.bind(this)
 		this.handleRequestClose = this.handleRequestClose.bind(this)
 		this.toggleDatePicker = this.toggleDatePicker.bind(this)
+		this.setSelectedDate = this.setSelectedDate.bind(this)
 	}
-
 
 	handleClick(event) {
 		this.setState({ open: true, anchorEl: event.currentTarget })
@@ -36,6 +38,11 @@ class Header extends Component {
 
 	toggleDatePicker() {
 		this.setState((prevState) => ({ pickerOpen: !prevState.pickerOpen}))
+	}
+
+	setSelectedDate(date) {
+		this.toggleDatePicker()
+		this.props.setSelectedDate(date)
 	}
 
 	render() {
@@ -65,7 +72,15 @@ class Header extends Component {
 					</IconButton>
 					<MoreMenu open={this.state.open} anchorEl={this.state.anchorEl} handleRequestClose={this.handleRequestClose}/>
 				</Toolbar>
-				<DatePicker open={this.state.pickerOpen} today={new Date()} />
+				{this.state.pickerOpen && 
+				<DatePicker
+					selected={this.props.selectedDate}
+					inline
+					withPortal
+					onClickOutside={this.toggleDatePicker}
+					onSelect={this.setSelectedDate}
+				/>
+				}
 			</AppBar>
 		)
 	}
@@ -73,7 +88,9 @@ class Header extends Component {
 
 Header.propTypes = {
 	onMenuButtonClick: PropTypes.func,
-	headerItems: PropTypes.array
+	headerItems: PropTypes.array,
+	setSelectedDate: PropTypes.func,
+	selectedDate: PropTypes.object
 }
 
 export default Header
