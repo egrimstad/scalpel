@@ -43,12 +43,11 @@ class Timeline extends Component {
 	}
 
 	closeDialog(value) {
-		this.setState({ time: value, open: false }, () => console.log(this.state.time))
+		this.setState({ time: value, open: false })
 	}
 
 	click(operation) {
 		if(this.pressTimer) {
-			console.log('Long press')
 			clearTimeout(this.pressTimer)
 			this.pressTimer = null
 		}
@@ -73,7 +72,6 @@ class Timeline extends Component {
 		this.pressTimer = setTimeout(() => {
 			this.longpress = true
 			this.setState({ open: true })
-			// console.log(filter.select('feMorphology').attr('radius'))  // can read out the current radius value
 			this.filter.transition().select('feMorphology').attr('radius','2')
 			d3.select(this.pressTarget).attr('filter', null)
 			this.pressTimer = null

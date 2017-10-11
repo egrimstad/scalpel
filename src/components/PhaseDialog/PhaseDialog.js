@@ -21,12 +21,10 @@ class PhaseDialog extends React.Component {
   handleRequestClose() {
 	this.setState({time: this.props.time})
 	this.props.onRequestClose(this.props.time);
-	console.log(this.state.time)
   };
 
   handleEndPhaseClick() {
 	  this.props.onRequestClose(this.state.time)
-	  console.log(this.state.time)
   }
 
   handleChange = name => event => {
