@@ -42,9 +42,9 @@ class Timeline extends Component {
 		}
 	}
 
-	closeDialog = value => {
+	closeDialog(value) {
 		this.setState({ time: value, open: false }, () => console.log(this.state.time))
-	  }
+	}
 
 	click(operation) {
 		if(this.pressTimer) {
