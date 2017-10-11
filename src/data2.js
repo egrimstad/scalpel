@@ -17,7 +17,7 @@ const data = [{
 	"DiagnoseTypeFreeText": "Akutt appendisitt med generalisert peritonitt", //Diagnose
 	"ProcedureTypeFreeText": "", //Inngrep
 	"PatientBirthDate": "1945-02-02T00:00:00",  //Born
-	"NumberOfBloodUnits": null,  //Blod?
+	"NumberOfBloodUnits": null,
 	"AsaScore": null,                 //ASA
 	"Crew": [], //Personell
 	"OperationEvents": [{

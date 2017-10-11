@@ -26,9 +26,9 @@ class Overview extends Component {
 	}
 
 	getMainHeaders() {return ['Diagnose', 'Inngrep', 'Navn', 'Født', 'Enhet', 'Personell', 'Utstyr']}
-	getMainData() {return ['Syk', 'Kutt', 'Jenny', '16.03.95', 'NTNU', 'HDY, DFDF, LLLF, FNE', 'Scalpel']}
-	getTopHeaders() {return ['Date', 'Inn', 'Tils', 'Pri', 'ASA', 'Blood']}
-	getTopData() {return}
+	getMainData() {return [this.operation["ProcedureTypeFreeText"], this.operation["DiagnoseTypeFreeText"], this.operation["PatientName"], this.operation["PatientBirthDate"], this.operation["CareUnitName"], this.operation["Crew"], 'Utstyr ..']}
+	getTopHeaders() {return ['Dato', 'Inn', 'Tils', 'Pri', 'ASA', 'Blod']}
+	getTopData() {return [this.operation["OperatingDate"], "Inn...", this.operation["PreVisitStatus"], this.operation["Priority"], this.operation["AsaScore"], this.operation["NumberOfBloodUnits"]]}
 
 	getTopContentFormatted() {
 		return (
@@ -37,7 +37,7 @@ class Overview extends Component {
 					<List> {this.getTopHeaders().map(header => <ListItem>{header}</ListItem>)}</List>
 				</GridListTile>
 				<GridListTile cols={1} rows={1}>
-					<List> {this.getTopHeaders().map(header => <ListItem>{header}</ListItem>)}</List>
+					<List> {this.getTopData().map(data => <ListItem>{data}</ListItem>)}</List>
 				</GridListTile>
 			</GridList>)
 	}
@@ -57,6 +57,12 @@ class Overview extends Component {
 		)
 	}
 
+	getIconDataFormatted() {
+		return (
+			<img src='../../../icons/bullet_ball_green.png' alt="Status icon" />
+		)
+	}
+
 
 	getTileData() {
 		return [
@@ -64,7 +70,7 @@ class Overview extends Component {
 				id: 0,
 				cols: 1,
 				rows: 3,
-				content: <div>Icons</div>
+				content: this.getIconDataFormatted()
 			},
 			{
 				id: 1,
