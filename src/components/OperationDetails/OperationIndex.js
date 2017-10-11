@@ -50,7 +50,7 @@ function getTabContent(operation) {
 	]}
 }
 
-class OperationDetails extends Component {
+class OperationIndex extends Component {
 	constructor(props) {
 		super(props)
 		this.operationId = props.match.params.operationId
@@ -103,8 +103,8 @@ class OperationDetails extends Component {
 	}
 }
 
-OperationDetails.propTypes = {
+OperationIndex.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(OperationDetails)
+export default withStyles(styles)(OperationIndex)
