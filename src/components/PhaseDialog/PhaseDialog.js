@@ -2,7 +2,7 @@ import React from 'react'
 import Dialog, { DialogActions, DialogTitle } from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
-import ScheduleIcon from 'material-ui-icons/Schedule';
+import ScheduleIcon from 'material-ui-icons/Schedule'
 
 class PhaseDialog extends React.Component {
 	constructor(props) {
@@ -39,33 +39,33 @@ class PhaseDialog extends React.Component {
     return (
       <Dialog onRequestClose={this.handleRequestClose} {...other}>
         <DialogTitle>Phase dialog</DialogTitle>
-		<form style={{display: 'flex', flexWrap: 'wrap', margin: 'auto'}}>
-			<ScheduleIcon style={{marginRight: 15}}/>
-			<TextField
-				id="time"
-				//label="End time"
-				type="time"
-				defaultValue={this.state.time}
-				InputLabelProps={{
-				shrink: true,
-				}}
-				inputProps={{
-				step: 300, // 5 min
-				}}
-				onChange={this.handleChange('time')}
-			/>
-		</form>
-		  <DialogActions>
-		  	<Button color="primary">
-       			START NEW PHASE
-      		</Button>
-		  	<Button color="primary" onClick={this.handleRequestClose}>
-       			CANCEL
-      		</Button>
-		  	<Button color="primary" onClick={this.handleEndPhaseClick}>
-       			END PHASE
-      		</Button>
-		</DialogActions>
+				<form style={{display: 'flex', flexWrap: 'wrap', margin: 'auto'}}>
+					<ScheduleIcon style={{marginRight: 15}}/>
+					<TextField
+						id="time"
+						//label="End time"
+						type="time"
+						defaultValue={this.state.time}
+						InputLabelProps={{
+						shrink: true,
+						}}
+						inputProps={{
+						step: 300, // 5 min
+						}}
+						onChange={this.handleChange('time')}
+					/>
+				</form>
+				<DialogActions>
+					<Button color="primary">
+							START NEW PHASE
+						</Button>
+					<Button color="primary" onClick={this.handleRequestClose}>
+							CANCEL
+						</Button>
+					<Button color="primary" onClick={this.handleEndPhaseClick}>
+							END PHASE
+						</Button>
+				</DialogActions>
       </Dialog>
     );
   }
