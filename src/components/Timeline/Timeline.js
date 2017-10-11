@@ -28,6 +28,7 @@ class Timeline extends Component {
 		this.pressTimer = null
 		this.longpress = false
 		this.pressTarget = null
+		this.operationID = null
 		this.filter = null
 
 		this.click = this.click.bind(this)
@@ -65,7 +66,7 @@ class Timeline extends Component {
 		if(this.pressTimer) return
 		
 		this.pressTarget = d3.event.currentTarget
-		// How do we get the data from the pressTarget?
+		this.operationID = operation.id
 		this.longpress = false
 		d3.select(this.pressTarget).attr('filter', 'url(#Timeline-click-filter)')
 		this.filter.transition().duration(1000).select('feMorphology').attr('radius', '5')
@@ -303,7 +304,7 @@ class Timeline extends Component {
 			>
 				<PhaseDialog
 					time={this.state.time}
-					title='Phase Dialog'
+					title={'Operation ' + this.operationID}
 					open={this.state.open}
 					onRequestClose={this.closeDialog}
 				/>
