@@ -41,8 +41,9 @@ class PhaseDialog extends React.Component {
     return (
       <Dialog onRequestClose={this.handleRequestClose} {...other}>
         <DialogTitle>{this.props.title}</DialogTitle>
-				<form style={{display: 'flex', flexWrap: 'wrap', margin: 'auto'}}>
-					<ScheduleIcon style={{marginRight: 15}}/>
+
+				<form style={{display: 'flex', flexWrap: 'wrap', margin: 'auto', marginTop: 15}}>
+					<ScheduleIcon style={{marginRight: 15, marginTop: 5}}/>
 					<TextField
 						id="time"
 						//label="End time"
@@ -57,8 +58,9 @@ class PhaseDialog extends React.Component {
 						onChange={this.handleChange('time')}
 					/>
 				</form>
-				<DialogActions>
-					<Button color="primary" className="btn-small">
+
+				<DialogActions /*style={{overflow: 'hidden', whiteSpace: 'nowrap'}} // The style makes the buttons single line, but does not scale well*/>
+					<Button color="primary" className="btn-small" style={{marginRight: 30}}>
 							<p>START NEW PHASE</p>
 						</Button>
 					<Button color="primary" onClick={this.handleRequestClose}>
