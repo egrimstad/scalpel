@@ -53,9 +53,7 @@ class App extends Component {
 							<Route exact path="/patients" render={() =>
 								<ListView setHeaderItems={this.setHeaderItems}/>
 							} />
-							<Route exact path="/operationDetails/:operationId" render={() =>
-								<OperationDetails setHeaderItems={this.setHeaderItems}/>
-							} />
+							<Route exact path="/operationDetails/:operationId" component={OperationDetails} />
 						</div>
 					</div>
 				</Router>

@@ -8,6 +8,7 @@ import PhoneList from './PhoneList'
 import Overview from './Overview'
 import Operation from './Operation'
 import Anesthesia from './Anesthesia'
+import * as data from '../../data2'
 
 function TabContainer(props) {
 	return <div style={{ padding: 20 }}>{props.children}</div>
@@ -26,11 +27,12 @@ const styles = theme => ({
 	}
 })
 
-const tabContent = {
-	tabs: [
+function getTabContent(operation) {
+
+	return {tabs: [
 		{
 			name: 'Overview',
-			fields: <Overview/>
+			fields: <Overview operation={operation}/>
 		},
 		{
 			name: 'Operation',
@@ -45,11 +47,14 @@ const tabContent = {
 			fields: <PhoneList/>
 		}
 
-	]
+	]}
 }
+
 class OperationDetails extends Component {
 	constructor(props) {
 		super(props)
+		this.operationId = props.match.params.operationId
+		this.operation = data.getOperationById(14867)
 		this.state = {
 			value: 0
 		}
@@ -79,13 +84,13 @@ class OperationDetails extends Component {
 						scrollable
 						scrollButtons="auto"
 					>
-						{tabContent.tabs.map((tab, tIndex) => {
+						{getTabContent().tabs.map((tab, tIndex) => {
 							return <Tab label={tab.name} key={tIndex}/>
 						})}
 					</Tabs>
 				</AppBar>
 				<SwipeableViews index={this.state.value} onChangeIndex={this.handleChangeIndex}>
-					{tabContent.tabs.map((tab, tIndex) =>
+					{getTabContent(this.operation).tabs.map((tab, tIndex) =>
 						tIndex === this.state.value ?
 							<TabContainer key={tIndex}>
 								<div>
