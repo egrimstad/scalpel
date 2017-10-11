@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import './App.css'
+import './styles/App.css'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import theme from './theme/theme'
@@ -9,6 +9,8 @@ import MenuDrawer from './components/MenuDrawer/MenuDrawer'
 import Timeline from './components/Timeline/Timeline'
 import ListView from './components/Patients/ListView'
 import OperationDetails from './components/OperationDetails/OperationDetails'
+
+import moment from 'moment'
 
 class App extends Component {
 	constructor(props) {
@@ -44,7 +46,13 @@ class App extends Component {
 				<Router>
 					<div>
 						<MenuDrawer open={this.state.menuOpen} onRequestClose={this.closeMenu}/>
-						<Header onMenuButtonClick={this.openMenu} headerItems={this.state.headerItems} />
+						<Header 
+							onMenuButtonClick={this.openMenu} 
+							headerItems={this.state.headerItems}
+							selectedDate={moment()}
+							setSelectedDate={date => console.log(date)}
+
+						/>
 
 						<div className="App-content">
 							<Route exact path="/" render={() =>
