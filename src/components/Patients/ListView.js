@@ -67,19 +67,21 @@ class ListView extends React.Component {
 					{data.theaters.map((theatre, tIndex) =>
 						tIndex === this.state.value ?
 							<TabContainer key={tIndex}>
-								<div>
-									<List>
-										{theatre.operations.map((operation, oIndex) =>
-											<div key={oIndex}>
-												<Link to={"/operationDetails/"+operation.id} query={{operationId: operation.id}}>
-													<ListItem button>
-														<ListItemText primary={operation.patient}/>
-													</ListItem>
-												</Link>
-											</div>
-										)}
-									</List>
-								</div>
+								<List>
+									{theatre.operations.map((operation, oIndex) =>
+										<div key={oIndex}>
+											<Link to={"/operationDetails/"+operation.id}
+												  query={{operationId: operation.id}}>
+												<ListItem button>
+													<img src='../../../icons/pencil.png' height="20px"
+														 alt="Status icon"/>
+													<img src='../../../icons/bullet_ball_green.png' alt="Status icon"/>
+													<ListItemText primary={operation.patient}/>
+												</ListItem>
+											</Link>
+										</div>
+									)}
+								</List>
 							</TabContainer> : <div key={tIndex}></div>)}
 				</SwipeableViews>
 			</div>

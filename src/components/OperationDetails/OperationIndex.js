@@ -31,19 +31,19 @@ function getTabContent(operation) {
 
 	return {tabs: [
 		{
-			name: 'Overview',
+			name: 'Oversikt',
 			fields: <Overview operation={operation}/>
 		},
 		{
-			name: 'Operation',
+			name: 'Operasjon',
 			fields: <Operation/>
 		},
 		{
-			name: 'Anesthesia',
+			name: 'Anestesi',
 			fields: <Anesthesia/>
 		},
 		{
-			name: 'Contact',
+			name: 'Personell',
 			fields: <PhoneList/>
 		}
 

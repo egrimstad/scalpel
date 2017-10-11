@@ -59,7 +59,10 @@ class Overview extends Component {
 
 	getIconDataFormatted() {
 		return (
-			<img src='../../../icons/bullet_ball_green.png' alt="Status icon" />
+			<div>
+				<img src='../../../icons/pencil.png' height="100px" alt="Status icon" />
+				<img src='../../../icons/bullet_ball_green.png' alt="Status icon" />
+			</div>
 		)
 	}
 
@@ -68,13 +71,13 @@ class Overview extends Component {
 		return [
 			{
 				id: 0,
-				cols: 1,
+				cols: 0.5,
 				rows: 3,
 				content: this.getIconDataFormatted()
 			},
 			{
 				id: 1,
-				cols: 1,
+				cols: 1.5,
 				rows: 3,
 				content: this.getTopContentFormatted()
 			},
