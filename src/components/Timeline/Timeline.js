@@ -33,7 +33,7 @@ class Timeline extends Component {
 		this.click = this.click.bind(this)
 		this.start = this.start.bind(this)
 		this.cancel = this.cancel.bind(this)
-		this.handleRequestClose = this.handleRequestClose.bind(this)
+		this.closeDialog = this.closeDialog.bind(this)
 
 		this.state = {
 			open: false,
@@ -41,7 +41,7 @@ class Timeline extends Component {
 		}
 	}
 
-	handleRequestClose = value => {
+	closeDialog = value => {
 		this.setState({ time: value, open: false }, () => console.log(this.state.time))
 	  }
 
@@ -65,6 +65,7 @@ class Timeline extends Component {
 		if(this.pressTimer) return
 		
 		this.pressTarget = d3.event.currentTarget
+		// How do we get the data from the pressTarget?
 		this.longpress = false
 		d3.select(this.pressTarget).attr('filter', 'url(#Timeline-click-filter)')
 		this.filter.transition().duration(1000).select('feMorphology').attr('radius', '5')
@@ -302,8 +303,9 @@ class Timeline extends Component {
 			>
 				<PhaseDialog
 					time={this.state.time}
+					title='Phase Dialog'
 					open={this.state.open}
-					onRequestClose={this.handleRequestClose}
+					onRequestClose={this.closeDialog}
 				/>
 			</div>
 		)

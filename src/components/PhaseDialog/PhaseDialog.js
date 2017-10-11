@@ -36,11 +36,11 @@ class PhaseDialog extends React.Component {
 }
 
   render() {
-    const { classes, onRequestClose, time, ...other } = this.props;
+    const { classes, onRequestClose, time, title, ...other } = this.props;
 
     return (
       <Dialog onRequestClose={this.handleRequestClose} {...other}>
-        <DialogTitle>Phase dialog</DialogTitle>
+        <DialogTitle>{this.props.title}</DialogTitle>
 				<form style={{display: 'flex', flexWrap: 'wrap', margin: 'auto'}}>
 					<ScheduleIcon style={{marginRight: 15}}/>
 					<TextField
