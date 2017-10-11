@@ -2,7 +2,8 @@ module.exports = {
     "env": {
         "browser": true,
         "es6": true,
-        "jest/globals": true
+        "jest/globals": true,
+        "node": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
@@ -18,7 +19,7 @@ module.exports = {
     ],
     "rules": {
         "indent": [
-            "error",
+            "warn",
             "tab"
         ],
         "linebreak-style": [
@@ -26,18 +27,20 @@ module.exports = {
             "unix"
         ],
         "quotes": [
-            "error",
+            "warn",
             "single"
         ],
         "semi": [
-            "error",
+            "warn",
             "never"
         ],
         "linebreak-style": [
             "error",
             "unix"
         ],
-        "space-before-blocks": "error",
+        "no-console": "warn",
+        "no-unused-vars": "warn",
+        "space-before-blocks": "warn",
         "react/react-in-jsx-scope": 2,
         "react/jsx-uses-vars": 2,
         "react/jsx-uses-react": 2
