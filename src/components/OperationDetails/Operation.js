@@ -1,20 +1,35 @@
 import React, { Component } from 'react'
-import List, { ListItem } from 'material-ui/List'
+import Grid, {GridItem} from 'material-ui/List'
 
 class Operation extends Component {
+	/* Something like this for getting data??
+
+	getData(operationId, dataType) {
+		return DataComponent.getOperationData(operationId, dataType)
+	}
+	getFields() {
+		return [{'Beskjed til operasjonsstue': getData("something")}, 'Medisinsk informasjon', 'Fastende']
+	}
+	*/
 
 	render() {
-		return (<div>
-			<List>
-				<ListItem>
-					<p>Hei aosdifj oiasj dfoijaoiw oiajf oiaj foialiuhaer liufh aliurh lia liah iuha fliuh awliufh liua fliuafliuh aliuh liauhf liuas fliuh awliuh liuawf liuaew fliu awliuefh liauwehfliuahw liuqhw eliuh awe</p>
-					<p> o!!!!!!!!</p>
-
-				</ListItem>
-				<ListItem> hhh </ListItem>
-				<ListItem> fff </ListItem>
-			</List>
-		</div>)
+		return (
+			<div>
+				<Grid container>
+					<Grid item>
+						<h1>Beskjed til operasjonsstue</h1>
+						<p>Actual message.. Blabal.</p>
+					</Grid>
+					<Grid item>
+						<h1>Another sample</h1>
+						<p>Asoisdjf oij iwjoij oifwej.. </p>
+					</Grid>
+					<Grid item>
+					
+					</Grid>
+					
+				</Grid>
+			</div>)
 	}
 }
 
