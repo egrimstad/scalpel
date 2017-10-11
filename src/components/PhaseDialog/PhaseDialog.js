@@ -4,6 +4,8 @@ import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
 import ScheduleIcon from 'material-ui-icons/Schedule'
 
+import './PhaseDialog.css'
+
 class PhaseDialog extends React.Component {
 	constructor(props) {
 		super(props)
@@ -56,8 +58,8 @@ class PhaseDialog extends React.Component {
 					/>
 				</form>
 				<DialogActions>
-					<Button color="primary">
-							START NEW PHASE
+					<Button color="primary" className="btn-small">
+							<p>START NEW PHASE</p>
 						</Button>
 					<Button color="primary" onClick={this.handleRequestClose}>
 							CANCEL
