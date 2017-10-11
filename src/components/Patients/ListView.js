@@ -37,7 +37,6 @@ class ListView extends React.Component {
 	}
 
 	handleChange(_, value) {
-		console.log(value)
 		this.setState({value})
 	}
 
@@ -80,7 +79,7 @@ class ListView extends React.Component {
 							</TabContainer> : <div></div>)}
 				</SwipeableViews>
 			</div>
-		);
+		)
 	}
 }
 
