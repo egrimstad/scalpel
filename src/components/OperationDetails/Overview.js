@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import List, { ListItem, ListItemText } from 'material-ui/List'
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import { GridList, GridListTile } from 'material-ui/GridList';
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import { GridList, GridListTile } from 'material-ui/GridList'
 
 
 const styles = theme => ({
@@ -26,9 +26,9 @@ class Overview extends Component {
 	}
 
 	getMainHeaders() {return ['Diagnose', 'Inngrep', 'Navn', 'Født', 'Enhet', 'Personell', 'Utstyr']}
-	getMainData() {return [this.operation["ProcedureTypeFreeText"], this.operation["DiagnoseTypeFreeText"], this.operation["PatientName"], this.operation["PatientBirthDate"], this.operation["CareUnitName"], this.operation["Crew"], 'Utstyr ..']}
+	getMainData() {return [this.operation['ProcedureTypeFreeText'], this.operation['DiagnoseTypeFreeText'], this.operation['PatientName'], this.operation['PatientBirthDate'], this.operation['CareUnitName'], this.operation['Crew'], 'Utstyr ..']}
 	getTopHeaders() {return ['Dato', 'Inn', 'Tils', 'Pri', 'ASA', 'Blod']}
-	getTopData() {return [this.operation["OperatingDate"], "Inn...", this.operation["PreVisitStatus"], this.operation["Priority"], this.operation["AsaScore"], this.operation["NumberOfBloodUnits"]]}
+	getTopData() {return [this.operation['OperatingDate'], 'Inn...', this.operation['PreVisitStatus'], this.operation['Priority'], this.operation['AsaScore'], this.operation['NumberOfBloodUnits']]}
 
 	getTopContentFormatted() {
 		return (
@@ -97,7 +97,7 @@ class Overview extends Component {
 	}
 
 	render() {
-		const classes = this.props.classes;
+		const classes = this.props.classes
 		return (<div className={classes.root}>
 			<GridList cellHeight={100} spacing={1} className={classes.gridList}>
 				{this.getTileData().map(tile => (
@@ -112,6 +112,6 @@ class Overview extends Component {
 
 Overview.propTypes = {
 	classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(Overview);
+export default withStyles(styles)(Overview)
