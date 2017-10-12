@@ -3,6 +3,11 @@ import List, { ListItem } from 'material-ui/List'
 
 class Anesthesia extends Component {
 
+	constructor(props) {
+		super(props)
+		this.operation = props.operation
+	}
+
 	render() {
 		return (<div>
 			<List>

@@ -36,15 +36,15 @@ function getTabContent(operation) {
 		},
 		{
 			name: 'Operasjon',
-			fields: <Operation/>
+			fields: <Operation operation={operation}/>
 		},
 		{
 			name: 'Anestesi',
-			fields: <Anesthesia/>
+			fields: <Anesthesia operation={operation}/>
 		},
 		{
 			name: 'Personell',
-			fields: <PhoneList/>
+			fields: <PhoneList operation={operation}/>
 		}
 
 	]}

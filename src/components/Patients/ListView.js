@@ -49,14 +49,14 @@ class ListView extends React.Component {
 		const { classes } = this.props
 		return (
 			<div className={classes.root}>
-				<AppBar position="static" color="default">
+				<AppBar position='static' color='default'>
 					<Tabs
 						value={this.state.value}
 						onChange={this.handleChange}
-						indicatorColor="primary"
-						textColor="primary"
+						indicatorColor='primary'
+						textColor='primary'
 						scrollable
-						scrollButtons="auto"
+						scrollButtons='auto'
 					>
 						{data.theaters.map((theatre, tIndex) => {
 							return <Tab label={theatre.name} key={tIndex}/>
@@ -70,12 +70,10 @@ class ListView extends React.Component {
 								<List>
 									{theatre.operations.map((operation, oIndex) =>
 										<div key={oIndex}>
-											<Link to={"/operationDetails/"+operation.id}
-												  query={{operationId: operation.id}}>
+											<Link to={'/operationDetails/'+operation.id} query={{operationId: operation.id}}>
 												<ListItem button>
-													<img src='../../../icons/pencil.png' height="20px"
-														 alt="Status icon"/>
-													<img src='../../../icons/bullet_ball_green.png' alt="Status icon"/>
+													<img src='../../../icons/pencil.png' height='20px' alt='Status icon'/>
+													<img src='../../../icons/bullet_ball_green.png' alt='Status icon'/>
 													<ListItemText primary={operation.patient}/>
 												</ListItem>
 											</Link>

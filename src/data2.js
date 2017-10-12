@@ -2,8 +2,8 @@
 const data = [{
 	"OperationId": 14867,
 	"TheaterId": 4,
-	"OperatingDate": "2017-10-02T00:00:00",
-	"ArrivalTime": null,
+	"OperatingDate": "2017-10-02T00:13:20",
+	"ArrivalTime": "2017-10-02T00:10:10",
 	"StartTime": "2017-10-02T08:00:01",
 	"IsStartTimeGenerated": true,
 	"EndTime": null,
@@ -12,14 +12,14 @@ const data = [{
 	"OperationStatus": 2,
 	"PasGroupId": 3,
 	"CareUnitName": "KB2", //Enhet
-	"Priority": null,
+	"Priority": 2,
 	"PatientName": "Opplan4, Grete", //Navn
 	"DiagnoseTypeFreeText": "Akutt appendisitt med generalisert peritonitt", //Diagnose
-	"ProcedureTypeFreeText": "", //Inngrep
+	"ProcedureTypeFreeText": "Kutt kutt appendisitt med generalisert peritonitt", //Inngrep
 	"PatientBirthDate": "1945-02-02T00:00:00",  //Born
-	"NumberOfBloodUnits": null,
-	"AsaScore": null,                 //ASA
-	"Crew": [], //Personell
+	"NumberOfBloodUnits": "A",
+	"AsaScore": 2,                 //ASA
+	"Crew": ['RGH ', 'JSJ ', 'OLP ', 'II '], //Personell må finne ut formatet
 	"OperationEvents": [{
 		"OperationEventId": 47620,
 		"OperationId": 14867,
@@ -105,7 +105,7 @@ const data = [{
 	"ScheduledStatus": 3,
 	"ScheduledStatusTime": "2017-10-02T05:36:44.64Z",
 	"IsSafeSurgery": false,
-	"AnesthesiaCodeName": null,
+	"AnesthesiaCodeName": 'RDR',
 	"LastPostponementCauseDescription": null,
 	"ProcedureTypeId": "",
 	"HospitalCode": "TR",

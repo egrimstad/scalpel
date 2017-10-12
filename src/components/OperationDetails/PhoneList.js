@@ -4,6 +4,11 @@ import IconButton from 'material-ui/IconButton'
 import Phone from 'material-ui-icons/Phone'
 
 class Staff extends Component {
+	constructor(props) {
+		super(props)
+		this.operation = props.operation
+		this.staff = this.operation['Crew']
+	}
 
 	render() {
 		return (
@@ -11,20 +16,20 @@ class Staff extends Component {
 				<List>
 					<ListItem> Hei
 						<ListItemSecondaryAction>
-							<IconButton aria-label="Call" href="tel:+4712345678">
+							<IconButton aria-label='Call' href='tel:+4712345678'>
 								<Phone />
 							</IconButton>
 						</ListItemSecondaryAction>
 					</ListItem>
 					<ListItem> hhh
 						<ListItemSecondaryAction>
-							<IconButton aria-label="Call" href="tel:+4712345678">
+							<IconButton aria-label='Call' href='tel:+4712345678'>
 								<Phone />
 							</IconButton>
 						</ListItemSecondaryAction></ListItem>
 					<ListItem> fff
 						<ListItemSecondaryAction>
-							<IconButton aria-label="Call" href="tel:+4712345678">
+							<IconButton aria-label='Call' href='tel:+4712345678'>
 								<Phone />
 							</IconButton>
 						</ListItemSecondaryAction></ListItem>

@@ -1,9 +1,42 @@
 import React, { Component } from 'react'
-import Grid, {GridItem} from 'material-ui/List'
+import Grid from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
-import List, { ListItem, ListItemText } from 'material-ui/List'
+import { ListItem, ListItemText } from 'material-ui/List'
 
 class Operation extends Component {
+
+	constructor(props) {
+		super(props)
+		this.operation = props.operation
+	}
+
+	getShortFields() {
+		return ([
+			['Fastende', 'Fra kl 14'],
+			['Knivtid', this.operation['SurgeonTime']],
+			['Kirurg', 'LSL'],
+			['1. Assistent', 'EV'],
+			['2. Assistent', 'TDR'],
+			['Leie', 'Sideleie'],
+			['Blod', this.operation['NumberOfBloodUnits']],
+			['Anest. kode', this.operation['AnesthesiaCodeName']],
+			['ASA', this.operation['AsaScore']]
+		])
+	}
+
+	getCheckboxFields() {
+		return ([
+			['Skal ikke ha anestesitilsyn', false],
+			['Tramue/Ulykke', false],
+			['Tromboseprofylakse', false],
+			['Smittefare', true],
+			['Intensivplass', false],
+			['AB-profylakse', false],
+			['Overvåking', true]
+		])
+	}
+
+
 	/* Something like this for getting data??
 
 	getData(operationId, dataType) {
@@ -27,53 +60,32 @@ class Operation extends Component {
 						<p>Asoisdjf oij iwjoij oifwej.. </p>
 					</Grid>
 					<Grid item>
-						<ListItem>
-							<ListItemText
-								primary="Fra 14:00"
-								secondary="Fastende"
-							/>
-						</ListItem>
-						<ListItem>
-							<ListItemText
-								primary="Tor"
-								secondary="Kirurg"
-							/>
-						</ListItem>
-						<ListItem>
-							<ListItemText
-								primary="17min"
-								secondary="Knivtid"
-							/>
-						</ListItem>
+						{this.getShortFields().map(item =>
+							<ListItem>
+								<ListItemText
+									primary={item[1]}
+									secondary={item[0]}
+								/>
+							</ListItem>)}
+					</Grid>
+					<Grid item>
+						{this.getCheckboxFields().map(item =>
+							<ListItem>
+								{item[0]}
+								<Checkbox
+									checked={item[1]}
+									tabIndex={-1}
+									disabled
+								/>
+							</ListItem>)}
 					</Grid>
 					<Grid item>
 						<ListItem>
-							Skal ikke ha anestesitilsyn
-							<Checkbox
-								checked="False"
-								tabIndex={-1}
-								disabled
+							<ListItemText
+								primary='-'
+								secondary='Verifisert'
 							/>
 						</ListItem>
-						<ListItem>
-							Traume/Ulykke
-							<Checkbox
-								checked="False"
-								tabIndex={-1}
-								disabled
-							/>
-						</ListItem>
-						<ListItem>
-							Smittefare
-							<Checkbox
-								checked="False"
-								tabIndex={-1}
-								disabled
-							/>
-						</ListItem>
-					</Grid>
-					<Grid item>
-						Verifisert
 					</Grid>
 					
 				</Grid>

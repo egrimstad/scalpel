@@ -17,7 +17,7 @@ const styles = theme => ({
 		width: '100%',
 		transform: 'translateZ(0)',
 	}
-});
+})
 
 class Overview extends Component {
 	constructor(props) {
@@ -28,7 +28,7 @@ class Overview extends Component {
 	getMainHeaders() {return ['Diagnose', 'Inngrep', 'Navn', 'Født', 'Enhet', 'Personell', 'Utstyr']}
 	getMainData() {return [this.operation['ProcedureTypeFreeText'], this.operation['DiagnoseTypeFreeText'], this.operation['PatientName'], this.operation['PatientBirthDate'], this.operation['CareUnitName'], this.operation['Crew'], 'Utstyr ..']}
 	getTopHeaders() {return ['Dato', 'Inn', 'Tils', 'Pri', 'ASA', 'Blod']}
-	getTopData() {return [this.operation['OperatingDate'], 'Inn...', this.operation['PreVisitStatus'], this.operation['Priority'], this.operation['AsaScore'], this.operation['NumberOfBloodUnits']]}
+	getTopData() {return [this.operation['OperatingDate'], this.operation['ArrivalTime'], this.operation['PreVisitStatus'], this.operation['Priority'], this.operation['AsaScore'], this.operation['NumberOfBloodUnits']]}
 
 	getTopContentFormatted() {
 		return (
@@ -60,8 +60,8 @@ class Overview extends Component {
 	getIconDataFormatted() {
 		return (
 			<div>
-				<img src='../../../icons/pencil.png' height="100px" alt="Status icon" />
-				<img src='../../../icons/bullet_ball_green.png' alt="Status icon" />
+				<img src='../../../icons/pencil.png' height='100px' alt='Status icon' />
+				<img src='../../../icons/bullet_ball_green.png' alt='Status icon' />
 			</div>
 		)
 	}
@@ -101,8 +101,7 @@ class Overview extends Component {
 		return (<div className={classes.root}>
 			<GridList cellHeight={100} spacing={1} className={classes.gridList}>
 				{this.getTileData().map(tile => (
-					<GridListTile key={tile.id} cols={tile.cols} rows={tile.rows}
-								  children={tile.content}>
+					<GridListTile key={tile.id} cols={tile.cols} rows={tile.rows} children={tile.content}>
 					</GridListTile>
 				))}
 			</GridList>
