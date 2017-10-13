@@ -14,25 +14,15 @@ class Staff extends Component {
 		return (
 			<div>
 				<List>
-					<ListItem> Hei
-						<ListItemSecondaryAction>
-							<IconButton aria-label='Call' href='tel:+4712345678'>
-								<Phone />
-							</IconButton>
-						</ListItemSecondaryAction>
-					</ListItem>
-					<ListItem> hhh
-						<ListItemSecondaryAction>
-							<IconButton aria-label='Call' href='tel:+4712345678'>
-								<Phone />
-							</IconButton>
-						</ListItemSecondaryAction></ListItem>
-					<ListItem> fff
-						<ListItemSecondaryAction>
-							<IconButton aria-label='Call' href='tel:+4712345678'>
-								<Phone />
-							</IconButton>
-						</ListItemSecondaryAction></ListItem>
+					{this.staff.map((person, index) =>
+						<ListItem key={index}> {person['FullName']}
+							<ListItemSecondaryAction>
+								<IconButton aria-label='Call' href={'tel:' + person['Phone']}>
+									<Phone />
+								</IconButton>
+							</ListItemSecondaryAction>
+						</ListItem>
+					)}
 				</List>
 			</div>)
 	}

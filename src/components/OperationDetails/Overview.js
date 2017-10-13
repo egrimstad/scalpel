@@ -26,7 +26,7 @@ class Overview extends Component {
 	}
 
 	getMainHeaders() {return ['Diagnose', 'Inngrep', 'Navn', 'Født', 'Enhet', 'Personell', 'Utstyr']}
-	getMainData() {return [this.operation['ProcedureTypeFreeText'], this.operation['DiagnoseTypeFreeText'], this.operation['PatientName'], this.operation['PatientBirthDate'], this.operation['CareUnitName'], this.operation['Crew'], 'Utstyr ..']}
+	getMainData() {return [this.operation['ProcedureTypeFreeText'], this.operation['DiagnoseTypeFreeText'], this.operation['PatientName'], this.operation['PatientBirthDate'], this.operation['CareUnitName'], this.operation['Crew'].map(crew => crew['Initials']), 'Utstyr ..']}
 	getTopHeaders() {return ['Dato', 'Inn', 'Tils', 'Pri', 'ASA', 'Blod']}
 	getTopData() {return [this.operation['OperatingDate'], this.operation['ArrivalTime'], this.operation['PreVisitStatus'], this.operation['Priority'], this.operation['AsaScore'], this.operation['NumberOfBloodUnits']]}
 
@@ -34,10 +34,10 @@ class Overview extends Component {
 		return (
 			<GridList cellHeight={300} spacing={1}>
 				<GridListTile cols={1} rows={1}>
-					<List> {this.getTopHeaders().map(header => <ListItem>{header}</ListItem>)}</List>
+					<List> {this.getTopHeaders().map((header, hIndex) => <ListItem key={hIndex}>{header}</ListItem>)}</List>
 				</GridListTile>
 				<GridListTile cols={1} rows={1}>
-					<List> {this.getTopData().map(data => <ListItem>{data}</ListItem>)}</List>
+					<List> {this.getTopData().map((data, dIndex) => <ListItem key={dIndex}>{data}</ListItem>)}</List>
 				</GridListTile>
 			</GridList>)
 	}
@@ -46,7 +46,7 @@ class Overview extends Component {
 		return (
 			<List>
 				{this.getMainHeaders().map((header, i) =>
-					<ListItem>
+					<ListItem key={i}>
 						<ListItemText
 							primary={this.getMainData()[i]}
 							secondary={header}

@@ -84,7 +84,7 @@ class OperationIndex extends Component {
 						scrollable
 						scrollButtons="auto"
 					>
-						{getTabContent().tabs.map((tab, tIndex) => {
+						{getTabContent(this.operation).tabs.map((tab, tIndex) => {
 							return <Tab label={tab.name} key={tIndex}/>
 						})}
 					</Tabs>

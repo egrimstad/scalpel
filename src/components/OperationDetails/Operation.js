@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Grid from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
-import { ListItem, ListItemText } from 'material-ui/List'
+import { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
 
 class Operation extends Component {
 
@@ -10,6 +10,12 @@ class Operation extends Component {
 		this.operation = props.operation
 	}
 
+	getLongFields() {
+		return ([
+			['Beskjed til operasjonsstue', this.operation['MessageFromBedWard']],
+			['Medisinsk informasjon', 'DETTE ER TEKST 1\r\nDETTE ER TELST 2\r\n']
+		])
+	}
 	getShortFields() {
 		return ([
 			['Fastende', 'Fra kl 14'],
@@ -29,7 +35,7 @@ class Operation extends Component {
 			['Skal ikke ha anestesitilsyn', false],
 			['Tramue/Ulykke', false],
 			['Tromboseprofylakse', false],
-			['Smittefare', true],
+			['Smittefare', this.operation['IsContaminationDanger']],
 			['Intensivplass', false],
 			['AB-profylakse', false],
 			['Overvåking', true]
@@ -51,17 +57,14 @@ class Operation extends Component {
 		return (
 			<div>
 				<Grid container>
+					{this.getLongFields().map((item, i) =>
+						<Grid item key={i}>
+							<h4>{item[0]}</h4>
+							<p>{item[1]}</p>
+						</Grid>)}
 					<Grid item>
-						<h1>Beskjed til operasjonsstue</h1>
-						<p>Actual message.. Blabal.</p>
-					</Grid>
-					<Grid item>
-						<h1>Medisinsk informasjon</h1>
-						<p>Asoisdjf oij iwjoij oifwej.. </p>
-					</Grid>
-					<Grid item>
-						{this.getShortFields().map(item =>
-							<ListItem>
+						{this.getShortFields().map((item,i) =>
+							<ListItem key={i}>
 								<ListItemText
 									primary={item[1]}
 									secondary={item[0]}
@@ -69,14 +72,16 @@ class Operation extends Component {
 							</ListItem>)}
 					</Grid>
 					<Grid item>
-						{this.getCheckboxFields().map(item =>
-							<ListItem>
+						{this.getCheckboxFields().map((item, i) =>
+							<ListItem key={i}>
 								{item[0]}
-								<Checkbox
-									checked={item[1]}
-									tabIndex={-1}
-									disabled
-								/>
+								<ListItemSecondaryAction>
+									<Checkbox
+										checked={item[1]}
+										tabIndex={-1}
+										disabled
+									/>
+								</ListItemSecondaryAction>
 							</ListItem>)}
 					</Grid>
 					<Grid item>
@@ -87,7 +92,6 @@ class Operation extends Component {
 							/>
 						</ListItem>
 					</Grid>
-					
 				</Grid>
 			</div>)
 	}
