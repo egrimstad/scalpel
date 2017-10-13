@@ -159,6 +159,7 @@ class Timeline extends Component {
 		const yAxis = d3.axisLeft(y)
 			.ticks(20)
 			.tickFormat(d3.timeFormat('%H:%M'))
+			
 		
 		const yLines = d3.axisLeft(y)
 			.ticks(20)
@@ -262,11 +263,10 @@ class Timeline extends Component {
 				.attr('y1', y(now))
 				.attr('x2', x(theaters.length-1)+x.bandwidth())
 				.attr('y2', y(now))
-				.attr('stroke-width', 2)
-				.attr('stroke', 'red')
+				.attr('stroke-width', 1)
+				.attr('stroke', '#EC4B3A')
 		}
 
-		
 		function yZoomed() {
 			const transform = d3.event.transform
 			const newY = transform.rescaleY(y)

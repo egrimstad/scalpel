@@ -47,9 +47,9 @@ class Header extends Component {
 
 	render() {
 		return (
-			<AppBar position="fixed">
+			<AppBar position="fixed" style={{backgroundColor: '#224C90'}}>
 				<Toolbar>
-					<IconButton onClick={this.props.onMenuButtonClick}>
+					<IconButton onClick={this.props.onMenuButtonClick} style={{color: '#fff'}}>
 						<MenuIcon />
 					</IconButton>
 					<Typography type="title" color="inherit" noWrap style={{flex:1}}>
@@ -60,6 +60,7 @@ class Header extends Component {
 						aria-owns={this.state.pickerOpen ? 'date-picker' : null}
 						aria-haspopup="true"
 						onClick={this.toggleDatePicker}
+						style={{color: '#fff'}}
 					>
 						<DateRange />
 					</IconButton>
@@ -67,6 +68,7 @@ class Header extends Component {
 						aria-owns={this.state.open ? 'more-menu' : null}
 						aria-haspopup="true"
 						onClick={this.handleClick}
+						style={{color: '#fff'}}
 					>
 						<MoreVert />
 					</IconButton>
