@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as d3 from 'd3'
 import moment from 'moment'
-import range from 'lodash/range'
 
 import './Timeline.css'
 
@@ -33,6 +32,7 @@ class Timeline extends Component {
 		this.start = this.start.bind(this)
 		this.cancel = this.cancel.bind(this)
 
+		this.createFilter = this.createFilter.bind(this)
 		this.buildTimeline = this.buildTimeline.bind(this)
 	}
 
@@ -87,8 +87,26 @@ class Timeline extends Component {
 		this.buildTimeline()
 	}
 
-	calculateX(theater, subColumn, xScale) {
-		return xScale(theater.id*THEATERPADDING + (theater.startColumn + subColumn)*(OPERATIONWIDTH + OPERATIONPADDING))
+	createFilter() {
+		this.filter = this.svg.append('defs')
+			.append('filter')
+			.attr('id', 'Timeline-click-filter')
+	
+		this.filter.append('feMorphology')  // Adds a dilation filter
+			.attr('operator', 'dilate')
+			.attr('radius', '2')
+	
+		this.filter.append('feColorMatrix')  // Adds a saturation filter
+			.attr('type', 'saturate')
+			.attr('values', '0.5')
+	}
+
+	createMask(id, width, height) {
+		this.svg.select('defs').append('clipPath')
+			.attr('id', id)
+			.append('rect')
+			.attr('width', width)
+			.attr('height', height)
 	}
 
 	buildTimeline() {
@@ -101,6 +119,9 @@ class Timeline extends Component {
 				.attr('width', '100%')
 				.attr('height', height)
 		}
+
+		this.svg.append('defs')
+		this.createFilter()
 
 		const theaters = this.props.theaters
 		const operations = this.props.operations
@@ -121,33 +142,16 @@ class Timeline extends Component {
 		const operationActualX = (theater, subColumn) => theaterX(theater) + subColumn*(OPERATIONWIDTH + OPERATIONPADDING)
 		const operationPlannedX = (theater, subColumn) => operationActualX(theater, subColumn) + OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH/2
 		const operationActualWidth = OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH
-
-		this.filter = this.svg.append('defs')
-			.append('filter')
-			.attr('id', 'Timeline-click-filter')
-		
-		this.filter.append('feMorphology')  // Adds a dilation filter
-			.attr('operator', 'dilate')
-			.attr('radius', '2')
-		
-		this.filter.append('feColorMatrix')  // Adds a saturation filter
-			.attr('type', 'saturate')
-			.attr('values', '0.5')
 		
 		let canScrollX = true
 		
 		const width = this.svg.node().getBoundingClientRect().width
 
+		this.createMask('Timeline-timelinemask', timelineWidth, timelineHeight)
+
 		if(width > timelineWidth) {
 			canScrollX = false
 		}
-
-		// x-axis zoom
-		const xZoom = d3.zoom()
-			.extent([[0, 0], [width, 0]])
-			.scaleExtent([1, 1])
-			.translateExtent([[0, 0], [timelineWidth + timelineX, 0]])
-			.on('zoom', () => xZoomed())
 		
 		// y-axis zoom
 		const yZoom = d3.zoom()
@@ -172,19 +176,21 @@ class Timeline extends Component {
 			.tickFormat('')
 			.tickSize(-timelineWidth)
 		
-		// x-axis group
-		const xGroup = this.svg.append('g')
-		// overlay
-		xGroup.append('rect')
-			.attr('width', width)
-			.attr('height', THEATERBARHEIGHT)
-			.attr('fill', 'white')
-			.attr('opacity', 1)
-		
-		// hook to zoom
+		// Create scrollbar on top if x scroll is needed
 		if(canScrollX) {
-			xGroup.call(xZoom).on('dblclick.zoom', null)
-			xGroup.attr('cursor', 'grab')
+			const xZoom = d3.zoom()
+				.extent([[0, 0], [width, 0]])
+				.scaleExtent([1, 1])
+				.translateExtent([[0, 0], [timelineWidth + timelineX, 0]])
+				.on('zoom', () => xZoomed())
+		
+			this.svg.append('rect')
+				.attr('width', width)
+				.attr('height', THEATERBARHEIGHT)
+				.attr('fill', 'white')
+				.attr('opacity', 1)
+				.attr('cursor', 'grab')
+				.call(xZoom).on('dblclick.zoom', null)
 		}
 		
 		const theaterGroup = this.svg.append('g')
@@ -213,6 +219,7 @@ class Timeline extends Component {
 		// Operations
 		const operation = this.svg.append('g')
 			.attr('transform', translate(timelineX, timelineY))
+			.attr('clip-path', 'url(#Timeline-timelinemask')
 			.selectAll('g')
 			.data(operations)
 		
