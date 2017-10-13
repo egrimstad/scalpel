@@ -218,6 +218,40 @@ const operations = [
 				name: 'knifetime',
 				start: '2017-09-20 15:45'
 			}
+		],
+	},
+	{
+		id: 7,
+		theater: 2,
+		plannedStartTime: '2017-09-20 14:00',
+		plannedEndTime: '2017-09-20 15:20',
+		patient: 'Letizia',
+		phases: [
+			{
+				name: 'preparation',
+				start: '2017-09-20 14:05',
+				end: '2017-09-20 14:20'
+			},
+			{
+				name: 'pretime',
+				start: '2017-09-20 14:20',
+				end: '2017-09-20 14:31'
+			},
+			{
+				name: 'knifetime',
+				start: '2017-09-20 14:33',
+				end: '2017-09-20 14:45'
+			},
+			{
+				name: 'posttime',
+				start: '2017-09-20 14:45',
+				end: '2017-09-20 15:05'
+			},
+			{
+				name: 'postop',
+				start: '2017-09-20 15:06',
+				end: '2017-09-20 15:30'
+			},
 		]
 	}
 ]
