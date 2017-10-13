@@ -35,7 +35,7 @@ class PhaseDialog extends React.Component {
 	}
 
 	render() {
-		const { classes, onRequestClose, time, title, ...other } = this.props
+		const { onRequestClose, time, title, ...other } = this.props
 
 		return (
 			<Dialog onRequestClose={this.handleRequestClose} {...other}>
