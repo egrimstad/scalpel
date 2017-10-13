@@ -7,6 +7,10 @@ import Typography from 'material-ui/Typography'
 import MenuIcon from 'material-ui-icons/Menu'
 import MoreMenu from '../MoreMenu/MoreMenu'
 import MoreVert from 'material-ui-icons/MoreVert'
+import DateRange from'material-ui-icons/DateRange'
+
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 class Header extends Component {
 	constructor(props) {
@@ -14,13 +18,15 @@ class Header extends Component {
 
 		this.state = {
 			open: false,
-			anchorEl: null
+			anchorEl: null,
+			pickerOpen: false
 		}
 
 		this.handleClick = this.handleClick.bind(this)
 		this.handleRequestClose = this.handleRequestClose.bind(this)
+		this.toggleDatePicker = this.toggleDatePicker.bind(this)
+		this.onSelectDate = this.onSelectDate.bind(this)
 	}
-
 
 	handleClick(event) {
 		this.setState({ open: true, anchorEl: event.currentTarget })
@@ -30,11 +36,20 @@ class Header extends Component {
 		this.setState({ open: false })
 	}
 
+	toggleDatePicker() {
+		this.setState((prevState) => ({ pickerOpen: !prevState.pickerOpen}))
+	}
+
+	onSelectDate(date) {
+		this.toggleDatePicker()
+		this.props.onSelectDate(date)
+	}
+
 	render() {
 		return (
-			<AppBar position="fixed">
+			<AppBar position="fixed" style={{backgroundColor: '#224C90'}}>
 				<Toolbar>
-					<IconButton onClick={this.props.onMenuButtonClick}>
+					<IconButton onClick={this.props.onMenuButtonClick} style={{color: '#fff'}}>
 						<MenuIcon />
 					</IconButton>
 					<Typography type="title" color="inherit" noWrap style={{flex:1}}>
@@ -42,14 +57,33 @@ class Header extends Component {
 					</Typography>
 					{this.props.headerItems}
 					<IconButton
+						aria-owns={this.state.pickerOpen ? 'date-picker' : null}
+						aria-haspopup="true"
+						onClick={this.toggleDatePicker}
+						style={{color: '#fff'}}
+					>
+						<DateRange />
+					</IconButton>
+					<IconButton
 						aria-owns={this.state.open ? 'more-menu' : null}
 						aria-haspopup="true"
 						onClick={this.handleClick}
+						style={{color: '#fff'}}
 					>
 						<MoreVert />
 					</IconButton>
 					<MoreMenu open={this.state.open} anchorEl={this.state.anchorEl} handleRequestClose={this.handleRequestClose}/>
 				</Toolbar>
+				{this.state.pickerOpen && 
+				<DatePicker
+					selected={this.props.selectedDate}
+					inline
+					withPortal
+					onClickOutside={this.toggleDatePicker}
+					onSelect={this.onSelectDate}
+					locale='nb'
+				/>
+				}
 			</AppBar>
 		)
 	}
@@ -57,7 +91,9 @@ class Header extends Component {
 
 Header.propTypes = {
 	onMenuButtonClick: PropTypes.func,
-	headerItems: PropTypes.array
+	headerItems: PropTypes.array,
+	onSelectDate: PropTypes.func,
+	selectedDate: PropTypes.object
 }
 
 export default Header

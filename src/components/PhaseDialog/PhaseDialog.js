@@ -18,27 +18,28 @@ class PhaseDialog extends React.Component {
 		this.handleEndPhaseClick = this.handleEndPhaseClick.bind(this)
 		this.handleChange = this.handleChange.bind(this)
 	}
-  handleRequestClose() {
-	this.setState({time: this.props.time})
-	this.props.onRequestClose(this.props.time);
-  };
 
-  handleEndPhaseClick() {
-	  this.props.onRequestClose(this.state.time)
-  }
+	handleRequestClose() {
+		this.setState({time: this.props.time})
+		this.props.onRequestClose(this.props.time)
+	}
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-	})
-}
+	handleEndPhaseClick() {
+		this.props.onRequestClose(this.state.time)
+	}
 
-  render() {
-    const { classes, onRequestClose, time, title, ...other } = this.props;
+	handleChange(event) {
+		this.setState({
+			time: event.target.value,
+		})
+	}
 
-    return (
-      <Dialog onRequestClose={this.handleRequestClose} {...other}>
-        <DialogTitle>{this.props.title}</DialogTitle>
+	render() {
+		const { classes, onRequestClose, time, title, ...other } = this.props
+
+		return (
+			<Dialog onRequestClose={this.handleRequestClose} {...other}>
+				<DialogTitle>{this.props.title}</DialogTitle>
 
 				<form style={{display: 'flex', flexWrap: 'wrap', margin: 'auto', marginTop: 15}}>
 					<ScheduleIcon style={{marginRight: 15, marginTop: 5}}/>
@@ -48,29 +49,29 @@ class PhaseDialog extends React.Component {
 						type="time"
 						defaultValue={this.state.time}
 						InputLabelProps={{
-						shrink: true,
+							shrink: true,
 						}}
 						inputProps={{
-						step: 300, // 5 min
+							step: 300, // 5 min
 						}}
-						onChange={this.handleChange('time')}
+						onChange={event => this.handleChange(event)}
 					/>
 				</form>
 
 				<DialogActions /*style={{overflow: 'hidden', whiteSpace: 'nowrap'}} // The style makes the buttons single line, but does not scale well*/>
 					<Button color="primary" className="btn-small" style={{marginRight: 30}}>
-							<p>START NEW PHASE</p>
-						</Button>
+						<p>START NEW PHASE</p>
+					</Button>
 					<Button color="primary" onClick={this.handleRequestClose}>
 							CANCEL
-						</Button>
+					</Button>
 					<Button color="primary" onClick={this.handleEndPhaseClick}>
 							END PHASE
-						</Button>
+					</Button>
 				</DialogActions>
-      </Dialog>
-    );
-  }
+			</Dialog>
+		)
+	}
 }
 
-export default PhaseDialog;
+export default PhaseDialog
