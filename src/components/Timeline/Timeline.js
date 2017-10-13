@@ -108,9 +108,19 @@ class Timeline extends Component {
 		const date = this.props.date
 		const now = moment('2017-09-20 15:59')
 
-		console.log(operations)
+		const timelineX = TIMEBARWIDTH
+		const timelineY = THEATERBARHEIGHT
+		const timelineWidth = (OPERATIONWIDTH + OPERATIONPADDING)*numColumns + THEATERPADDING*(theaters.length-1)
+		const timelineHeight = height - THEATERBARHEIGHT
+		
+		let xtransform = 0
 
-		let xDomain = (OPERATIONWIDTH + OPERATIONPADDING)*numColumns + THEATERPADDING*(theaters.length-1)
+		const theaterX = theater => xtransform + theater.id*THEATERPADDING + theater.startColumn*(OPERATIONWIDTH + OPERATIONPADDING)
+		const theaterWidth = theater => (OPERATIONWIDTH + OPERATIONPADDING)*theater.columns
+
+		const operationActualX = (theater, subColumn) => theaterX(theater) + subColumn*(OPERATIONWIDTH + OPERATIONPADDING)
+		const operationPlannedX = (theater, subColumn) => operationActualX(theater, subColumn) + OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH/2
+		const operationActualWidth = OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH
 
 		this.filter = this.svg.append('defs')
 			.append('filter')
@@ -128,67 +138,81 @@ class Timeline extends Component {
 		
 		const width = this.svg.node().getBoundingClientRect().width
 
-		if(width > xDomain) {
+		if(width > timelineWidth) {
 			canScrollX = false
 		}
 
 		// x-axis zoom
 		const xZoom = d3.zoom()
-			.extent([[0, 0], [(width), height]])
+			.extent([[0, 0], [width, 0]])
 			.scaleExtent([1, 1])
-			.translateExtent([[0, 0], [xDomain, 0]])
+			.translateExtent([[0, 0], [timelineWidth + timelineX, 0]])
 			.on('zoom', () => xZoomed())
-
-		// x-axis scale
-		const x = d3.scaleBand()
-			.domain(range(0, xDomain))
-			.rangeRound([0, xDomain])
-
-		// x-axis
-		const xAxis = d3.axisTop(x)
-			.tickPadding(-20)
-			.tickSizeInner(0)
-			.tickFormat('')
 		
 		// y-axis zoom
 		const yZoom = d3.zoom()
-			.extent([[0, 0], [(width), height]])
+			.extent([[0, 0], [(width), timelineHeight]])
 			.scaleExtent([1, 15])
-			.translateExtent([[0, 0], [0, height]])
+			.translateExtent([[0, 0], [0, timelineHeight]])
 			.on('zoom', () => yZoomed())
 	
 		// y-axis scale
 		const y = d3.scaleTime()
 			.domain([moment(date).startOf('day'), moment(date).endOf('day')])
-			.range([0, height-THEATERBARHEIGHT-1])
+			.range([0, timelineHeight-1])
 	
-		// y-axis
-		const yAxis = d3.axisLeft(y)
+		// y-axis labels
+		const yLabels = d3.axisLeft(y)
 			.ticks(20)
 			.tickFormat(d3.timeFormat('%H:%M'))
-			
 		
+		// y-axis lines
 		const yLines = d3.axisLeft(y)
 			.ticks(20)
 			.tickFormat('')
-			.tickSize(-width)
+			.tickSize(-timelineWidth)
 		
-		const theaterBackgrounds = this.svg.append('g')
-			.attr('transform', translate(TIMEBARWIDTH, THEATERBARHEIGHT))
-			.selectAll('rect')
+		// x-axis group
+		const xGroup = this.svg.append('g')
+		// overlay
+		xGroup.append('rect')
+			.attr('width', width)
+			.attr('height', THEATERBARHEIGHT)
+			.attr('fill', 'white')
+			.attr('opacity', 1)
+		
+		// hook to zoom
+		if(canScrollX) {
+			xGroup.call(xZoom).on('dblclick.zoom', null)
+			xGroup.attr('cursor', 'grab')
+		}
+		
+		const theaterGroup = this.svg.append('g')
+			.attr('transform', translate(timelineX, timelineY))
+			.selectAll('g')
 			.data(theaters)
 			.enter()
-			.append('rect')
-			.attr('x',theater => this.calculateX(theater, 0, x))
-			.attr('y', 0)
-			.attr('width', theater => (OPERATIONWIDTH + OPERATIONPADDING)*theater.columns)
-			.attr('height', height-THEATERBARHEIGHT)
-			.attr('fill', '#efefef')
-
+			.append('g')
+			.attr('transform', theater => translate(theaterX(theater), 0))
 		
-		// rectangles representing operations
+		// Grey background behind theater
+		theaterGroup.append('rect')
+			.attr('y', 0)
+			.attr('width', theater => theaterWidth(theater))
+			.attr('height', timelineHeight)
+			.attr('fill', '#efefef')
+		
+		// Theater name
+		theaterGroup.append('text')
+			.text(theater => theater.name)
+			.attr('text-anchor', 'middle')
+			.attr('x', theater => theaterWidth(theater)/2)
+			.attr('y', -5)
+			.attr('font-size', '10px')
+
+		// Operations
 		const operation = this.svg.append('g')
-			.attr('transform', translate(TIMEBARWIDTH, THEATERBARHEIGHT))
+			.attr('transform', translate(timelineX, timelineY))
 			.selectAll('g')
 			.data(operations)
 		
@@ -204,68 +228,46 @@ class Timeline extends Component {
 			.on('dragstart', this.cancel)
 			.on('contextmenu', () => d3.event.preventDefault())
 		
-		// Actual time spend
+		// Actual time spent
 		const phase = operationEnter
 			.selectAll('rect')
 			.data(op => op.phases)
 			.enter()
 		
 		const phaseRects = phase.append('rect')
-			.attr('x', phase => this.calculateX(phase.theater, phase.subColumn, x))
+			.attr('x', phase => operationActualX(phase.theater, phase.subColumn))
 			.attr('y', phase => y(moment(phase.start)))
-			.attr('width', OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH)
+			.attr('width', operationActualWidth)
 			.attr('height', phase => y(moment(phase.end || now)) - y(moment(phase.start)))			
 			.attr('fill', phase => phase.color)
 	
 		// Planned time
 		const plannedRects = operationEnter.append('rect')
-			.attr('x', op => this.calculateX(op.theater, op.subColumn, x) + OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH/2)
+			.attr('x', op => operationPlannedX(op.theater, op.subColumn))
 			.attr('y', op => y(moment(op.plannedStartTime)))
 			.attr('width', PLANNEDWIDTH)
 			.attr('height', op => (y(moment(op.plannedEndTime)) - y(moment(op.plannedStartTime))))
 			.attr('fill', 'white')
 			.attr('stroke-width', STROKEWIDTH)
 			.attr('stroke', 'lightgrey')
-	
-		// x-axis group
-		const xGroup = this.svg.append('g')
-			.attr('class', 'Timeline-axis Timeline-axis--x')
-		// overlay
-		xGroup.append('rect')
-			.attr('width', width)
-			.attr('height', THEATERBARHEIGHT)
-			.attr('fill', 'white')
-			.attr('opacity', 1)
-		// axis
-		xGroup
-			.call(xAxis)
-			.selectAll('text')
-			.attr('font-size', '10px')
-		
-		// hook to zoom
-		if(canScrollX) {
-			xGroup.call(xZoom).on('dblclick.zoom', null)
-			xGroup.attr('cursor', 'grab')
-		}
 		
 		// y-axis group
 		const yGroup = this.svg.append('g')
 			.attr('class', 'Timeline-axis axis--y')
-			.attr('transform', translate(TIMEBARWIDTH, THEATERBARHEIGHT))
+			.attr('transform', translate(timelineX, timelineY))
 		// overlay
 		yGroup.append('rect')
-			.attr('transform', translate(-TIMEBARWIDTH, -THEATERBARHEIGHT))
+			.attr('transform', translate(-timelineX, -timelineY))
 			.attr('width', TIMEBARWIDTH)
 			.attr('height', height)
 			.attr('fill', 'white')
-			.attr('opacity', 1)
 		
 		//axis
-		yGroup.call(yAxis)
+		yGroup.call(yLabels)
 		
 		const yLinesGroup = this.svg.append('g')
 			.attr('class', 'Timeline-axis axis--y')
-			.attr('transform', translate(TIMEBARWIDTH, THEATERBARHEIGHT))
+			.attr('transform', translate(timelineX, timelineY))
 		
 		yLinesGroup
 			.call(yLines)
@@ -278,10 +280,10 @@ class Timeline extends Component {
 		let nowLine = null
 		if(now.isSame(date, 'day')) {
 			nowLine = this.svg.append('line')
-				.attr('transform', translate(TIMEBARWIDTH, THEATERBARHEIGHT))
+				.attr('transform', translate(timelineX, timelineY))
 				.attr('x1', 0)
 				.attr('y1', y(now))
-				.attr('x2', xDomain + x(0))
+				.attr('x2', timelineWidth)
 				.attr('y2', y(now))
 				.attr('stroke-width', 1)
 				.attr('stroke', '#EC4B3A')
@@ -305,19 +307,17 @@ class Timeline extends Component {
 					.attr('y2', newY(now))
 			}
 			
-			yAxis.scale(newY)
+			yLabels.scale(newY)
 			yLines.scale(newY)
-			yGroup.call(yAxis)
+			yGroup.call(yLabels)
 			yLinesGroup.call(yLines)
 		}
 
 		const xZoomed = () => {
-			const transform = d3.event.transform
-			var newX = x.rangeRound([transform.x+TIMEBARWIDTH, transform.x + TIMEBARWIDTH + xDomain])
-			phaseRects.attr('x', phase => this.calculateX(phase.theater, phase.subColumn, newX))
-			plannedRects.attr('x', op => this.calculateX(op.theater, op.subColumn, newX) + OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH/2)
-			xAxis.scale(newX)
-			xGroup.call(xAxis)
+			xtransform = d3.event.transform.x
+			phaseRects.attr('x', phase => operationActualX(phase.theater, phase.subColumn))
+			plannedRects.attr('x', op => operationPlannedX(op.theater, op.subColumn))
+			theaterGroup.attr('transform', theater => translate(theaterX(theater), 0))
 		}
 	}
 
