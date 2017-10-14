@@ -342,8 +342,21 @@ class Timeline extends Component {
 
 Timeline.propTypes = {
 	date: PropTypes.object,
-	operations: PropTypes.array,
-	theaters: PropTypes.array,
+	theaters: PropTypes.arrayOf(PropTypes.shape({
+		name: PropTypes.string,
+		operations: PropTypes.arrayOf(PropTypes.shape({
+			phases: PropTypes.arrayOf(PropTypes.shape({
+				column: PropTypes.number,
+				start: PropTypes.object,
+				end: PropTypes.object,
+				color: PropTypes.string
+			})),
+			column: PropTypes.number
+		})),
+		startColumn: PropTypes.number,
+		columns: PropTypes.number,
+	})),
+	numColumns: PropTypes.number,
 	setHeaderItems: PropTypes.func
 }
 

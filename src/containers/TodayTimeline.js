@@ -8,6 +8,11 @@ import { startTime, endTime } from 'utils/operationUtils'
 
 import moment from 'moment'
 
+/**
+ * Selects as many non-overlapping operations as possible
+ * @param {*} operations 
+ * @returns an object containing the selected operations and the rest
+ */
 const selectNonOverlappingOperations = operations => {
 	const sorted = operations.sort((op1, op2) => endTime(op1) > endTime(op2))
 	const nonOverlapping = [sorted[0]]
@@ -26,14 +31,19 @@ const selectNonOverlappingOperations = operations => {
 	}
 }
 
-const organizeOperationsIntoColumns = operations=> {
-	let result = []
+/**
+ * Distributes operations into as many columns as needed so none overlap
+ * @param {*} operations 
+ * @returns An object that contains of the operations with added column prop and the number of columns needed
+ */
+const distributeOperations = operations => {
+	const result = []
 	let column = 0
 	let rest = operations
 	while(rest.length > 0) {
 		const overlap = selectNonOverlappingOperations(rest)
 		rest = overlap.rest
-		result = result.concat(overlap.selected.map(op => {
+		result.push(...overlap.selected.map(op => {
 			const phases = op.phases.map(phase => {
 				return {
 					name: phase.name,
@@ -51,7 +61,10 @@ const organizeOperationsIntoColumns = operations=> {
 		}))
 		column++
 	}
-	return [result, column]
+	return {
+		operations: result, 
+		columns: column
+	}
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -63,14 +76,14 @@ const mapStateToProps = (state, ownProps) => {
 	const theaters = state.theaters
 		.filter(theater => operationsToday.some(op => op.theater === theater.id))
 		.map(theater => {
-			const [theaterOperations, columns] = organizeOperationsIntoColumns(operationsToday.filter(op => op.theater === theater.id))
+			const dist = distributeOperations(operationsToday.filter(op => op.theater === theater.id))
 			
-			numColumns += columns
+			numColumns += dist.columns
 			return {
 				...theater,
-				operations: theaterOperations,
-				startColumn: numColumns - columns,
-				columns: columns
+				operations: dist.operations,
+				startColumn: numColumns - dist.columns,
+				columns: dist.columns
 			}
 		})
 	return {
@@ -81,9 +94,6 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
-const TodayTimeline = connect(
-	mapStateToProps,
-	null
-)(Timeline)
+const TodayTimeline = connect(mapStateToProps, null)(Timeline)
 
 export default TodayTimeline
