@@ -23,6 +23,11 @@ This application is made to complement the desktop program that doctors, nurses 
 - We use ESLint to lint our code. To test your code for linting errors, run `npm run lint`. Please make sure your code passes the linter before creating a pull request or merging. For a list of the rules refer to the file `.eslintrc.js`, the configuration file for ESLint.
 - For a template on creating a React component, refer to `src/App.js`.
 
+### Utilities
+We use some popular JavaScript utility libraries to simplify development. The most important are
+- Moment.js: A library for manipulating and formatting time. Docs: https://momentjs.com/docs/
+- Lodash: A library containing many useful functions for manipulating arrays, strings, objects, etc.. Docs: https://lodash.com/docs/4.17.4
+
 ## IDE
 The recommended IDE is Visual Studio Code. It has good support for JavaScript and React, and plenty of extensions.
 
