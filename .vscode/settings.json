@@ -9,5 +9,9 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "**/*.css": true
+    },
+    "path-intellisense.mappings": {
+        "utils": "${workspaceRoot}/src/utils",
+        "assets": "${workspaceRoot}/src/assets"
     }
 }
