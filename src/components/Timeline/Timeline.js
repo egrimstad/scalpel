@@ -17,6 +17,14 @@ const translate = (x, y) => {
 	return 'translate('+x+','+y+')'
 }
 
+const mouseX = (event) => {
+	if(event instanceof MouseEvent) { 
+		return event.x
+	}else if(event instanceof TouchEvent) {
+		return event.touches[0].screenX
+	}
+}
+
 class Timeline extends Component {
 	constructor(props) {
 		super(props)
@@ -88,7 +96,7 @@ class Timeline extends Component {
 	}
 
 	createFilter() {
-		this.filter = this.svg.append('defs')
+		this.filter = this.svg.select('defs')
 			.append('filter')
 			.attr('id', 'Timeline-click-filter')
 	
@@ -101,64 +109,68 @@ class Timeline extends Component {
 			.attr('values', '0.5')
 	}
 
-	createMask(id, width, height) {
+	createMask(id, x,y, width, height) {
 		this.svg.select('defs').append('clipPath')
 			.attr('id', id)
 			.append('rect')
+			.attr('x', x)
+			.attr('y', y)
 			.attr('width', width)
 			.attr('height', height)
 	}
 
 	buildTimeline() {
-		const height = window.innerHeight - this.container.offsetTop - THEATERBARHEIGHT		
+		// Declare data
+		const theaters = this.props.theaters
+		const numColumns = this.props.numColumns
+		const date = this.props.date
+		const now = moment('2017-09-20 15:59')
 
+		// Create svg if not done yet
+		const height = window.innerHeight - this.container.offsetTop - THEATERBARHEIGHT		
 		if(this.svg) {
 			this.svg.selectAll('*').remove()
 		}else {
 			this.svg = d3.select(this.container).append('svg')
 				.attr('width', '100%')
 				.attr('height', height)
+				.style('user-select', 'none')
 		}
 
-		this.svg.append('defs')
-		this.createFilter()
-
-		const theaters = this.props.theaters
-		const operations = this.props.operations
-		const numColumns = this.props.numColumns
-		const date = this.props.date
-		const now = moment('2017-09-20 15:59')
-
+		// Declare useful constants and functions
+		const width = this.svg.node().getBoundingClientRect().width
 		const timelineX = TIMEBARWIDTH
 		const timelineY = THEATERBARHEIGHT
 		const timelineWidth = (OPERATIONWIDTH + OPERATIONPADDING)*numColumns + THEATERPADDING*(theaters.length-1)
 		const timelineHeight = height - THEATERBARHEIGHT
 		
-		let xtransform = 0
+		const xScrollDomain = [0, -(timelineWidth-(width-timelineX))]
+		let xscrollstart = 0
+		let xoffset = 0
 
-		const theaterX = theater => xtransform + theater.id*THEATERPADDING + theater.startColumn*(OPERATIONWIDTH + OPERATIONPADDING)
+		const theaterX = theater => xoffset + theater.id*THEATERPADDING + theater.startColumn*(OPERATIONWIDTH + OPERATIONPADDING)
 		const theaterWidth = theater => (OPERATIONWIDTH + OPERATIONPADDING)*theater.columns
 
-		const operationActualX = (theater, subColumn) => theaterX(theater) + subColumn*(OPERATIONWIDTH + OPERATIONPADDING)
-		const operationPlannedX = (theater, subColumn) => operationActualX(theater, subColumn) + OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH/2
+		const operationActualX = column => column*(OPERATIONWIDTH + OPERATIONPADDING)
+		const operationPlannedX = column => operationActualX(column) + OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH/2
 		const operationActualWidth = OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH
 		
-		let canScrollX = true
+		const canScrollX = width <= timelineWidth
 		
-		const width = this.svg.node().getBoundingClientRect().width
-
-		this.createMask('Timeline-timelinemask', timelineWidth, timelineHeight)
-
-		if(width > timelineWidth) {
-			canScrollX = false
-		}
+		this.svg.append('defs')
+		this.createFilter()
+		this.createMask('Timeline-ymask', 0, 0, timelineWidth, timelineHeight)
 		
-		// y-axis zoom
-		const yZoom = d3.zoom()
-			.extent([[0, 0], [(width), timelineHeight]])
+		// zoom
+		const zoom = d3.zoom()
+			.extent([[0, 0], [width-timelineX, timelineHeight]])
 			.scaleExtent([1, 15])
-			.translateExtent([[0, 0], [0, timelineHeight]])
-			.on('zoom', () => yZoomed())
+			.translateExtent([[0, 0], [timelineWidth, timelineHeight]])
+			.on('start', () => startZoom())
+			.on('zoom', () => zoomed())
+		
+		this.svg.call(zoom)
+			.on('dblclick.zoom', null)
 	
 		// y-axis scale
 		const y = d3.scaleTime()
@@ -175,23 +187,6 @@ class Timeline extends Component {
 			.ticks(20)
 			.tickFormat('')
 			.tickSize(-timelineWidth)
-		
-		// Create scrollbar on top if x scroll is needed
-		if(canScrollX) {
-			const xZoom = d3.zoom()
-				.extent([[0, 0], [width, 0]])
-				.scaleExtent([1, 1])
-				.translateExtent([[0, 0], [timelineWidth + timelineX, 0]])
-				.on('zoom', () => xZoomed())
-		
-			this.svg.append('rect')
-				.attr('width', width)
-				.attr('height', THEATERBARHEIGHT)
-				.attr('fill', 'white')
-				.attr('opacity', 1)
-				.attr('cursor', 'grab')
-				.call(xZoom).on('dblclick.zoom', null)
-		}
 		
 		const theaterGroup = this.svg.append('g')
 			.attr('transform', translate(timelineX, timelineY))
@@ -217,11 +212,10 @@ class Timeline extends Component {
 			.attr('font-size', '10px')
 
 		// Operations
-		const operation = this.svg.append('g')
-			.attr('transform', translate(timelineX, timelineY))
-			.attr('clip-path', 'url(#Timeline-timelinemask')
+		const operation = theaterGroup.append('g')
+			.attr('clip-path', 'url(#Timeline-ymask')
 			.selectAll('g')
-			.data(operations)
+			.data(theater => theater.operations)
 		
 		const operationEnter = operation.enter().append('g')
 			.on('click', this.click)
@@ -242,7 +236,7 @@ class Timeline extends Component {
 			.enter()
 		
 		const phaseRects = phase.append('rect')
-			.attr('x', phase => operationActualX(phase.theater, phase.subColumn))
+			.attr('x', phase => operationActualX(phase.column))
 			.attr('y', phase => y(moment(phase.start)))
 			.attr('width', operationActualWidth)
 			.attr('height', phase => y(moment(phase.end || now)) - y(moment(phase.start)))			
@@ -250,7 +244,7 @@ class Timeline extends Component {
 	
 		// Planned time
 		const plannedRects = operationEnter.append('rect')
-			.attr('x', op => operationPlannedX(op.theater, op.subColumn))
+			.attr('x', op => operationPlannedX(op.column))
 			.attr('y', op => y(moment(op.plannedStartTime)))
 			.attr('width', PLANNEDWIDTH)
 			.attr('height', op => (y(moment(op.plannedEndTime)) - y(moment(op.plannedStartTime))))
@@ -262,6 +256,7 @@ class Timeline extends Component {
 		const yGroup = this.svg.append('g')
 			.attr('class', 'Timeline-axis axis--y')
 			.attr('transform', translate(timelineX, timelineY))
+		
 		// overlay
 		yGroup.append('rect')
 			.attr('transform', translate(-timelineX, -timelineY))
@@ -278,10 +273,6 @@ class Timeline extends Component {
 		
 		yLinesGroup
 			.call(yLines)
-		
-
-		// y-axis zoom hook directly on svg
-		this.svg.call(yZoom).on('dblclick.zoom', null).style('user-select', 'none')
 
 		// Add line representing current time
 		let nowLine = null
@@ -296,7 +287,11 @@ class Timeline extends Component {
 				.attr('stroke', '#EC4B3A')
 		}
 
-		const yZoomed = () => {
+		const startZoom = () => {
+			xscrollstart = mouseX(d3.event.sourceEvent) - xoffset
+		}
+
+		const zoomed = () => {
 			const transform = d3.event.transform
 			const newY = transform.rescaleY(y)
 
@@ -318,12 +313,19 @@ class Timeline extends Component {
 			yLines.scale(newY)
 			yGroup.call(yLabels)
 			yLinesGroup.call(yLines)
-		}
 
-		const xZoomed = () => {
-			xtransform = d3.event.transform.x
-			phaseRects.attr('x', phase => operationActualX(phase.theater, phase.subColumn))
-			plannedRects.attr('x', op => operationPlannedX(op.theater, op.subColumn))
+			if(!canScrollX || d3.event.sourceEvent.type === 'wheel') {
+				return
+			}
+
+			xoffset =  mouseX(d3.event.sourceEvent) - xscrollstart
+
+			// Limit scroll
+			xoffset = (xoffset <= xScrollDomain[0]) ? xoffset : xScrollDomain[0]
+			xoffset = (xoffset >= xScrollDomain[1]) ? xoffset : xScrollDomain[1]
+			
+			phaseRects.attr('x', phase => operationActualX(phase.column))
+			plannedRects.attr('x', op => operationPlannedX(op.column))
 			theaterGroup.attr('transform', theater => translate(theaterX(theater), 0))
 		}
 	}

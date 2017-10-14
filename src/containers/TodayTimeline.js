@@ -2,77 +2,51 @@ import Timeline from '../components/Timeline/Timeline'
 import { operationPhases } from '../data/operations'
 import { connect } from 'react-redux'
 
+import last from 'lodash/last'
+
+import { startTime, endTime } from 'utils/operationUtils'
+
 import moment from 'moment'
 
-const lastPhase = operation => {
-	return operation.phases[operation.phases.length-1]
-}
-
-const firstPhase = operation => {
-	return operation.phases[0]
-}
-
-const startTime = operation => {
-	const actualStartTime = firstPhase(operation) && firstPhase(operation).start
-
-	if(actualStartTime) {
-		return moment(Math.min(moment(operation.plannedStartTime), moment(actualStartTime)))
-	}
-	return moment(operation.plannedStartTime)
-}
-
-const endTime = operation => {
-	const actualFinishTime = lastPhase(operation) && (lastPhase(operation).end || lastPhase(operation).start)
-	if(actualFinishTime) {
-		return moment(Math.max(moment(operation.plannedEndTime), moment(actualFinishTime)))
-	}
-	return moment(operation.plannedEndTime)
-}
 const selectNonOverlappingOperations = operations => {
-	const nonOverlappingOperations = []
+	const sorted = operations.sort((op1, op2) => endTime(op1) > endTime(op2))
+	const nonOverlapping = [sorted[0]]
 	const rest = []
-	const sortedOperations = operations.sort((op1, op2) => endTime(op1) > endTime(op2))
 
-	nonOverlappingOperations.push(sortedOperations[0])
-
-	let lastOperationAdded = operations[0]
-
-	sortedOperations.slice(1).forEach(op => {
-		if(startTime(op) > endTime(lastOperationAdded)) {
-			nonOverlappingOperations.push(op)
-			lastOperationAdded = op
+	sorted.slice(1).forEach(op => {
+		if(startTime(op) > endTime(last(nonOverlapping))) {
+			nonOverlapping.push(op)
 		}else{
 			rest.push(op)
 		}
 	})
-
-	return [rest, nonOverlappingOperations]
-
+	return {
+		selected: nonOverlapping, 
+		rest: rest
+	}
 }
 
-const organizeOperationsIntoColumns = (operations, theater) => {
+const organizeOperationsIntoColumns = operations=> {
 	let result = []
 	let column = 0
 	let rest = operations
 	while(rest.length > 0) {
-		let [checkRest, selected] = selectNonOverlappingOperations(rest)
-		rest = checkRest
-		result = result.concat(selected.map(op => {
+		const overlap = selectNonOverlappingOperations(rest)
+		rest = overlap.rest
+		result = result.concat(overlap.selected.map(op => {
 			const phases = op.phases.map(phase => {
 				return {
 					name: phase.name,
 					start: moment(phase.start),
 					end: phase.end ? moment(phase.end) : null,
 					color: operationPhases[phase.name].color,
-					theater: theater,
-					subColumn: column
+					column: column
 				}
 			})
 			return {
 				...op,
 				phases: phases,
-				theater: theater,
-				subColumn: column
+				column: column
 			}
 		}))
 		column++
@@ -81,26 +55,26 @@ const organizeOperationsIntoColumns = (operations, theater) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-
 	const date = moment(state.date)
+	const operationsToday = state.operations.filter(op => moment(op.phases[0].start).isSame(date, 'day'))
 
-	const operations = state.operations.filter(op => moment(op.phases[0].start).isSame(date, 'day'))
-	const theaters = state.theaters.filter(theater => operations.some(op => op.theater === theater.id))
-
-	let transformedOperations = []
 	let numColumns = 0
 
-	theaters.forEach(theater => {
-		const opsInTheater = operations.filter(op => op.theater === theater.id)
-		let [ops, cols] = organizeOperationsIntoColumns(opsInTheater, theater)
-		transformedOperations = transformedOperations.concat(ops)
-		theater.startColumn = numColumns
-		theater.columns = cols
-		numColumns += cols
-	})
+	const theaters = state.theaters
+		.filter(theater => operationsToday.some(op => op.theater === theater.id))
+		.map(theater => {
+			const [theaterOperations, columns] = organizeOperationsIntoColumns(operationsToday.filter(op => op.theater === theater.id))
+			
+			numColumns += columns
+			return {
+				...theater,
+				operations: theaterOperations,
+				startColumn: numColumns - columns,
+				columns: columns
+			}
+		})
 	return {
 		date: date,
-		operations: transformedOperations,
 		theaters: theaters,
 		numColumns: numColumns,
 		...ownProps

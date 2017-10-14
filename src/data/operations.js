@@ -172,7 +172,7 @@ const operations = [
 		phases: [
 			{
 				name: 'preparation',
-				start: '2017-09-20 10:43',
+				start: '2017-09-20 10:05',
 				end: '2017-09-20 10:50'
 			},
 			{
@@ -222,7 +222,7 @@ const operations = [
 	},
 	{
 		id: 7,
-		theater: 2,
+		theater: 3,
 		plannedStartTime: '2017-09-20 14:00',
 		plannedEndTime: '2017-09-20 15:20',
 		patient: 'Letizia',
@@ -251,6 +251,40 @@ const operations = [
 				name: 'postop',
 				start: '2017-09-20 15:06',
 				end: '2017-09-20 15:30'
+			},
+		]
+	},
+	{
+		id: 8,
+		theater: 4,
+		plannedStartTime: '2017-09-20 13:00',
+		plannedEndTime: '2017-09-20 13:58',
+		patient: 'Tor',
+		phases: [
+			{
+				name: 'preparation',
+				start: '2017-09-20 13:07',
+				end: '2017-09-20 13:20'
+			},
+			{
+				name: 'pretime',
+				start: '2017-09-20 13:20',
+				end: '2017-09-20 13:46'
+			},
+			{
+				name: 'knifetime',
+				start: '2017-09-20 13:48',
+				end: '2017-09-20 14:11'
+			},
+			{
+				name: 'posttime',
+				start: '2017-09-20 14:15',
+				end: '2017-09-20 14:31'
+			},
+			{
+				name: 'postop',
+				start: '2017-09-20 14:34',
+				end: '2017-09-20 14:47'
 			},
 		]
 	}
