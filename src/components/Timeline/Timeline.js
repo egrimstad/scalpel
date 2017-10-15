@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as d3 from 'd3'
 import moment from 'moment'
+import isEmpty from 'lodash/isEmpty'
 
 import './Timeline.css'
 
 const OPERATIONWIDTH = 64
-const PLANNEDWIDTH = 8
+const PLANNEDWIDTH = 16
 const STROKEWIDTH = 2
 const THEATERPADDING = 16
 const OPERATIONPADDING = 0
@@ -137,6 +138,13 @@ class Timeline extends Component {
 				.style('user-select', 'none')
 		}
 
+		if(isEmpty(theaters)) {
+			this.svg.append('text')
+				.attr('transform', translate(TIMEBARWIDTH, THEATERBARHEIGHT))
+				.text('Ingen operasjoner i dag!')
+			return
+		}
+
 		// Declare useful constants and functions
 		const width = this.svg.node().getBoundingClientRect().width
 		const timelineX = TIMEBARWIDTH
@@ -164,7 +172,7 @@ class Timeline extends Component {
 		// zoom
 		const zoom = d3.zoom()
 			.extent([[0, 0], [width-timelineX, timelineHeight]])
-			.scaleExtent([1, 15])
+			.scaleExtent([1, 20])
 			.translateExtent([[0, 0], [timelineWidth, timelineHeight]])
 			.on('start', () => startZoom())
 			.on('zoom', () => zoomed())
@@ -205,11 +213,10 @@ class Timeline extends Component {
 		
 		// Theater name
 		theaterGroup.append('text')
-			.text(theater => theater.name)
-			.attr('text-anchor', 'middle')
+			.text(theater => theater.name.toUpperCase())
+			.attr('class', 'Timeline-theater-name')
 			.attr('x', theater => theaterWidth(theater)/2)
 			.attr('y', -5)
-			.attr('font-size', '10px')
 
 		// Operations
 		const operation = theaterGroup.append('g')
@@ -254,7 +261,7 @@ class Timeline extends Component {
 		
 		// y-axis group
 		const yGroup = this.svg.append('g')
-			.attr('class', 'Timeline-axis axis--y')
+			.attr('class', 'Timeline-axis')
 			.attr('transform', translate(timelineX, timelineY))
 		
 		// overlay
@@ -268,7 +275,7 @@ class Timeline extends Component {
 		yGroup.call(yLabels)
 		
 		const yLinesGroup = this.svg.append('g')
-			.attr('class', 'Timeline-axis axis--y')
+			.attr('class', 'Timeline-axis')
 			.attr('transform', translate(timelineX, timelineY))
 		
 		yLinesGroup
@@ -283,8 +290,8 @@ class Timeline extends Component {
 				.attr('y1', y(now))
 				.attr('x2', timelineWidth)
 				.attr('y2', y(now))
-				.attr('stroke-width', 1)
-				.attr('stroke', '#EC4B3A')
+				.attr('class', 'Timeline-now-line')
+				.attr('clip-path', 'url(#Timeline-ymask)')
 		}
 
 		const startZoom = () => {
@@ -333,7 +340,6 @@ class Timeline extends Component {
 	render() {
 		return (
 			<div
-				className="Timeline-container"
 				ref = {element => this.container = element}
 			/>
 		)

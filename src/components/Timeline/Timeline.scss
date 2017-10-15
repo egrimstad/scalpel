@@ -1,16 +1,24 @@
-.Timeline-axis path {
-	opacity: 0.1;
+.Timeline-theater-name {
+	font-size: 10px;
+	fill: rgb(75, 75, 75);
+	font-weight: bold;
+	text-anchor: middle;
 }
 
-.Timeline-axis--y path {
-	opacity: 0;
+.Timeline-now-line {
+	stroke-width: 1;
+	stroke: #EC4B3A;
 }
-  
+
 .Timeline-axis line {
 	stroke-opacity: 0.1;
 	shape-rendering: crispEdges;
 }
 
-.Timeline-operation-selected * {
-	fill-opacity: 0.5;
+.Timeline-axis path {
+	opacity: 0.1;
+}
+
+.Timeline-axis text {
+	fill: rgb(75, 75, 75);
 }
