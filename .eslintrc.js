@@ -23,7 +23,7 @@ module.exports = {
             "tab"
         ],
         "linebreak-style": [
-            "error",
+            "warn",
             "unix"
         ],
         "quotes": [
@@ -33,10 +33,6 @@ module.exports = {
         "semi": [
             "warn",
             "never"
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
         ],
         "no-console": "warn",
         "no-unused-vars": "warn",
