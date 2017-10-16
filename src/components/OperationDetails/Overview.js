@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import List, { ListItem, ListItemText } from 'material-ui/List'
+import List, { ListItem, ListItemText, ListItemSecondaryAction} from 'material-ui/List'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { GridList, GridListTile } from 'material-ui/GridList'
@@ -19,8 +19,6 @@ const mainFields = ([
 	['Navn', 'patientName'],
 	['Født', 'patientBirthDate'],
 	['Enhet', 'careUnitName'],
-	['Personell', 'cre'],
-	['Utstyr', 'equipment']
 ])
 
 const styles = theme => ({
@@ -45,14 +43,12 @@ class Overview extends Component {
 
 	getTopContentFormatted() {
 		return (
-			<GridList cellHeight={300} spacing={1}>
-				<GridListTile cols={1} rows={1}>
-					<List> {topFields.map((tuple, hIndex) => <ListItem key={hIndex}>{tuple[0]}</ListItem>)}</List>
-				</GridListTile>
-				<GridListTile cols={1} rows={1}>
-					<List> {topFields.map((tuple, dIndex) => <ListItem key={dIndex}>{this.operation[tuple[1]]}</ListItem>)}</List>
-				</GridListTile>
-			</GridList>)
+			<List> {topFields.map((tuple, hIndex) =>
+				<ListItem key={hIndex}>{tuple[0]}
+					<ListItemSecondaryAction>{this.operation[tuple[1]]}</ListItemSecondaryAction>
+				</ListItem>)}
+			</List>
+		)
 	}
 
 	getMainContentFormatted() {
@@ -66,6 +62,18 @@ class Overview extends Component {
 						/>
 					</ListItem>
 				)}
+				<ListItem>
+					<ListItemText
+						primary={this.operation['crew'].map(crew => crew['initials'] + ', ')}
+						secondary='Personell'
+					/>
+				</ListItem>
+				<ListItem>
+					<ListItemText
+						primary={this.operation['equipment'].map(equip => equip + ', ')}
+						secondary='Utstyr'
+					/>
+				</ListItem>
 			</List>
 		)
 	}
@@ -114,8 +122,7 @@ class Overview extends Component {
 		return (<div className={classes.root}>
 			<GridList cellHeight={100} spacing={1} className={classes.gridList}>
 				{this.getTileData().map(tile => (
-					<GridListTile key={tile.id} cols={tile.cols} rows={tile.rows} children={tile.content}>
-					</GridListTile>
+					<GridListTile key={tile.id} cols={tile.cols} rows={tile.rows} children={tile.content}/>
 				))}
 			</GridList>
 		</div>)
