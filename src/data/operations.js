@@ -340,7 +340,7 @@ const operations = [
 		phases: [
 			{
 				name: 'preparation',
-				start: '2017-09-20 10:43',
+				start: '2017-09-20 10:05',
 				end: '2017-09-20 10:50'
 			},
 			{
@@ -428,6 +428,158 @@ const operations = [
 				name: 'knifetime',
 				start: '2017-09-20 15:45'
 			}
+		],
+		crew: [
+			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
+			{initials: 'JSJ', fullName: 'Jenny Stange Johansen', phone: '+4712345678', position: 'assistant1'},
+			{initials: 'OPH', fullName: 'Olav Per Høyset', phone: '+4712345678', position: 'assistant2'}],
+		surgeon: 'Roger Gran Hansen',
+		assistant1: 'Jenny Stange Johansen',
+		assistant2: 'Olav Per Høyset',
+		careUnitName: 'KB2',
+		operatingDate: '2017-10-02T00:13:20',
+		arrivalTime: '2017-10-02T00:10:10',
+		surgeonTime: 15,
+		patientBirthDate: '1945-02-02T00:00:00',
+		bloodType: 'AA',
+		asa: 2,
+		diagnoseTypeFreeText: 'Akutt appendisitt med generalisert peritonitt',
+		procedureTypeFreeText: 'Kutt kutt appendisitt med generalisert peritonitt',
+		equipment: ['Skalpell', 'Hansker', 'Frakk'],
+		tils: 'T',
+		priority: 2,
+		messageFromBedWard: 'DETTE ER TEKST 1\r\nDETTE ER TELST 2\r\n',
+		medicalInformation: 'DETTE ER TEKST 1\r\nDETTE ER TELST 2\r\n',
+		fasting: 'fra 14',
+		position: 'sideleie',
+		anesthesiaCode: 1234,
+		noAnesthesia: false,
+		trauma: false,
+		thrombosisProphylaxis: true,
+		isContaminationDanger: true,
+		intensiveRoom: false,
+		abProphylaxis: false,
+		surveillance: true,
+		anesthesiaInformation: 'Ingen anestesi før kl 16',
+		anesthesiaCodeComment: 'Anestesi etter kl 16',
+		premedication: 'Paracet',
+		propolDate: '1945-02-02T00:00:00',
+		isScreeningCompleted: false,
+		needsEpiduralAnesthetic: true,
+		needsArterialCatheter: false,
+		needsCentralVenousCatheter: true,
+		height: 179,
+		weight: 60,
+		otherInformation: 'Ingen anestesi før kl 16'
+	},
+	{
+		id: 7,
+		theater: 3,
+		plannedStartTime: '2017-09-20 14:00',
+		plannedEndTime: '2017-09-20 15:20',
+		patient: 'Letizia',
+		phases: [
+			{
+				name: 'preparation',
+				start: '2017-09-20 14:05',
+				end: '2017-09-20 14:20'
+			},
+			{
+				name: 'pretime',
+				start: '2017-09-20 14:20',
+				end: '2017-09-20 14:31'
+			},
+			{
+				name: 'knifetime',
+				start: '2017-09-20 14:33',
+				end: '2017-09-20 14:45'
+			},
+			{
+				name: 'posttime',
+				start: '2017-09-20 14:45',
+				end: '2017-09-20 15:05'
+			},
+			{
+				name: 'postop',
+				start: '2017-09-20 15:06',
+				end: '2017-09-20 15:30'
+			},
+		],
+		crew: [
+			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
+			{initials: 'JSJ', fullName: 'Jenny Stange Johansen', phone: '+4712345678', position: 'assistant1'},
+			{initials: 'OPH', fullName: 'Olav Per Høyset', phone: '+4712345678', position: 'assistant2'}],
+		surgeon: 'Roger Gran Hansen',
+		assistant1: 'Jenny Stange Johansen',
+		assistant2: 'Olav Per Høyset',
+		careUnitName: 'KB2',
+		operatingDate: '2017-10-02T00:13:20',
+		arrivalTime: '2017-10-02T00:10:10',
+		surgeonTime: 15,
+		patientBirthDate: '1945-02-02T00:00:00',
+		bloodType: 'AA',
+		asa: 2,
+		diagnoseTypeFreeText: 'Akutt appendisitt med generalisert peritonitt',
+		procedureTypeFreeText: 'Kutt kutt appendisitt med generalisert peritonitt',
+		equipment: ['Skalpell', 'Hansker', 'Frakk'],
+		tils: 'T',
+		priority: 2,
+		messageFromBedWard: 'DETTE ER TEKST 1\r\nDETTE ER TELST 2\r\n',
+		medicalInformation: 'DETTE ER TEKST 1\r\nDETTE ER TELST 2\r\n',
+		fasting: 'fra 14',
+		position: 'sideleie',
+		anesthesiaCode: 1234,
+		noAnesthesia: false,
+		trauma: false,
+		thrombosisProphylaxis: true,
+		isContaminationDanger: true,
+		intensiveRoom: false,
+		abProphylaxis: false,
+		surveillance: true,
+		anesthesiaInformation: 'Ingen anestesi før kl 16',
+		anesthesiaCodeComment: 'Anestesi etter kl 16',
+		premedication: 'Paracet',
+		propolDate: '1945-02-02T00:00:00',
+		isScreeningCompleted: false,
+		needsEpiduralAnesthetic: true,
+		needsArterialCatheter: false,
+		needsCentralVenousCatheter: true,
+		height: 179,
+		weight: 60,
+		otherInformation: 'Ingen anestesi før kl 16'
+	},
+	{
+		id: 8,
+		theater: 4,
+		plannedStartTime: '2017-09-20 13:00',
+		plannedEndTime: '2017-09-20 13:58',
+		patient: 'Tor',
+		phases: [
+			{
+				name: 'preparation',
+				start: '2017-09-20 13:07',
+				end: '2017-09-20 13:20'
+			},
+			{
+				name: 'pretime',
+				start: '2017-09-20 13:20',
+				end: '2017-09-20 13:46'
+			},
+			{
+				name: 'knifetime',
+				start: '2017-09-20 13:48',
+				end: '2017-09-20 14:11'
+			},
+			{
+				name: 'posttime',
+				start: '2017-09-20 14:15',
+				end: '2017-09-20 14:31'
+			},
+			{
+				name: 'postop',
+				start: '2017-09-20 14:34',
+				end: '2017-09-20 14:47'
+			},
 		],
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
