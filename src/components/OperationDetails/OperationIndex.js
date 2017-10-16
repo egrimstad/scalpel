@@ -8,7 +8,6 @@ import PhoneList from './PhoneList'
 import Overview from './Overview'
 import Operation from './Operation'
 import Anesthesia from './Anesthesia'
-import * as data from '../../data2'
 
 function TabContainer(props) {
 	return <div style={{ padding: 20 }}>{props.children}</div>
@@ -29,36 +28,36 @@ const styles = theme => ({
 
 function getTabContent(operation) {
 
-	return {tabs: [
-		{
-			name: 'Oversikt',
-			fields: <Overview operation={operation}/>
-		},
-		{
-			name: 'Operasjon',
-			fields: <Operation operation={operation}/>
-		},
-		{
-			name: 'Anestesi',
-			fields: <Anesthesia operation={operation}/>
-		},
-		{
-			name: 'Personell',
-			fields: <PhoneList operation={operation}/>
-		}
+	return {
+		tabs: [
+			{
+				name: 'Oversikt',
+				fields: <Overview operation={operation}/>
+			},
+			{
+				name: 'Operasjon',
+				fields: <Operation operation={operation}/>
+			},
+			{
+				name: 'Anestesi',
+				fields: <Anesthesia operation={operation}/>
+			},
+			{
+				name: 'Personell',
+				fields: <PhoneList operation={operation}/>
+			}
 
-	]}
+		]
+	}
 }
 
 class OperationIndex extends Component {
 	constructor(props) {
 		super(props)
-		this.operationId = props.match.params.operationId
-		this.operation = data.getOperationById(14867)
+		this.operation = props.operation
 		this.state = {
 			value: 0
 		}
-
 		this.handleChange = this.handleChange.bind(this)
 		this.handleChangeIndex = this.handleChangeIndex.bind(this)
 	}
@@ -96,7 +95,7 @@ class OperationIndex extends Component {
 								<div>
 									{tab.fields}
 								</div>
-							</TabContainer>:<div key={tIndex}></div>)}
+							</TabContainer> : <div key={tIndex}></div>)}
 				</SwipeableViews>
 			</div>
 		)

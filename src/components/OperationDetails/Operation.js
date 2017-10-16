@@ -3,6 +3,33 @@ import Grid from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
 import { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
 
+const shortFields = ([
+	['Fastende', 'fasting'],
+	['Knivtid', 'surgeonTime'],
+	['Kirurg', 'surgeon'],
+	['1. Assistent', 'assistant1'],
+	['2. Assistent', 'assistant2'],
+	['Leie', 'position'],
+	['Blod', 'bloodType'],
+	['Anest. kode', 'anesthesiaCode'],
+	['ASA', 'asa']
+])
+
+const longFields = ([
+	['Beskjed til operasjonsstue', 'messageFromBedWard'],
+	['Medisinsk informasjon', 'medicalInformation']
+])
+
+const checkboxFields = ([
+	['Skal ikke ha anestesitilsyn', 'noAnesthesia'],
+	['Tramue/Ulykke', 'trauma'],
+	['Tromboseprofylakse', 'thrombosisProphylaxis'],
+	['Smittefare', 'isContaminationDanger'],
+	['Intensivplass', 'intensiveRoom'],
+	['AB-profylakse', 'abProphylaxis'],
+	['Overvåking', 'surveillance']
+])
+
 class Operation extends Component {
 
 	constructor(props) {
@@ -10,74 +37,31 @@ class Operation extends Component {
 		this.operation = props.operation
 	}
 
-	getLongFields() {
-		return ([
-			['Beskjed til operasjonsstue', this.operation['MessageFromBedWard']],
-			['Medisinsk informasjon', 'DETTE ER TEKST 1\r\nDETTE ER TELST 2\r\n']
-		])
-	}
-	getShortFields() {
-		return ([
-			['Fastende', 'Fra kl 14'],
-			['Knivtid', this.operation['SurgeonTime']],
-			['Kirurg', 'LSL'],
-			['1. Assistent', 'EV'],
-			['2. Assistent', 'TDR'],
-			['Leie', 'Sideleie'],
-			['Blod', this.operation['NumberOfBloodUnits']],
-			['Anest. kode', this.operation['AnesthesiaCodeName']],
-			['ASA', this.operation['AsaScore']]
-		])
-	}
-
-	getCheckboxFields() {
-		return ([
-			['Skal ikke ha anestesitilsyn', false],
-			['Tramue/Ulykke', false],
-			['Tromboseprofylakse', false],
-			['Smittefare', this.operation['IsContaminationDanger']],
-			['Intensivplass', false],
-			['AB-profylakse', false],
-			['Overvåking', true]
-		])
-	}
-
-
-	/* Something like this for getting data??
-
-	getData(operationId, dataType) {
-		return DataComponent.getOperationData(operationId, dataType)
-	}
-	getFields() {
-		return [{'Beskjed til operasjonsstue': getData("something")}, 'Medisinsk informasjon', 'Fastende']
-	}
-	*/
-
 	render() {
 		return (
 			<div>
 				<Grid container>
-					{this.getLongFields().map((item, i) =>
+					{longFields.map((item, i) =>
 						<Grid item key={i}>
 							<h4>{item[0]}</h4>
-							<p>{item[1]}</p>
+							<p>{this.operation[item[1]]}</p>
 						</Grid>)}
 					<Grid item>
-						{this.getShortFields().map((item,i) =>
+						{shortFields.map((item,i) =>
 							<ListItem key={i}>
 								<ListItemText
-									primary={item[1]}
+									primary={this.operation[item[1]]}
 									secondary={item[0]}
 								/>
 							</ListItem>)}
 					</Grid>
 					<Grid item>
-						{this.getCheckboxFields().map((item, i) =>
+						{checkboxFields.map((item, i) =>
 							<ListItem key={i}>
 								{item[0]}
 								<ListItemSecondaryAction>
 									<Checkbox
-										checked={item[1]}
+										checked={this.operation[item[1]]}
 										tabIndex={-1}
 										disabled
 									/>

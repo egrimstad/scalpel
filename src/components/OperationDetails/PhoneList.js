@@ -7,17 +7,16 @@ class Staff extends Component {
 	constructor(props) {
 		super(props)
 		this.operation = props.operation
-		this.staff = this.operation['Crew']
 	}
 
 	render() {
 		return (
 			<div>
 				<List>
-					{this.staff.map((person, index) =>
-						<ListItem key={index}> {person['FullName']}
+					{this.operation['crew'].map((person, index) =>
+						<ListItem key={index}> {person['fullName']}
 							<ListItemSecondaryAction>
-								<IconButton aria-label='Call' href={'tel:' + person['Phone']}>
+								<IconButton aria-label='Call' href={'tel:' + person['phone']}>
 									<Phone />
 								</IconButton>
 							</ListItemSecondaryAction>

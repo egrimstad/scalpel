@@ -8,7 +8,7 @@ import Header from './containers/Header'
 import MenuDrawer from './components/MenuDrawer/MenuDrawer'
 import TodayTimeline from './containers/TodayTimeline'
 import ListView from './components/Patients/ListView'
-import OperationIndex from './components/OperationDetails/OperationIndex'
+import OperationIndex from './containers/OperationIndex'
 
 class App extends Component {
 	constructor(props) {

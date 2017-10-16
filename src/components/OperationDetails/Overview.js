@@ -4,6 +4,24 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { GridList, GridListTile } from 'material-ui/GridList'
 
+const topFields = ([
+	['Dato', 'operatingDate'],
+	['Inn', 'arrivalTime'],
+	['Tils', 'tils'],
+	['Pri', 'priority'],
+	['ASA', 'asa'],
+	['Blod', 'bloodType']
+])
+
+const mainFields = ([
+	['Diagnose', 'procedureTypeFreeText'],
+	['Inngrep', 'diagnoseTypeFreeText'],
+	['Navn', 'patientName'],
+	['Født', 'patientBirthDate'],
+	['Enhet', 'careUnitName'],
+	['Personell', 'cre'],
+	['Utstyr', 'equipment']
+])
 
 const styles = theme => ({
 	root: {
@@ -25,19 +43,14 @@ class Overview extends Component {
 		this.operation = props.operation
 	}
 
-	getMainHeaders() {return ['Diagnose', 'Inngrep', 'Navn', 'Født', 'Enhet', 'Personell', 'Utstyr']}
-	getMainData() {return [this.operation['ProcedureTypeFreeText'], this.operation['DiagnoseTypeFreeText'], this.operation['PatientName'], this.operation['PatientBirthDate'], this.operation['CareUnitName'], this.operation['Crew'].map(crew => crew['Initials']), 'Utstyr ..']}
-	getTopHeaders() {return ['Dato', 'Inn', 'Tils', 'Pri', 'ASA', 'Blod']}
-	getTopData() {return [this.operation['OperatingDate'], this.operation['ArrivalTime'], this.operation['PreVisitStatus'], this.operation['Priority'], this.operation['AsaScore'], this.operation['NumberOfBloodUnits']]}
-
 	getTopContentFormatted() {
 		return (
 			<GridList cellHeight={300} spacing={1}>
 				<GridListTile cols={1} rows={1}>
-					<List> {this.getTopHeaders().map((header, hIndex) => <ListItem key={hIndex}>{header}</ListItem>)}</List>
+					<List> {topFields.map((tuple, hIndex) => <ListItem key={hIndex}>{tuple[0]}</ListItem>)}</List>
 				</GridListTile>
 				<GridListTile cols={1} rows={1}>
-					<List> {this.getTopData().map((data, dIndex) => <ListItem key={dIndex}>{data}</ListItem>)}</List>
+					<List> {topFields.map((tuple, dIndex) => <ListItem key={dIndex}>{this.operation[tuple[1]]}</ListItem>)}</List>
 				</GridListTile>
 			</GridList>)
 	}
@@ -45,11 +58,11 @@ class Overview extends Component {
 	getMainContentFormatted() {
 		return (
 			<List>
-				{this.getMainHeaders().map((header, i) =>
+				{mainFields.map((tuple, i) =>
 					<ListItem key={i}>
 						<ListItemText
-							primary={this.getMainData()[i]}
-							secondary={header}
+							primary={this.operation[tuple[1]]}
+							secondary={tuple[0]}
 						/>
 					</ListItem>
 				)}
