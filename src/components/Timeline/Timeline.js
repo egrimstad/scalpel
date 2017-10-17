@@ -45,7 +45,7 @@ class Timeline extends Component {
 		this.buildTimeline = this.buildTimeline.bind(this)
 	}
 
-	click(operation) {
+	click() {
 		if(this.pressTimer) {
 			clearTimeout(this.pressTimer)
 			this.pressTimer = null
@@ -60,7 +60,7 @@ class Timeline extends Component {
 		
 	}
 
-	start(operation) {
+	start() {
 		if(this.pressTimer) return
 		
 		this.pressTarget = d3.event.currentTarget

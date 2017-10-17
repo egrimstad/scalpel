@@ -3,6 +3,7 @@ import List, { ListItem, ListItemText, ListItemSecondaryAction} from 'material-u
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { GridList, GridListTile } from 'material-ui/GridList'
+import './OperationDetails.css'
 
 const topFields = ([
 	['Dato', 'operatingDate'],
@@ -81,7 +82,7 @@ class Overview extends Component {
 	getIconDataFormatted() {
 		return (
 			<div>
-				<img src='../../../icons/pencil.png' height='100px' alt='Status icon' />
+				<img src='../../../icons/pencil.png' style={{width:'-webkit-fill-available'}} alt='Status icon'/>
 				<img src='../../../icons/bullet_ball_green.png' alt='Status icon' />
 			</div>
 		)

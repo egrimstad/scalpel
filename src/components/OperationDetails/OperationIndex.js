@@ -8,6 +8,7 @@ import PhoneList from './PhoneList'
 import Overview from './Overview'
 import Operation from './Operation'
 import Anesthesia from './Anesthesia'
+import './OperationDetails.css'
 
 function TabContainer(props) {
 	return <div style={{ padding: 20 }}>{props.children}</div>
@@ -75,14 +76,12 @@ class OperationIndex extends Component {
 		return (
 			<div className={classes.root}>
 				<AppBar position="static" color="default">
-					<Tabs
-						value={this.state.value}
+					<Tabs value={this.state.value}
 						onChange={this.handleChange}
 						indicatorColor="primary"
 						textColor="primary"
 						scrollable
-						scrollButtons="auto"
-					>
+						scrollButtons="auto">
 						{getTabContent(this.operation).tabs.map((tab, tIndex) => {
 							return <Tab label={tab.name} key={tIndex}/>
 						})}

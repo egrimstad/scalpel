@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Grid from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
 import { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
+import './OperationDetails.css'
 
 const fields1 = ([
 	['Anest.kode på program', 'anesthesiaCode'],
