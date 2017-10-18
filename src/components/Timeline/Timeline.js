@@ -8,7 +8,7 @@ import './Timeline.css'
 
 const OPERATIONWIDTH = 64
 const PLANNEDWIDTH = 16
-const STROKEWIDTH = 2
+const STROKEWIDTH = 1
 const THEATERPADDING = 16
 const OPERATIONPADDING = 0
 const THEATERBARHEIGHT = 30
@@ -236,8 +236,11 @@ class Timeline extends Component {
 			.on('dragstart', this.cancel)
 			.on('contextmenu', () => d3.event.preventDefault())
 		
+		const actualPhases = operationEnter.append('g')
+		const plannedPhases = operationEnter.append('g')
+		
 		// Actual time spent
-		const phase = operationEnter
+		const phase = actualPhases
 			.selectAll('rect')
 			.data(op => op.phases)
 			.enter()
@@ -248,17 +251,21 @@ class Timeline extends Component {
 			.attr('width', operationActualWidth)
 			.attr('height', phase => y(moment(phase.end || now)) - y(moment(phase.start)))			
 			.attr('fill', phase => phase.color)
-	
-		// Planned time
-		const plannedRects = operationEnter.append('rect')
-			.attr('x', op => operationPlannedX(op.column))
-			.attr('y', op => y(moment(op.plannedStartTime)))
-			.attr('width', PLANNEDWIDTH)
-			.attr('height', op => (y(moment(op.plannedEndTime)) - y(moment(op.plannedStartTime))))
-			.attr('fill', 'white')
-			.attr('stroke-width', STROKEWIDTH)
-			.attr('stroke', 'lightgrey')
 		
+		const plannedPhase = plannedPhases
+			.selectAll('rect')
+			.data(op => op.plannedPhases)
+			.enter()
+
+		const plannedRects = plannedPhase.append('rect')
+			.attr('x', plannedPhase => operationPlannedX(plannedPhase.column))
+			.attr('y', plannedPhase => y(moment(plannedPhase.start)))
+			.attr('width', PLANNEDWIDTH)
+			.attr('height', plannedPhase => y(moment(plannedPhase.end)) - y(moment(plannedPhase.start)))			
+			.attr('fill', plannedPhase => plannedPhase.color)
+			.attr('stroke-width', STROKEWIDTH)
+			.attr('stroke', 'gray')
+
 		// y-axis group
 		const yGroup = this.svg.append('g')
 			.attr('class', 'Timeline-axis')
@@ -307,8 +314,8 @@ class Timeline extends Component {
 				.attr('height', phase => newY(moment(phase.end || now)) - newY(moment(phase.start)))
 			
 			plannedRects
-				.attr('y', op => newY(moment(op.plannedStartTime)))
-				.attr('height', op => (newY(moment(op.plannedEndTime)) - newY(moment(op.plannedStartTime))))
+				.attr('y', phase => newY(moment(phase.start)))
+				.attr('height', phase => (newY(moment(phase.end)) - newY(moment(phase.start))))
 			
 			if(nowLine) {
 				nowLine

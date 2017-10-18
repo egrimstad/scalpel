@@ -3,8 +3,24 @@ const operations = [
 		id: 0,
 		theater: 0,
 		patientName: 'Eivind',
-		plannedStartTime: '2017-09-20 14:00',
-		plannedEndTime: '2017-09-20 14:40',
+		// As per the documentation, preparation is calcluated given a start time, 
+		// pre-/post time (in minutes) (from a drop down) and knife time (in minutes)
+		//plannedEndTime: '2017-09-20 14:40',
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 14:00',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10
+			}
+		],
 		phases: [
 			{
 				name: 'preparation',
@@ -79,8 +95,21 @@ const operations = [
 		id: 1,
 		theater: 0,
 		patientName: 'Felix',
-		plannedStartTime: '2017-09-20 10:27',
-		plannedEndTime: '2017-09-20 11:05',
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 10:27',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10
+			}
+		],
 		phases: [
 			{
 				name: 'preparation',
@@ -155,8 +184,21 @@ const operations = [
 		id: 2,
 		theater: 1,
 		patientName: 'Nina',
-		plannedStartTime: '2017-09-20 14:50',
-		plannedEndTime: '2017-09-20 16:25',
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 14:50',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10
+			}
+		],
 		phases: [
 			{
 				name: 'preparation',
@@ -225,8 +267,21 @@ const operations = [
 		id: 3,
 		theater: 1,
 		patientName: 'Fredrik',
-		plannedStartTime: '2017-09-20 08:00',
-		plannedEndTime: '2017-09-20 09:30',
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 08:00',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10
+			}
+		],
 		phases: [
 			{
 				name: 'preparation',
@@ -259,8 +314,21 @@ const operations = [
 		id: 4,
 		theater: 2,
 		patientName: 'Jenny',
-		plannedStartTime: '2017-09-20 09:20',
-		plannedEndTime: '2017-09-20 10:20',
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 09:20',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10
+			}
+		],
 		phases: [
 			{
 				name: 'preparation',
@@ -335,8 +403,21 @@ const operations = [
 		id: 5,
 		theater: 2,
 		patientName: 'Svenn-Helge',
-		plannedStartTime: '2017-09-20 10:30',
-		plannedEndTime: '2017-09-20 12:00',
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 10:30',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10
+			}
+		],
 		phases: [
 			{
 				name: 'preparation',
@@ -410,8 +491,21 @@ const operations = [
 	{
 		id: 6,
 		theater: 2,
-		plannedStartTime: '2017-09-20 15:00',
-		plannedEndTime: '2017-09-20 16:50',
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 15:00',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10
+			}
+		],
 		patientName: 'Magnus',
 		phases: [
 			{
@@ -475,8 +569,21 @@ const operations = [
 	{
 		id: 7,
 		theater: 3,
-		plannedStartTime: '2017-09-20 14:00',
-		plannedEndTime: '2017-09-20 15:20',
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 14:00',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10
+			}
+		],
 		patientName: 'Letizia',
 		phases: [
 			{
@@ -551,8 +658,21 @@ const operations = [
 	{
 		id: 8,
 		theater: 4,
-		plannedStartTime: '2017-09-20 13:00',
-		plannedEndTime: '2017-09-20 13:58',
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 13:00',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10
+			}
+		],
 		patientName: 'Tor',
 		phases: [
 			{
@@ -625,6 +745,18 @@ const operations = [
 		otherInformation: 'Ingen anestesi før kl 16'
 	}
 ]
+
+export const planningPhases = {
+	pretime: {
+		color: '#F9F9EE'
+	},
+	knifetime: {
+		color: '#DAD9C0'
+	},
+	posttime: {
+		color: '#F9F9EE'
+	},
+}
 
 export const operationPhases = {
 	preparation: {
