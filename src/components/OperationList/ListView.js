@@ -70,7 +70,7 @@ class ListView extends React.Component {
 								<List>
 									{theatre.operations.map((operation, oIndex) =>
 										<div key={oIndex}>
-											<Link to={'/operationDetails/'+operation.id}  id={operation.id}>
+											<Link to={'/operations/'+operation.id}>
 												<ListItem button>
 													<img src='../../../icons/pencil.png' height='20px' alt='Status icon'/>
 													<img src='../../../icons/bullet_ball_green.png' alt='Status icon'/>
