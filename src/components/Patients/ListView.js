@@ -7,6 +7,7 @@ import data from './../../data'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import SwipeableViews from 'react-swipeable-views'
 import { Link } from 'react-router-dom'
+import { Pencil, GreenBall } from 'assets/icons'
 
 function TabContainer(props) {
 	return <div style={{ padding: 20 }}>{props.children}</div>
@@ -72,8 +73,8 @@ class ListView extends React.Component {
 										<div key={oIndex}>
 											<Link to={'/operationDetails/'+operation.id}  id={operation.id}>
 												<ListItem button>
-													<img src='../../../icons/pencil.png' height='20px' alt='Status icon'/>
-													<img src='../../../icons/bullet_ball_green.png' alt='Status icon'/>
+													<img src={Pencil} height='20px' alt='Status icon'/>
+													<img src={GreenBall} alt='Status icon'/>
 													<ListItemText primary={operation.patient}/>
 												</ListItem>
 											</Link>

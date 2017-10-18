@@ -5,6 +5,8 @@ import { withStyles } from 'material-ui/styles'
 import { GridList, GridListTile } from 'material-ui/GridList'
 import './OperationDetails.css'
 
+import { Pencil, GreenBall } from 'assets/icons'
+
 const topFields = ([
 	['Dato', 'operatingDate'],
 	['Inn', 'arrivalTime'],
@@ -82,8 +84,8 @@ class Overview extends Component {
 	getIconDataFormatted() {
 		return (
 			<div>
-				<img src='../../../icons/pencil.png' style={{width:'-webkit-fill-available'}} alt='Status icon'/>
-				<img src='../../../icons/bullet_ball_green.png' alt='Status icon' />
+				<img src={Pencil} style={{width:'-webkit-fill-available'}} alt='Status icon'/>
+				<img src={GreenBall} alt='Status icon' />
 			</div>
 		)
 	}
