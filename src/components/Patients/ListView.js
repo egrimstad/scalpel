@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import data from './../../data'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import SwipeableViews from 'react-swipeable-views'
 import { Link } from 'react-router-dom'
@@ -31,6 +30,7 @@ class ListView extends React.Component {
 		super(props)
 		this.props.setHeaderItems([])  // Menu button hidden for now
 
+		this.theaters = props.theaters
 		this.state = {
 			value: 0
 		}
@@ -60,13 +60,13 @@ class ListView extends React.Component {
 						scrollable
 						scrollButtons='auto'
 					>
-						{data.theaters.map((theatre, tIndex) => {
+						{this.theaters.map((theatre, tIndex) => {
 							return <Tab label={theatre.name} key={tIndex}/>
 						})}
 					</Tabs>
 				</AppBar>
 				<SwipeableViews index={this.state.value} onChangeIndex={this.handleChangeIndex}>
-					{data.theaters.map((theatre, tIndex) =>
+					{this.theaters.map((theatre, tIndex) =>
 						tIndex === this.state.value ?
 							<TabContainer key={tIndex}>
 								<List>
@@ -76,7 +76,7 @@ class ListView extends React.Component {
 												<ListItem button>
 													<img src='../../../icons/pencil.png' height='20px' alt='Status icon'/>
 													<img src='../../../icons/bullet_ball_green.png' alt='Status icon'/>
-													<ListItemText primary={operation.patient}/>
+													<ListItemText primary={operation.procedure} secondary={operation.diagnosis}/>
 												</ListItem>
 											</Link>
 										</div>

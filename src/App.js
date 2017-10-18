@@ -7,7 +7,7 @@ import theme from './theme/theme'
 import Header from './containers/Header'
 import MenuDrawer from './components/MenuDrawer/MenuDrawer'
 import TodayTimeline from './containers/TodayTimeline'
-import ListView from './components/Patients/ListView'
+import ListView from './containers/ListView'
 import OperationIndex from './containers/OperationIndex'
 
 class App extends Component {
