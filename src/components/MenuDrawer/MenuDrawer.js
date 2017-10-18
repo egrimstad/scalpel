@@ -4,10 +4,7 @@ import { Link } from 'react-router-dom'
 import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 
-import Button from 'material-ui/Button'
 import Divider from 'material-ui/Divider'
-import Avatar from 'material-ui/Avatar'
-import FolderIcon from 'material-ui-icons/Folder'
 
 import SettingsIcon from 'material-ui-icons/Settings'
 import StopIcon from 'material-ui-icons/Stop'
