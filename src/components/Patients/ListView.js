@@ -29,6 +29,8 @@ class ListView extends React.Component {
 
 	constructor(props) {
 		super(props)
+		this.props.setHeaderItems([])  // Menu button hidden for now
+
 		this.state = {
 			value: 0
 		}

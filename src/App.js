@@ -16,7 +16,7 @@ class App extends Component {
 
 		this.state = {
 			menuOpen: false,
-			headerItems: []
+			headerItems: ['calendar', 'menu']
 		}
 
 		this.openMenu = this.openMenu.bind(this)

@@ -46,6 +46,30 @@ class Header extends Component {
 	}
 
 	render() {
+		let menu = null
+		let calendar = null
+		if (this.props.headerItems.some(item => 'menu' === item)) {
+			menu = <IconButton
+				aria-owns={this.state.open ? 'more-menu' : null}
+				aria-haspopup="true"
+				onClick={this.handleClick}
+				style={{color: '#fff'}}
+			>
+				<MoreVert />
+			</IconButton>
+		}
+
+		if (this.props.headerItems.some(item => 'calendar' === item)) {
+			calendar = <IconButton
+				aria-owns={this.state.pickerOpen ? 'date-picker' : null}
+				aria-haspopup="true"
+				onClick={this.toggleDatePicker}
+				style={{color: '#fff'}}
+			>
+				<DateRange />
+			</IconButton>
+		}
+		
 		return (
 			<AppBar position="fixed" style={{backgroundColor: '#224C90'}}>
 				<Toolbar>
@@ -55,23 +79,8 @@ class Header extends Component {
 					<Typography type="title" color="inherit" noWrap style={{flex:1}}>
 						Scalpel
 					</Typography>
-					{this.props.headerItems}
-					<IconButton
-						aria-owns={this.state.pickerOpen ? 'date-picker' : null}
-						aria-haspopup="true"
-						onClick={this.toggleDatePicker}
-						style={{color: '#fff'}}
-					>
-						<DateRange />
-					</IconButton>
-					<IconButton
-						aria-owns={this.state.open ? 'more-menu' : null}
-						aria-haspopup="true"
-						onClick={this.handleClick}
-						style={{color: '#fff'}}
-					>
-						<MoreVert />
-					</IconButton>
+					{calendar}
+					{menu}
 					<MoreMenu open={this.state.open} anchorEl={this.state.anchorEl} handleRequestClose={this.handleRequestClose}/>
 				</Toolbar>
 				{this.state.pickerOpen && 
