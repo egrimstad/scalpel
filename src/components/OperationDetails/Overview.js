@@ -46,7 +46,7 @@ class Overview extends Component {
 		return (
 			<List> {topFields.map((tuple, hIndex) =>
 				<ListItem key={hIndex}>{tuple[0]}
-					<ListItemSecondaryAction>{this.operation[tuple[1]]}</ListItemSecondaryAction>
+					<ListItemSecondaryAction>{this.operation[tuple[1]] ? this.operation[tuple[1]] : '-'}</ListItemSecondaryAction>
 				</ListItem>)}
 			</List>
 		)
@@ -58,20 +58,20 @@ class Overview extends Component {
 				{mainFields.map((tuple, i) =>
 					<ListItem key={i}>
 						<ListItemText
-							primary={this.operation[tuple[1]]}
+							primary={this.operation[tuple[1]] ? this.operation[tuple[1]] : '-'}
 							secondary={tuple[0]}
 						/>
 					</ListItem>
 				)}
 				<ListItem>
 					<ListItemText
-						primary={this.operation['crew'].map(crew => crew['initials'] + ', ')}
+						primary={this.operation['crew'] ? this.operation['crew'].map(crew => crew['initials'] + ', '): '-'}
 						secondary='Personell'
 					/>
 				</ListItem>
 				<ListItem>
 					<ListItemText
-						primary={this.operation['equipment'].map(equip => equip + ', ')}
+						primary={this.operation['equipment'] ? this.operation['equipment'].map(equip => equip + ', ') : '-'}
 						secondary='Utstyr'
 					/>
 				</ListItem>

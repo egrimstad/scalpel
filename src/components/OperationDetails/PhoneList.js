@@ -13,7 +13,7 @@ class Staff extends Component {
 		return (
 			<div>
 				<List>
-					{this.operation['crew'].map((person, index) =>
+					{this.operation['crew'] ? this.operation['crew'].map((person, index) =>
 						<ListItem key={index}> {person['fullName']}
 							<ListItemSecondaryAction>
 								<IconButton aria-label='Call' href={'tel:' + person['phone']}>
@@ -21,7 +21,7 @@ class Staff extends Component {
 								</IconButton>
 							</ListItemSecondaryAction>
 						</ListItem>
-					)}
+					) : 'Ingen personell er registrert'}
 				</List>
 			</div>)
 	}
