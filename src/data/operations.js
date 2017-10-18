@@ -477,7 +477,7 @@ const operations = [
 		theater: 3,
 		plannedStartTime: '2017-09-20 14:00',
 		plannedEndTime: '2017-09-20 15:20',
-		patient: 'Letizia',
+		patientName: 'Letizia',
 		phases: [
 			{
 				name: 'preparation',
@@ -553,7 +553,7 @@ const operations = [
 		theater: 4,
 		plannedStartTime: '2017-09-20 13:00',
 		plannedEndTime: '2017-09-20 13:58',
-		patient: 'Tor',
+		patientName: 'Tor',
 		phases: [
 			{
 				name: 'preparation',
