@@ -10,6 +10,14 @@ const theaters = [
 	{
 		id: 2,
 		name: 'Theater3'
+	},
+	{
+		id: 3,
+		name: 'Theater4'
+	},
+	{
+		id: 4,
+		name: 'Theater5'
 	}
 ]
 
