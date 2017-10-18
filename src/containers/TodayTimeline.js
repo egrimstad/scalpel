@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import last from 'lodash/last'
 
-import { startTime, endTime } from 'utils/operationUtils'
+import { startTime, endTime } from '../utils/operationUtils'
 
 import moment from 'moment'
 

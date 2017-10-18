@@ -57,7 +57,7 @@ class Timeline extends Component {
 		this.setState({ time: value, open: false })
 	}
 
-	click(operation) {
+	click() {
 		if(this.pressTimer) {
 			clearTimeout(this.pressTimer)
 			this.pressTimer = null
@@ -72,7 +72,7 @@ class Timeline extends Component {
 		
 	}
 
-	start(operation) {
+	start() {
 		if(this.pressTimer) return
 		
 		this.pressTarget = d3.event.currentTarget
