@@ -76,7 +76,7 @@ const mapStateToProps = (state, ownProps) => {
 
 	let numColumns = 0
 
-	const theaters = theatersFromPlan(state.theaters, state.plan)
+	const theaters = theatersFromPlan(state.theaters, state.selectedPlan)
 		.filter(theater => operationsToday.some(op => op.theater === theater.id))
 		.map(theater => {
 			const dist = distributeOperations(operationsToday.filter(op => op.theater === theater.id))

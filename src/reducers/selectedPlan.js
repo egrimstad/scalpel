@@ -1,6 +1,6 @@
 import plans from '../data/plans'
 
-const plan = (state = plans[0], action) => {
+const selectedPlan = (state = plans[0], action) => {
 	switch(action.type) {
 	case 'SET_SELECTED_PLAN':
 		return action.plan
@@ -9,4 +9,4 @@ const plan = (state = plans[0], action) => {
 	}
 }
 
-export default plan
+export default selectedPlan

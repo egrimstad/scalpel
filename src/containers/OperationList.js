@@ -19,7 +19,7 @@ const operationsByTheater = (todayOperations, theaterId) =>
 
 const mapStateToProps = (state, ownProps) => {
 	const operationsToday = state.operations.filter(op => moment(op.phases[0].start).isSame(moment(state.date), 'day'))
-	const theaters = theatersFromPlan(state.theaters, state.plan)
+	const theaters = theatersFromPlan(state.theaters, state.selectedPlan)
 		.filter(theater => operationsToday.some(op => op.theater === theater.id))
 		.map(theater => {
 			return {

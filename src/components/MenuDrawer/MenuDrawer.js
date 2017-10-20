@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
-import plans from '../../data/plans'
 
 import Divider from 'material-ui/Divider'
 
@@ -47,7 +46,7 @@ class MenuDrawer extends Component {
 						</List>
 					</div>
 					<List id="testtest">
-						{plans.map((plan, index) =>
+						{this.props.plans.map((plan, index) =>
 							<ListItem button key={index} onClick={() => this.props.onSelectPlan(plan)}>
 								<ListItemIcon>
 									<div style={{color: '#9C639D'}}>
