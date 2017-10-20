@@ -49,6 +49,8 @@ class Timeline extends Component {
 		this.createFilter = this.createFilter.bind(this)
 		this.buildTimeline = this.buildTimeline.bind(this)
 
+		this.zoomTransformEvent = null
+
 		this.state = {
 			phaseDialogOpen: false,
 			operationDrawerOpen: false,
@@ -342,7 +344,12 @@ class Timeline extends Component {
 		}
 
 		const zoomed = () => {
-			const transform = d3.event.transform
+			zoomer(d3.event)
+		}
+
+		const zoomer = (event) => {
+			this.zoomTransformEvent = event
+			const transform = event.transform
 			const newY = transform.rescaleY(y)
 			
 			timeRects
@@ -368,11 +375,11 @@ class Timeline extends Component {
 			yGroup.call(yLabels)
 			yLinesGroup.call(yLines)
 
-			if(!canScrollX || d3.event.sourceEvent.type === 'wheel') {
+			if(!canScrollX || event.sourceEvent.type === 'wheel') {
 				return
 			}
 
-			xoffset =  mouseX(d3.event.sourceEvent) - xscrollstart
+			xoffset =  mouseX(event.sourceEvent) - xscrollstart
 
 			// Limit scroll
 			xoffset = (xoffset <= xScrollDomain[0]) ? xoffset : xScrollDomain[0]
@@ -382,6 +389,10 @@ class Timeline extends Component {
 			phaseRects.attr('x', phase => operationActualX(phase.column))
 			plannedRects.attr('x', op => operationPlannedX(op.column))
 			theaterGroup.attr('transform', theater => translate(theaterX(theater), 0))
+		}
+
+		if(this.zoomTransformEvent) {
+			zoomer(this.zoomTransformEvent)
 		}
 	}
 
