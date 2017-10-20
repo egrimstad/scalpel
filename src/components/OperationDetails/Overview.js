@@ -5,6 +5,8 @@ import { withStyles } from 'material-ui/styles'
 import { GridList, GridListTile } from 'material-ui/GridList'
 import './OperationDetails.css'
 
+import OperationTimeline from './OperationTimeline'
+
 import { Pencil, GreenBall } from 'assets/icons'
 
 const topFields = ([
@@ -104,7 +106,7 @@ class Overview extends Component {
 				id: 2,
 				cols: 2,
 				rows: 1,
-				content: <div>Timeline</div>
+				content: <OperationTimeline operation={this.operation} />
 			},
 			{
 				id: 3,
