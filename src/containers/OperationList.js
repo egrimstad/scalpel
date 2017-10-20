@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import ListView from '../components/OperationList/ListView'
+import OperationList from '../components/OperationList/OperationList'
 import moment from 'moment'
 
 const operationsByTheatre = (todayOperations, theatreId) =>
@@ -33,4 +33,4 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(
 	mapStateToProps,
 	null
-)(ListView)
+)(OperationList)

@@ -25,7 +25,7 @@ const menuOptions = [
 		icon: <ViewList/>,
 		link: '/operations'
 	}
-	]
+]
 
 const plans = [
 	{

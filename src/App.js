@@ -7,8 +7,8 @@ import theme from './theme/theme'
 import Header from './containers/Header'
 import MenuDrawer from './components/MenuDrawer/MenuDrawer'
 import TodayTimeline from './containers/TodayTimeline'
-import ListView from './components/OperationList/ListView'
-import OperationIndex from './containers/OperationIndex'
+import ListView from './containers/OperationList'
+import OperationIndex from './containers/OperationDetails'
 
 class App extends Component {
 	constructor(props) {

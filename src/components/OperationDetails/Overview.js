@@ -5,6 +5,8 @@ import { withStyles } from 'material-ui/styles'
 import { GridList, GridListTile } from 'material-ui/GridList'
 import './OperationDetails.css'
 
+import { Pencil, GreenBall } from 'assets/icons'
+
 const topFields = ([
 	['Dato', 'operatingDate'],
 	['Inn', 'arrivalTime'],
@@ -42,36 +44,36 @@ class Overview extends Component {
 		this.operation = props.operation
 	}
 
-	getTopContentFormatted() {
+	topContentFormatted() {
 		return (
 			<List> {topFields.map((tuple, hIndex) =>
 				<ListItem key={hIndex}>{tuple[0]}
-					<ListItemSecondaryAction>{this.operation[tuple[1]]}</ListItemSecondaryAction>
+					<ListItemSecondaryAction>{this.operation[tuple[1]] ? this.operation[tuple[1]] : '-'}</ListItemSecondaryAction>
 				</ListItem>)}
 			</List>
 		)
 	}
 
-	getMainContentFormatted() {
+	mainContentFormatted() {
 		return (
 			<List>
 				{mainFields.map((tuple, i) =>
 					<ListItem key={i}>
 						<ListItemText
-							primary={this.operation[tuple[1]]}
+							primary={this.operation[tuple[1]] ? this.operation[tuple[1]] : '-'}
 							secondary={tuple[0]}
 						/>
 					</ListItem>
 				)}
 				<ListItem>
 					<ListItemText
-						primary={this.operation['crew'].map(crew => crew['initials'] + ', ')}
+						primary={this.operation['crew'] ? this.operation['crew'].map(crew => crew['initials'] + ', '): '-'}
 						secondary='Personell'
 					/>
 				</ListItem>
 				<ListItem>
 					<ListItemText
-						primary={this.operation['equipment'].map(equip => equip + ', ')}
+						primary={this.operation['equipment'] ? this.operation['equipment'].map(equip => equip + ', ') : '-'}
 						secondary='Utstyr'
 					/>
 				</ListItem>
@@ -79,29 +81,29 @@ class Overview extends Component {
 		)
 	}
 
-	getIconDataFormatted() {
+	iconDataFormatted() {
 		return (
 			<div>
-				<img src='../../../icons/pencil.png' style={{width:'-webkit-fill-available'}} alt='Status icon'/>
-				<img src='../../../icons/bullet_ball_green.png' alt='Status icon' />
+				<img src={Pencil} style={{width:'-webkit-fill-available'}} alt='Status icon'/>
+				<img src={GreenBall} alt='Status icon' />
 			</div>
 		)
 	}
 
 
-	getTileData() {
+	tileData() {
 		return [
 			{
 				id: 0,
 				cols: 0.5,
 				rows: 3,
-				content: this.getIconDataFormatted()
+				content: this.iconDataFormatted()
 			},
 			{
 				id: 1,
 				cols: 1.5,
 				rows: 3,
-				content: this.getTopContentFormatted()
+				content: this.topContentFormatted()
 			},
 			{
 				id: 2,
@@ -113,7 +115,7 @@ class Overview extends Component {
 				id: 3,
 				cols: 2,
 				rows: 6,
-				content: this.getMainContentFormatted()
+				content: this.mainContentFormatted()
 			}
 		]
 	}
@@ -122,7 +124,7 @@ class Overview extends Component {
 		const classes = this.props.classes
 		return (<div className={classes.root}>
 			<GridList cellHeight={100} spacing={1} className={classes.gridList}>
-				{this.getTileData().map(tile => (
+				{this.tileData().map(tile => (
 					<GridListTile key={tile.id} cols={tile.cols} rows={tile.rows} children={tile.content}/>
 				))}
 			</GridList>

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import data from './../../data'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import SwipeableViews from 'react-swipeable-views'
 import { Link } from 'react-router-dom'
+import { Pencil, GreenBall } from 'assets/icons'
 
 function TabContainer(props) {
 	return <div style={{ padding: 20 }}>{props.children}</div>
@@ -25,10 +25,11 @@ const styles = theme => ({
 	}
 })
 
-class ListView extends React.Component {
+class OperationList extends React.Component {
 
 	constructor(props) {
 		super(props)
+		this.theaters = props.theaters
 		this.state = {
 			value: 0
 		}
@@ -58,13 +59,13 @@ class ListView extends React.Component {
 						scrollable
 						scrollButtons='auto'
 					>
-						{data.theaters.map((theatre, tIndex) => {
+						{this.theaters.map((theatre, tIndex) => {
 							return <Tab label={theatre.name} key={tIndex}/>
 						})}
 					</Tabs>
 				</AppBar>
 				<SwipeableViews index={this.state.value} onChangeIndex={this.handleChangeIndex}>
-					{data.theaters.map((theatre, tIndex) =>
+					{this.theaters.map((theatre, tIndex) =>
 						tIndex === this.state.value ?
 							<TabContainer key={tIndex}>
 								<List>
@@ -72,9 +73,9 @@ class ListView extends React.Component {
 										<div key={oIndex}>
 											<Link to={'/operations/'+operation.id}>
 												<ListItem button>
-													<img src='../../../icons/pencil.png' height='20px' alt='Status icon'/>
-													<img src='../../../icons/bullet_ball_green.png' alt='Status icon'/>
-													<ListItemText primary={operation.patient}/>
+													<img src={Pencil} height='20px' alt='Status icon'/>
+													<img src={GreenBall} alt='Status icon'/>
+													<ListItemText primary={operation.patient} secondary={operation.diagnosis}/>
 												</ListItem>
 											</Link>
 										</div>
@@ -87,8 +88,8 @@ class ListView extends React.Component {
 	}
 }
 
-ListView.propTypes = {
+OperationList.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(ListView)
+export default withStyles(styles)(OperationList)

@@ -20,7 +20,7 @@ const fields2 = ([
 const fields3 = ([
 	['Anestesitilsyn', 'Journaltilsyn uten pas. tilstede'],
 	['Verifisert', 'Larsen, Tor']
-])
+]) //TODO
 
 const checkboxFields = ([
 	['Screening utført', 'isScreeningCompleted'],
@@ -39,21 +39,21 @@ class Anesthesia extends Component {
 	render() {
 		return (
 			<div>
-				<Grid container>
-					<Grid item>
+				<Grid>
+					<Grid>
 						<h4>Anestesiologiske forhold</h4>
-						<p>{this.operation['anesthesiaInformation']}</p>
+						<p>{this.operation['anesthesiaInformation'] ? this.operation['anesthesiaInformation'] : '-'}</p>
 					</Grid>
-					<Grid item>
+					<Grid>
 						{fields1.map((item, i) =>
 							<ListItem key={i}>
 								<ListItemText
-									primary={this.operation[item[1]]}
+									primary={this.operation[item[1]] ? this.operation[item[1]] : '-'}
 									secondary={item[0]}
 								/>
 							</ListItem>)}
 					</Grid>
-					<Grid item>
+					<Grid>
 						{checkboxFields.map((item, i) =>
 							<ListItem key={i}>
 								{item[0]}
@@ -66,26 +66,26 @@ class Anesthesia extends Component {
 								</ListItemSecondaryAction>
 							</ListItem>)}
 					</Grid>
-					<Grid item>
+					<Grid>
 						{fields2.map((item, i) =>
 							<ListItem key={i}>
 								<ListItemText
-									primary={this.operation[item[1]]}
+									primary={this.operation[item[1]] ? this.operation[item[1]] : '-'}
 									secondary={item[0]}
 								/>
 							</ListItem>)}
 						<ListItem>
 							<ListItemText
-								primary={this.operation['weight']/((this.operation['height'])^2)}
+								primary={this.operation['weight'] && this.operation['height'] ? this.operation['weight']/((this.operation['height'])^2) : '-'}
 								secondary='BMI'
 							/>
 						</ListItem>
 					</Grid>
-					<Grid item>
+					<Grid>
 						<h4>Annet</h4>
-						<p>{this.operation['otherInformation']}</p>
+						<p>{this.operation['otherInformation'] ? this.operation['otherInformation'] : '-'}</p>
 					</Grid>
-					<Grid item>
+					<Grid>
 						{fields3.map((item, i) =>
 							<ListItem key={i}>
 								<ListItemText
