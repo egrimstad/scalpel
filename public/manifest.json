@@ -3,8 +3,8 @@
   "name": "Scalpel - A Clean Cut in Medical Organizing",
   "icons": [
     {
-      "src": "scalpelfav.ico",
-      "sizes": "192x192",
+      "src": "scalpelapp.ico",
+      "sizes": "256x256",
       "type": "image/png"
     }
   ],
