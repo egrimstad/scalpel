@@ -51,7 +51,9 @@ class Timeline extends Component {
 			this.pressTimer = null
 		}
 		if(!this.longpress) {
-			d3.select(this.pressTarget).selectAll('rect').attr('stroke', 'gray')
+			d3.select(this.pressTarget)
+				.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
+				.classed('Timeline-operation-click', false)
 			d3.select(this.pressTarget).attr('filter', null)
 			this.pressTimer = null
 		}
@@ -65,10 +67,14 @@ class Timeline extends Component {
 		this.pressTarget = d3.event.currentTarget
 		this.longpress = false
 		d3.select(this.pressTarget).attr('filter', 'url(#Timeline-click-filter)')
-		d3.select(this.pressTarget).selectAll('rect').attr('stroke', 'blue')
+		d3.select(this.pressTarget)
+			.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
+			.classed('Timeline-operation-click', true)
 		this.pressTimer = setTimeout(() => {
 			this.longpress = true
-			d3.select(this.pressTarget).selectAll('rect').attr('stroke', 'gray')
+			d3.select(this.pressTarget)
+				.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
+				.classed('Timeline-operation-click', false)
 			d3.select(this.pressTarget).attr('filter', null)
 			this.pressTimer = null
 		}, 1000)
@@ -80,7 +86,9 @@ class Timeline extends Component {
 		if(this.pressTimer) {
 			clearTimeout(this.pressTimer)
 			this.pressTimer = null
-			d3.select(this.pressTarget).selectAll('rect').attr('stroke', 'gray')
+			d3.select(this.pressTarget)
+				.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
+				.classed('Timeline-operation-click', false)
 			d3.select(this.pressTarget).attr('filter', null)
 		}
 		return false
@@ -214,7 +222,7 @@ class Timeline extends Component {
 
 		// Operations
 		const operation = theaterGroup.append('g')
-			.attr('clip-path', 'url(#Timeline-ymask')
+			.attr('clip-path', 'url(#Timeline-ymask)')
 			.selectAll('g')
 			.data(theater => theater.operations)
 		
@@ -229,31 +237,20 @@ class Timeline extends Component {
 			.on('touchcancel', this.cancel)
 			.on('dragstart', this.cancel)
 			.on('contextmenu', () => d3.event.preventDefault())
-		
-		const operationTimes = operationEnter.append('g')
-		const actualPhases = operationEnter.append('g')
-		const plannedPhases = operationEnter.append('g')
-		
-		const time = operationTimes
-			.selectAll('rect')
-			.data(op => op)
-			.enter()
-
-		const timeRects = operationTimes.append('rect')
-			.attr('x', op => operationActualX(op.column))
-			.attr('y', op => y(moment(op.start)))
-			.attr('width', operationActualWidth)
-			.attr('height', op => y(moment(op.end || now)) - y(moment(op.start)))			
-			.attr('fill', 'white')
-			.attr('stroke-width', STROKEWIDTH)
-			.attr('stroke', 'gray')
 
 		// Actual time spent
-		const phase = actualPhases
+		const phase = operationEnter.append('g')
 			.selectAll('rect')
 			.data(op => op.phases)
 			.enter()
 		
+		const timeRects =  operationEnter.append('g').append('rect')
+			.attr('class', 'Timeline-operation-backdrop')
+			.attr('x', op => operationActualX(op.column))
+			.attr('y', op => y(moment(op.start)))
+			.attr('width', operationActualWidth)
+			.attr('height', op => y(moment(op.end || now)) - y(moment(op.start)))
+			
 		const phaseRects = phase.append('rect')
 			.attr('x', phase => operationActualX(phase.column))
 			.attr('y', phase => y(moment(phase.start)))
@@ -262,7 +259,10 @@ class Timeline extends Component {
 			.attr('fill', phase => phase.color)
 			.attr('stroke-width', 0)
 
-		const plannedPhase = plannedPhases
+		const plannedPhase = operationEnter.append('g')
+			.attr('class', 'Timeline-planned')
+			.attr('stroke-width', STROKEWIDTH)
+			.attr('stroke', 'gray')
 			.selectAll('rect')
 			.data(op => op.plannedPhases)
 			.enter()
@@ -273,8 +273,7 @@ class Timeline extends Component {
 			.attr('width', PLANNEDWIDTH)
 			.attr('height', plannedPhase => y(moment(plannedPhase.end)) - y(moment(plannedPhase.start)))			
 			.attr('fill', plannedPhase => plannedPhase.color)
-			.attr('stroke-width', STROKEWIDTH)
-			.attr('stroke', 'gray')
+			
 
 		// y-axis group
 		const yGroup = this.svg.append('g')
