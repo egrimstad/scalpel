@@ -18,10 +18,6 @@ const theaters = [
 	{
 		id: 4,
 		name: 'ER'
-	},
-	{
-		id: 5,
-		name: 'ER-2'
 	}
 ]
 

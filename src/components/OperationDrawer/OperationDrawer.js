@@ -94,7 +94,7 @@ class OperationDrawer extends Component {
 						style={{gridArea: 'goto'}}
 						dense
 						raised
-						onClick={() => this.props.redirect('/operationDetails/' + operation.id)}
+						onClick={() => this.props.redirect('/operations/' + operation.id)}
 					>
 						Flere detaljer
 					</Button>

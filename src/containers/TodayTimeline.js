@@ -44,9 +44,10 @@ const distributeOperations = (operations, state) => {
 		rest = overlap.rest
 		result.push(...overlap.selected.map(op => {
 			const phases = op.phases.map(phase => {
+				const opPhase = state.operationPhases.find(opPhase => opPhase.id === phase.id)
 				return {
 					...phase,
-					color: state.operationPhases[phase.name].color,
+					...opPhase,
 					column: column
 				}
 			})
