@@ -51,7 +51,7 @@ class Timeline extends Component {
 			this.pressTimer = null
 		}
 		if(!this.longpress) {
-			this.filter.transition().select('feMorphology').attr('radius','2')
+			d3.select(this.pressTarget).selectAll('rect').attr('stroke', 'gray')
 			d3.select(this.pressTarget).attr('filter', null)
 			this.pressTimer = null
 		}
@@ -65,11 +65,10 @@ class Timeline extends Component {
 		this.pressTarget = d3.event.currentTarget
 		this.longpress = false
 		d3.select(this.pressTarget).attr('filter', 'url(#Timeline-click-filter)')
-		this.filter.transition().duration(1000).select('feMorphology').attr('radius', '5')
+		d3.select(this.pressTarget).selectAll('rect').attr('stroke', 'blue')
 		this.pressTimer = setTimeout(() => {
 			this.longpress = true
-			// console.log(filter.select('feMorphology').attr('radius'))  // can read out the current radius value
-			this.filter.transition().select('feMorphology').attr('radius','2')
+			d3.select(this.pressTarget).selectAll('rect').attr('stroke', 'gray')
 			d3.select(this.pressTarget).attr('filter', null)
 			this.pressTimer = null
 		}, 1000)
@@ -81,7 +80,7 @@ class Timeline extends Component {
 		if(this.pressTimer) {
 			clearTimeout(this.pressTimer)
 			this.pressTimer = null
-			this.filter.transition().select('feMorphology').attr('radius','2')
+			d3.select(this.pressTarget).selectAll('rect').attr('stroke', 'gray')
 			d3.select(this.pressTarget).attr('filter', null)
 		}
 		return false
@@ -99,14 +98,10 @@ class Timeline extends Component {
 		this.filter = this.svg.select('defs')
 			.append('filter')
 			.attr('id', 'Timeline-click-filter')
-	
-		this.filter.append('feMorphology')  // Adds a dilation filter
-			.attr('operator', 'dilate')
-			.attr('radius', '2')
-		
+
 		this.filter.append('feColorMatrix')  // Adds a saturation filter
 			.attr('type', 'saturate')
-			.attr('values', '0.5')
+			.attr('values', '0.4')
 	}
 
 	createMask(id, x,y, width, height) {
@@ -234,7 +229,6 @@ class Timeline extends Component {
 			.on('touchcancel', this.cancel)
 			.on('dragstart', this.cancel)
 			.on('contextmenu', () => d3.event.preventDefault())
-			//.attr('style', 'outline: thin solid red;')  // Outlines a group
 		
 		const operationTimes = operationEnter.append('g')
 		const actualPhases = operationEnter.append('g')
@@ -266,6 +260,7 @@ class Timeline extends Component {
 			.attr('width', operationActualWidth)
 			.attr('height', phase => y(moment(phase.end || now)) - y(moment(phase.start)))			
 			.attr('fill', phase => phase.color)
+			.attr('stroke-width', 0)
 
 		const plannedPhase = plannedPhases
 			.selectAll('rect')
