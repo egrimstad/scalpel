@@ -2,6 +2,24 @@ const operations = [
 	{
 		id: 0,
 		theater: 0,
+		// As per the documentation, preparation is calcluated given a start time, 
+		// pre-/post time (in minutes) (from a drop down) and knife time (in minutes)
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 14:00',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				end: '2017-09-20 15:40',
+				duration: 10
+			}
+		],
 		patientName: 'Christian Olsen',
 		plannedStartTime: '2017-09-20 14:00',
 		plannedEndTime: '2017-09-20 14:40',
@@ -32,6 +50,8 @@ const operations = [
 				end: '2017-09-20 15:37'
 			}
 		],
+		start: '2017-09-20 14:37',
+		end: '2017-09-20 15:37',
 		crew: [
 			{initials: 'AB', fullName: 'Aurora Bentsen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'EG', fullName: 'Erik Grønvold', phone: '+4712345678', position: 'assistant1'},
@@ -78,6 +98,22 @@ const operations = [
 	{
 		id: 1,
 		theater: 0,
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 10:27',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				end: '2017-09-20 12:07',
+				duration: 10
+			}
+		],
 		patientName: 'Asbjørg Mong',
 		plannedStartTime: '2017-09-20 10:27',
 		plannedEndTime: '2017-09-20 11:05',
@@ -108,6 +144,8 @@ const operations = [
 				end: '2017-09-20 11:58'
 			}
 		],
+		start: '2017-09-20 10:21',
+		end: '2017-09-20 11:58',
 		crew: [
 			{initials: 'EG', fullName: 'Eldar Gjervik', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'TN', fullName: 'Thomas Nygård', phone: '+4712345678', position: 'assistant1'},
@@ -154,6 +192,22 @@ const operations = [
 	{
 		id: 2,
 		theater: 1,
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 14:50',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10,
+				end: '2017-09-20 16:30'
+			}
+		],
 		patientName: 'Maria Johansen',
 		plannedStartTime: '2017-09-20 14:50',
 		plannedEndTime: '2017-09-20 16:25',
@@ -178,6 +232,7 @@ const operations = [
 				start: '2017-09-20 15:59',
 			}
 		],
+		start: '2017-09-20 14:49',
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'EG', fullName: 'Eldar Gjervik', phone: '+4712345678', position: 'assistant1'},
@@ -224,6 +279,22 @@ const operations = [
 	{
 		id: 3,
 		theater: 1,
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 08:00',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10,
+				end: '2017-09-20 09:40'
+			}
+		],
 		patientName: 'Asle Seim',
 		plannedStartTime: '2017-09-20 08:00',
 		plannedEndTime: '2017-09-20 09:30',
@@ -254,6 +325,8 @@ const operations = [
 				end: '2017-09-20 10:00'
 			}
 		],
+		start: '2017-09-20 08:11',
+		end: '2017-09-20 10:00',
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'EG', fullName: 'Eldar Gjervik', phone: '+4712345678', position: 'assistant1'},
@@ -300,6 +373,22 @@ const operations = [
 	{
 		id: 4,
 		theater: 2,
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 09:20',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10,
+				end: '2017-09-20 11:00'
+			}
+		],
 		patientName: 'Sarah Karlsen',
 		plannedStartTime: '2017-09-20 09:20',
 		plannedEndTime: '2017-09-20 10:20',
@@ -330,6 +419,8 @@ const operations = [
 				end: '2017-09-20 10:23'
 			}
 		],
+		start: '2017-09-20 09:30',
+		end: '2017-09-20 10:23',
 		crew: [
 			{initials: 'ØI', fullName: 'Øyvind Iversen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'KK', fullName: 'Kaja Khan', phone: '+4712345678', position: 'assistant1'},
@@ -376,6 +467,22 @@ const operations = [
 	{
 		id: 5,
 		theater: 2,
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 10:30',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10,
+				end: '2017-09-20 12:10'
+			}
+		],
 		patientName: 'Jarl Grøtte',
 		plannedStartTime: '2017-09-20 10:30',
 		plannedEndTime: '2017-09-20 12:00',
@@ -406,6 +513,8 @@ const operations = [
 				end: '2017-09-20 11:58'
 			}
 		],
+		start: '2017-09-20 10:05',
+		end: '2017-09-20 11:58',
 		crew: [
 			{initials: 'KK', fullName: 'Kaja Khan', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'EM', fullName: 'Erland Marstein', phone: '+4712345678', position: 'assistant1'},
@@ -451,6 +560,22 @@ const operations = [
 	{
 		id: 6,
 		theater: 2,
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 15:00',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10,
+				end: '2017-09-20 16:40'
+			}
+		],
 		plannedStartTime: '2017-09-20 15:00',
 		plannedEndTime: '2017-09-20 16:50',
 		patientName: 'Andreas Halvorsen',
@@ -470,6 +595,7 @@ const operations = [
 				start: '2017-09-20 15:45'
 			}
 		],
+		start: '2017-09-20 15:11',
 		crew: [
 			{initials: 'LS', fullName: 'Laila Selle', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'HW', fullName: 'Hans Westbye', phone: '+4712345678', position: 'assistant1'}],
@@ -515,6 +641,22 @@ const operations = [
 	{
 		id: 7,
 		theater: 3,
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 14:00',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10,
+				end: '2017-09-20 15:40'
+			}
+		],
 		plannedStartTime: '2017-09-20 14:00',
 		plannedEndTime: '2017-09-20 15:20',
 		patientName: 'Lillian Andersen',
@@ -545,6 +687,8 @@ const operations = [
 				end: '2017-09-20 15:30'
 			},
 		],
+		start: '2017-09-20 14:05',
+		end: '2017-09-20 15:30',
 		crew: [
 			{initials: 'HT', fullName: 'Heidi Tollefsen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'KT', fullName: 'Kåre Tveit', phone: '+4712345678', position: 'assistant1'}],
@@ -590,6 +734,22 @@ const operations = [
 	{
 		id: 8,
 		theater: 4,
+		plannedPhases: [
+			{
+				name: 'pretime',
+				start: '2017-09-20 13:00',
+				duration: 30
+			},
+			{
+				name: 'knifetime',
+				duration: 60
+			},
+			{
+				name: 'posttime',
+				duration: 10,
+				end: '2017-09-20 14:40'
+			}
+		],
 		plannedStartTime: '2017-09-20 13:00',
 		plannedEndTime: '2017-09-20 13:58',
 		patientName: 'Hannah Wilhelmsen',
@@ -620,6 +780,8 @@ const operations = [
 				end: '2017-09-20 14:47'
 			},
 		],
+		start: '2017-09-20 13:07',
+		end: '2017-09-20 14:47',
 		crew: [
 			{initials: 'KT', fullName: 'Kåre Tveit', phone: '+4712345678', position: 'kirurg'}],
 		surgeon: 'Kåre Tveit',
@@ -662,6 +824,18 @@ const operations = [
 		otherInformation: 'Ingen anestesi før kl 16'
 	}
 ]
+
+export const planningPhases = {
+	pretime: {
+		color: '#F9F9EE'
+	},
+	knifetime: {
+		color: '#DAD9C0'
+	},
+	posttime: {
+		color: '#F9F9EE'
+	},
+}
 
 export const operationPhases = {
 	preparation: {

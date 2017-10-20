@@ -22,3 +22,17 @@
 .Timeline-axis text {
 	fill: rgb(75, 75, 75);
 }
+
+.Timeline-operation-click {
+	stroke-width: 1;
+	stroke: blue;
+}
+
+.Timeline-operation-backdrop {
+	fill: rgba(231, 231, 231, 0);
+	shape-rendering: crispEdges;
+}
+
+.Timeline-planned {
+	shape-rendering: crispEdges;
+}
