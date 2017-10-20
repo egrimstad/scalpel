@@ -1,5 +1,5 @@
 import Timeline from '../components/Timeline/Timeline'
-import { operationPhases } from '../data/operations'
+import { operationPhases, planningPhases } from '../data/operations'
 import { connect } from 'react-redux'
 
 import last from 'lodash/last'
@@ -53,9 +53,23 @@ const distributeOperations = operations => {
 					column: column
 				}
 			})
+			let phaseStart = moment(op.plannedPhases[0].start)
+			let phaseDuration = 0
+			const plannedPhases = op.plannedPhases.map(plannedPhase => {
+				phaseStart = phaseStart.clone().add(phaseDuration, 'm')
+				phaseDuration = plannedPhase.duration
+				return {
+					name: plannedPhase.name,
+					start: phaseStart,
+					end: phaseStart.clone().add(phaseDuration, 'm'),
+					color: planningPhases[plannedPhase.name].color,
+					column: column
+				}
+			})
 			return {
 				...op,
 				phases: phases,
+				plannedPhases: plannedPhases,
 				column: column
 			}
 		}))

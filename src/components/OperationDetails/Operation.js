@@ -44,7 +44,7 @@ class Operation extends Component {
 					{longFields.map((item, i) =>
 						<Grid key={i}>
 							<h4>{item[0]}</h4>
-							<p>{this.operation[item[1]] ? this.operation[item[1]] : '-'}</p>
+							<p>{this.operation[item[1]] ? this.operation[item[1]] : 'Ingen informasjon tilgjengelig'}</p>
 						</Grid>)}
 					<Grid>
 						{shortFields.map((item,i) =>
