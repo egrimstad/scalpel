@@ -81,13 +81,16 @@ const distributeOperations = operations => {
 	}
 }
 
+const theatersFromPlan = (allTheaters, plan) =>
+	allTheaters.filter(theater => plan.theaters.includes(theater.id))
+
 const mapStateToProps = (state, ownProps) => {
 	const date = moment(state.date)
 	const operationsToday = state.operations.filter(op => moment(op.phases[0].start).isSame(date, 'day'))
 
 	let numColumns = 0
 
-	const theaters = state.theaters
+	const theaters = theatersFromPlan(state.theaters, state.selectedPlan)
 		.filter(theater => operationsToday.some(op => op.theater === theater.id))
 		.map(theater => {
 			const dist = distributeOperations(operationsToday.filter(op => op.theater === theater.id))
