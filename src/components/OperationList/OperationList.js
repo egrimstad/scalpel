@@ -25,7 +25,7 @@ const styles = theme => ({
 	}
 })
 
-class ListView extends React.Component {
+class OperationList extends React.Component {
 
 	constructor(props) {
 		super(props)
@@ -71,7 +71,7 @@ class ListView extends React.Component {
 								<List>
 									{theatre.operations.map((operation, oIndex) =>
 										<div key={oIndex}>
-											<Link to={'/operationDetails/'+operation.id}  id={operation.id}>
+											<Link to={'/operations/'+operation.id}>
 												<ListItem button>
 													<img src={Pencil} height='20px' alt='Status icon'/>
 													<img src={GreenBall} alt='Status icon'/>
@@ -88,8 +88,8 @@ class ListView extends React.Component {
 	}
 }
 
-ListView.propTypes = {
+OperationList.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(ListView)
+export default withStyles(styles)(OperationList)

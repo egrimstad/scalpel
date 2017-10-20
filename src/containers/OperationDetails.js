@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import OperationIndex from '../components/OperationDetails/OperationIndex'
+import OperationDetails from '../components/OperationDetails/OperationDetails'
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -12,4 +12,4 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(
 	mapStateToProps,
 	null
-)(OperationIndex)
+)(OperationDetails)
