@@ -52,7 +52,6 @@ const distributeOperations = (operations, state) => {
 					column: column
 				}
 			})
-			console.log(op)
 			let phaseStart = moment(op.plannedPhases[0].start)
 			let phaseDuration = 0
 			const plannedPhases = op.plannedPhases.map(plannedPhase => {

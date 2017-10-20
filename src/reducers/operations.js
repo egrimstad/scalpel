@@ -31,7 +31,7 @@ const finishOperationPhase = (operation, action) => {
 	return {
 		...operation,
 		phases: operation.phases.map(phase => {
-			if(phase.name !== operationLastPhase.name) return phase
+			if(phase.id !== operationLastPhase.id) return phase
 			return {
 				...phase,
 				end: time.format('YYYY-MM-DD HH:mm')
@@ -50,7 +50,7 @@ const startNextOperationPhase = (operation, action) => {
 	return {
 		...operation,
 		phases: operation.phases.map(phase => {
-			if(phase.name !== next.name) return phase
+			if(phase.id !== next.id) return phase
 			return {
 				...phase,
 				start: action.time.format('YYYY-MM-DD HH:mm')

@@ -881,6 +881,8 @@ const operations = [
 				id: 4
 			},
 		],
+		start: '2017-10-20 13:07',
+		end: '2017-10-20 13:48',
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'JSJ', fullName: 'Jenny Stange Johansen', phone: '+4712345678', position: 'assistant1'},
