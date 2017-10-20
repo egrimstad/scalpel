@@ -103,7 +103,7 @@ class Timeline extends Component {
 		this.filter.append('feMorphology')  // Adds a dilation filter
 			.attr('operator', 'dilate')
 			.attr('radius', '2')
-	
+		
 		this.filter.append('feColorMatrix')  // Adds a saturation filter
 			.attr('type', 'saturate')
 			.attr('values', '0.5')
@@ -234,6 +234,7 @@ class Timeline extends Component {
 			.on('touchcancel', this.cancel)
 			.on('dragstart', this.cancel)
 			.on('contextmenu', () => d3.event.preventDefault())
+			//.attr('style', 'outline: thin solid red;')  // Outlines a group
 		
 		const operationTimes = operationEnter.append('g')
 		const actualPhases = operationEnter.append('g')
