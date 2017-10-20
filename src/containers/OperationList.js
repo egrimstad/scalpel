@@ -2,9 +2,12 @@ import { connect } from 'react-redux'
 import OperationList from '../components/OperationList/OperationList'
 import moment from 'moment'
 
-const operationsByTheatre = (todayOperations, theatreId) =>
+const theatersFromPlan = (allTheaters, plan) =>
+	allTheaters.filter(theater => plan.theaters.includes(theater.id))
+
+const operationsByTheater = (todayOperations, theaterId) =>
 	todayOperations
-		.filter(operation => operation.theater == theatreId) //correct theatre and today
+		.filter(operation => operation.theater == theaterId) //correct theatre and today
 		.map(operation => {
 			return {
 				id: operation.id,
@@ -16,16 +19,17 @@ const operationsByTheatre = (todayOperations, theatreId) =>
 
 const mapStateToProps = (state, ownProps) => {
 	const operationsToday = state.operations.filter(op => moment(op.phases[0].start).isSame(moment(state.date), 'day'))
-	const theaters = state.theaters
+	const theaters = theatersFromPlan(state.theaters, state.selectedPlan)
 		.filter(theater => operationsToday.some(op => op.theater === theater.id))
 		.map(theater => {
 			return {
 				...theater,
-				operations: operationsByTheatre(operationsToday, theater.id),
+				operations: operationsByTheater(operationsToday, theater.id),
 			}
 		})
 	return {
 		theaters: theaters,
+		plan: state.plan,
 		...ownProps
 	}
 }

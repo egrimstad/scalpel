@@ -22,19 +22,22 @@ export const hasPhaseEnded = phase => !isNil(phase.end)
 
 export const startTime = operation => {
 	const actualStartTime = firstPhase(operation) && firstPhase(operation).start
+	const plannedStartTime = operation.plannedPhases[0].start
 
 	if(actualStartTime) {
-		return moment.min(moment(operation.plannedStartTime), moment(actualStartTime))
+		return moment.min(moment(plannedStartTime), moment(actualStartTime))
 	}
-	return moment(operation.plannedStartTime)
+	return moment(plannedStartTime)
 }
 
 export const endTime = operation => {
-	const actualFinishTime = lastStartedPhase(operation).end || lastStartedPhase(operation).start
-	if(actualFinishTime) {
-		return moment.max(moment(operation.plannedEndTime), moment(actualFinishTime))
-	}
-	return moment(operation.plannedEndTime)
-}
+	const actualFinishTime = lastOperationEventTime(operation)
+	const plannedFinishTime = operation.plannedPhases.reduce(
+		(acc, current) => acc.clone().add(current.duration, 'minutes'), 
+		moment(operation.plannedPhases[0].start))
 
-export const surgeon = operation => operation.crew.find(person => person.position === 'kirurg')
+	if(actualFinishTime) {
+		return moment.max(moment(plannedFinishTime), moment(actualFinishTime))
+	}
+	return moment(plannedFinishTime)
+}

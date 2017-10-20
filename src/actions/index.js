@@ -14,3 +14,8 @@ export const startNextOperationPhase = (operationId, time) => ({
 	operationId: operationId,
 	time: time
 })
+
+export const setSelectedPlan = plan => ({
+	type: 'SET_SELECTED_PLAN',
+	plan: plan
+})

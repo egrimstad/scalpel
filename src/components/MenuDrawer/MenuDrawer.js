@@ -27,21 +27,6 @@ const menuOptions = [
 	}
 ]
 
-const plans = [
-	{
-		name: 'Plan 1',
-		color: '#FC7777'
-	},
-	{
-		name: 'Plan 2',
-		color: '#9C639D'
-	},
-	{
-		name: 'Plan 3',
-		color: '#3B4EC2'
-	}
-]
-
 
 class MenuDrawer extends Component {
 	render() {
@@ -61,10 +46,10 @@ class MenuDrawer extends Component {
 						</List>
 					</div>
 					<List id="testtest">
-						{plans.map((plan, index) =>
-							<ListItem button key={index}>
+						{this.props.plans.map((plan, index) =>
+							<ListItem button key={index} onClick={() => this.props.onSelectPlan(plan)}>
 								<ListItemIcon>
-									<div style={{color: plan.color}}>
+									<div style={{color: '#9C639D'}}>
 										<StopIcon size={32}/>
 									</div>
 								</ListItemIcon>
@@ -98,7 +83,7 @@ class MenuDrawer extends Component {
 
 MenuDrawer.propTypes = {
 	open: PropTypes.bool,
-	onRequestClose: PropTypes.func
+	onRequestClose: PropTypes.func,
 }
 
 export default MenuDrawer

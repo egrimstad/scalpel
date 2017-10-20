@@ -10,7 +10,7 @@ import OperationDrawer from '../../containers/OperationDrawer'
 
 const OPERATIONWIDTH = 64
 const PLANNEDWIDTH = 16
-const STROKEWIDTH = 2
+const STROKEWIDTH = 1
 const THEATERPADDING = 16
 const OPERATIONPADDING = 0
 const THEATERBARHEIGHT = 30
@@ -77,9 +77,14 @@ class Timeline extends Component {
 			this.pressTimer = null
 			this.shortPress(operation)
 		}
-		this.filter.transition().select('feMorphology').attr('radius','2')
-		d3.select(this.pressTarget).attr('filter', null)
-		this.pressTimer = null
+		if(!this.longpress) {
+			d3.select(this.pressTarget)
+				.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
+				.classed('Timeline-operation-click', false)
+			d3.select(this.pressTarget).attr('filter', null)
+			this.pressTimer = null
+		}
+
 		return false
 	}
 
@@ -89,11 +94,14 @@ class Timeline extends Component {
 		this.pressTarget = d3.event.currentTarget
 		this.operationID = operation.id
 		d3.select(this.pressTarget).attr('filter', 'url(#Timeline-click-filter)')
-		this.filter.transition().duration(1000).select('feMorphology').attr('radius', '5')
+		d3.select(this.pressTarget)
+			.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
+			.classed('Timeline-operation-click', true)
 		this.pressTimer = setTimeout(() => {
-			this.longPress(operation)
-			this.setState({ open: true })
-			this.filter.transition().select('feMorphology').attr('radius','2')
+			this.longpress = true
+			d3.select(this.pressTarget)
+				.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
+				.classed('Timeline-operation-click', false)
 			d3.select(this.pressTarget).attr('filter', null)
 			this.pressTimer = null
 		}, 1000)
@@ -105,7 +113,9 @@ class Timeline extends Component {
 		if(this.pressTimer) {
 			clearTimeout(this.pressTimer)
 			this.pressTimer = null
-			this.filter.transition().select('feMorphology').attr('radius','2')
+			d3.select(this.pressTarget)
+				.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
+				.classed('Timeline-operation-click', false)
 			d3.select(this.pressTarget).attr('filter', null)
 		}
 		return false
@@ -123,14 +133,10 @@ class Timeline extends Component {
 		this.filter = this.svg.select('defs')
 			.append('filter')
 			.attr('id', 'Timeline-click-filter')
-	
-		this.filter.append('feMorphology')  // Adds a dilation filter
-			.attr('operator', 'dilate')
-			.attr('radius', '2')
-	
+
 		this.filter.append('feColorMatrix')  // Adds a saturation filter
 			.attr('type', 'saturate')
-			.attr('values', '0.5')
+			.attr('values', '0.4')
 	}
 
 	createMask(id, x,y, width, height) {
@@ -243,7 +249,7 @@ class Timeline extends Component {
 
 		// Operations
 		const operation = theaterGroup.append('g')
-			.attr('clip-path', 'url(#Timeline-ymask')
+			.attr('clip-path', 'url(#Timeline-ymask)')
 			.selectAll('g')
 			.data(theater => theater.operations)
 		
@@ -258,30 +264,44 @@ class Timeline extends Component {
 			.on('touchcancel', this.cancel)
 			.on('dragstart', this.cancel)
 			.on('contextmenu', () => d3.event.preventDefault())
-		
+
 		// Actual time spent
-		const phase = operationEnter
+		const phase = operationEnter.append('g')
 			.selectAll('rect')
 			.data(op => op.phases.filter(phase => !isNil(phase.start)))
 			.enter()
 		
+		const timeRects =  operationEnter.append('g').append('rect')
+			.attr('class', 'Timeline-operation-backdrop')
+			.attr('x', op => operationActualX(op.column))
+			.attr('y', op => y(moment(op.start)))
+			.attr('width', operationActualWidth)
+			.attr('height', op => y(moment(op.end || now)) - y(moment(op.start)))
+			
 		const phaseRects = phase.append('rect')
 			.attr('x', phase => operationActualX(phase.column))
 			.attr('y', phase => y(moment(phase.start)))
 			.attr('width', operationActualWidth)
 			.attr('height', phase => y(moment(phase.end || now)) - y(moment(phase.start)))			
 			.attr('fill', phase => phase.color)
-	
-		// Planned time
-		const plannedRects = operationEnter.append('rect')
-			.attr('x', op => operationPlannedX(op.column))
-			.attr('y', op => y(moment(op.plannedStartTime)))
-			.attr('width', PLANNEDWIDTH)
-			.attr('height', op => (y(moment(op.plannedEndTime)) - y(moment(op.plannedStartTime))))
-			.attr('fill', 'white')
+			.attr('stroke-width', 0)
+
+		const plannedPhase = operationEnter.append('g')
+			.attr('class', 'Timeline-planned')
 			.attr('stroke-width', STROKEWIDTH)
-			.attr('stroke', 'lightgrey')
-		
+			.attr('stroke', 'gray')
+			.selectAll('rect')
+			.data(op => op.plannedPhases)
+			.enter()
+
+		const plannedRects = plannedPhase.append('rect')
+			.attr('x', plannedPhase => operationPlannedX(plannedPhase.column))
+			.attr('y', plannedPhase => y(moment(plannedPhase.start)))
+			.attr('width', PLANNEDWIDTH)
+			.attr('height', plannedPhase => y(moment(plannedPhase.end)) - y(moment(plannedPhase.start)))			
+			.attr('fill', plannedPhase => plannedPhase.color)
+			
+
 		// y-axis group
 		const yGroup = this.svg.append('g')
 			.attr('class', 'Timeline-axis')
@@ -324,14 +344,18 @@ class Timeline extends Component {
 		const zoomed = () => {
 			const transform = d3.event.transform
 			const newY = transform.rescaleY(y)
+			
+			timeRects
+				.attr('y', op => newY(moment(op.start)))
+				.attr('height', op => newY(moment(op.end || now)) - newY(moment(op.start)))
 
 			phaseRects
 				.attr('y', phase => newY(moment(phase.start)))
 				.attr('height', phase => newY(moment(phase.end || now)) - newY(moment(phase.start)))
 			
 			plannedRects
-				.attr('y', op => newY(moment(op.plannedStartTime)))
-				.attr('height', op => (newY(moment(op.plannedEndTime)) - newY(moment(op.plannedStartTime))))
+				.attr('y', phase => newY(moment(phase.start)))
+				.attr('height', phase => (newY(moment(phase.end)) - newY(moment(phase.start))))
 			
 			if(nowLine) {
 				nowLine
@@ -354,6 +378,7 @@ class Timeline extends Component {
 			xoffset = (xoffset <= xScrollDomain[0]) ? xoffset : xScrollDomain[0]
 			xoffset = (xoffset >= xScrollDomain[1]) ? xoffset : xScrollDomain[1]
 			
+			timeRects.attr('x', op => operationActualX(op.column))
 			phaseRects.attr('x', phase => operationActualX(phase.column))
 			plannedRects.attr('x', op => operationPlannedX(op.column))
 			theaterGroup.attr('transform', theater => translate(theaterX(theater), 0))

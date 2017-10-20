@@ -2,11 +2,11 @@
   "short_name": "Scalpel",
   "name": "Scalpel - A Clean Cut in Medical Organizing",
   "icons": [
-    /*{
-      "src": "favicon.ico",
-      "sizes": "192x192",
+    {
+      "src": "scalpelapp.ico",
+      "sizes": "256x256",
       "type": "image/png"
-    }*/
+    }
   ],
   "start_url": "./index.html",
   "display": "standalone",

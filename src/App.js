@@ -5,7 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import theme from './theme/theme'
 import Header from './containers/Header'
-import MenuDrawer from './components/MenuDrawer/MenuDrawer'
+import MenuDrawer from './containers/MenuDrawer'
 import TodayTimeline from './containers/TodayTimeline'
 import OperationList from './containers/OperationList'
 import OperationDetails from './containers/OperationDetails'
@@ -43,7 +43,7 @@ class App extends Component {
 			<MuiThemeProvider theme={theme}>
 				<Router>
 					<div>
-						<MenuDrawer open={this.state.menuOpen} onRequestClose={this.closeMenu}/>
+						<MenuDrawer open={this.state.menuOpen} onRequestClose={this.closeMenu} />
 						<Header 
 							onMenuButtonClick={this.openMenu} 
 							headerItems={this.state.headerItems}

@@ -29,13 +29,18 @@ class OperationList extends React.Component {
 
 	constructor(props) {
 		super(props)
-		this.theaters = props.theaters
 		this.state = {
 			value: 0
 		}
 
 		this.handleChange = this.handleChange.bind(this)
 		this.handleChangeIndex = this.handleChangeIndex.bind(this)
+	}
+
+	componentWillReceiveProps (newProps) { //Set to first tab on change plan
+		if (this.props.plan != newProps.plan) {
+			this.handleChange(undefined, 0)
+		}
 	}
 
 	handleChange(_, value) {
@@ -59,13 +64,13 @@ class OperationList extends React.Component {
 						scrollable
 						scrollButtons='auto'
 					>
-						{this.theaters.map((theatre, tIndex) => {
+						{this.props.theaters.map((theatre, tIndex) => {
 							return <Tab label={theatre.name} key={tIndex}/>
 						})}
 					</Tabs>
 				</AppBar>
 				<SwipeableViews index={this.state.value} onChangeIndex={this.handleChangeIndex}>
-					{this.theaters.map((theatre, tIndex) =>
+					{this.props.theaters.map((theatre, tIndex) =>
 						tIndex === this.state.value ?
 							<TabContainer key={tIndex}>
 								<List>
