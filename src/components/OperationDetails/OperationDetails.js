@@ -83,11 +83,15 @@ class OperationDetails extends Component {
 						scrollable
 						scrollButtons="off">
 						{tabContent(this.operation).tabs.map((tab, tIndex) => {
-							return <Tab label={tab.name} key={tIndex}/>
+							return <Tab label={tab.name} key={tIndex} disableFocusRipple={true}/>
 						})}
 					</Tabs>
 				</AppBar>
-				<SwipeableViews index={this.state.value} onChangeIndex={this.handleChangeIndex}>
+				<SwipeableViews 
+					index={this.state.value} 
+					onChangeIndex={this.handleChangeIndex}
+					animateTransitions={false}
+					disableLazyLoading={true} >
 					{tabContent(this.operation).tabs.map((tab, tIndex) =>
 						tIndex === this.state.value ?
 							<TabContainer key={tIndex}>
