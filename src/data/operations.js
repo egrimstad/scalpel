@@ -17,6 +17,7 @@ const operations = [
 			},
 			{
 				name: 'posttime',
+				end: '2017-09-20 15:40',
 				duration: 10
 			}
 		],
@@ -108,6 +109,7 @@ const operations = [
 			},
 			{
 				name: 'posttime',
+				end: '2017-09-20 12:07',
 				duration: 10
 			}
 		],
@@ -199,7 +201,8 @@ const operations = [
 			},
 			{
 				name: 'posttime',
-				duration: 10
+				duration: 10,
+				end: '2017-09-20 16:30'
 			}
 		],
 		phases: [
@@ -283,7 +286,8 @@ const operations = [
 			},
 			{
 				name: 'posttime',
-				duration: 10
+				duration: 10,
+				end: '2017-09-20 09:40'
 			}
 		],
 		phases: [
@@ -332,7 +336,8 @@ const operations = [
 			},
 			{
 				name: 'posttime',
-				duration: 10
+				duration: 10,
+				end: '2017-09-20 11:00'
 			}
 		],
 		phases: [
@@ -423,7 +428,8 @@ const operations = [
 			},
 			{
 				name: 'posttime',
-				duration: 10
+				duration: 10,
+				end: '2017-09-20 12:10'
 			}
 		],
 		phases: [
@@ -513,7 +519,8 @@ const operations = [
 			},
 			{
 				name: 'posttime',
-				duration: 10
+				duration: 10,
+				end: '2017-09-20 16:40'
 			}
 		],
 		patientName: 'Magnus',
@@ -592,7 +599,8 @@ const operations = [
 			},
 			{
 				name: 'posttime',
-				duration: 10
+				duration: 10,
+				end: '2017-09-20 15:40'
 			}
 		],
 		patientName: 'Letizia',
@@ -683,7 +691,8 @@ const operations = [
 			},
 			{
 				name: 'posttime',
-				duration: 10
+				duration: 10,
+				end: '2017-09-20 14:40'
 			}
 		],
 		patientName: 'Tor',
