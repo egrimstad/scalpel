@@ -39,7 +39,7 @@ class MenuDrawer extends Component {
 									<StopIcon size={32}/>
 								</div>
 							</ListItemIcon>
-							<ListItemText primary="Plan 1" />
+							<ListItemText primary="Ortopedisk avdeling" />
 						</ListItem>
 						<ListItem button>
 							<ListItemIcon>
@@ -47,7 +47,7 @@ class MenuDrawer extends Component {
 									<StopIcon size={32}/>
 								</div>
 							</ListItemIcon>
-							<ListItemText primary="Plan 2" />
+							<ListItemText primary="Fødeavdelingen" />
 						</ListItem>
 						<ListItem button>
 							<ListItemIcon>
@@ -55,7 +55,7 @@ class MenuDrawer extends Component {
 									<StopIcon size={32}/>
 								</div>
 							</ListItemIcon>
-							<ListItemText primary="Plan 3" />
+							<ListItemText primary="Kvinne-barn" />
 						</ListItem>
 						<ListItem button>
 							<ListItemIcon>
