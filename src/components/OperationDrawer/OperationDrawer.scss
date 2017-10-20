@@ -1,0 +1,13 @@
+.OperationDrawer-container {
+	margin: 10px;
+	display: grid;
+	grid-template-areas:
+		"details-header phase-header"
+		"details phase-at"
+		"details phase-time"
+		"details phase-secondary"
+		"details phase-or"
+		"goto phase-primary";
+	grid-row-gap: 10px;
+	grid-column-gap: 30px;
+}

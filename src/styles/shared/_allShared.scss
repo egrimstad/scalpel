@@ -8,3 +8,6 @@ instead of having to import all individual files.
 Partials vs Shared: Partials are element specific, while shared is
 more Scalpel specifc.
 */
+
+@import 'colors';
+@import 'sizes';
