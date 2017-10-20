@@ -2,11 +2,13 @@ import { combineReducers } from 'redux'
 import date from './date'
 import operations from './operations'
 import theaters from './theaters'
+import plan from './plan'
 
 const scalpelReducer = combineReducers({
 	date,
 	operations,
-	theaters
+	theaters,
+	plan
 })
 
 export default scalpelReducer

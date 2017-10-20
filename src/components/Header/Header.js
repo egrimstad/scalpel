@@ -52,8 +52,8 @@ class Header extends Component {
 					<IconButton onClick={this.props.onMenuButtonClick} style={{color: '#fff'}}>
 						<MenuIcon />
 					</IconButton>
-					<Typography type="title" color="inherit" noWrap style={{flex:1}}>
-						Scalpel
+					<Typography color="inherit" noWrap style={{flex:1}}>
+						{this.props.planName}
 					</Typography>
 					{this.props.headerItems}
 					<IconButton

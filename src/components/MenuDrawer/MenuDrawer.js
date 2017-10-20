@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
+import plans from '../../data/plans'
 
 import Divider from 'material-ui/Divider'
 
@@ -27,21 +28,6 @@ const menuOptions = [
 	}
 ]
 
-const plans = [
-	{
-		name: 'Plan 1',
-		color: '#FC7777'
-	},
-	{
-		name: 'Plan 2',
-		color: '#9C639D'
-	},
-	{
-		name: 'Plan 3',
-		color: '#3B4EC2'
-	}
-]
-
 
 class MenuDrawer extends Component {
 	render() {
@@ -62,9 +48,9 @@ class MenuDrawer extends Component {
 					</div>
 					<List id="testtest">
 						{plans.map((plan, index) =>
-							<ListItem button key={index}>
+							<ListItem button key={index} onClick={() => this.props.onSelectPlan(plan)}>
 								<ListItemIcon>
-									<div style={{color: plan.color}}>
+									<div style={{color: '#9C639D'}}>
 										<StopIcon size={32}/>
 									</div>
 								</ListItemIcon>
@@ -98,7 +84,7 @@ class MenuDrawer extends Component {
 
 MenuDrawer.propTypes = {
 	open: PropTypes.bool,
-	onRequestClose: PropTypes.func
+	onRequestClose: PropTypes.func,
 }
 
 export default MenuDrawer
