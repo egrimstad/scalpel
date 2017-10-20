@@ -22,6 +22,7 @@ const mainFields = ([
 	['Navn', 'patientName'],
 	['Født', 'patientBirthDate'],
 	['Enhet', 'careUnitName'],
+	['Utstyr', 'equipment']
 ])
 
 const styles = theme => ({
@@ -69,12 +70,6 @@ class Overview extends Component {
 					<ListItemText
 						primary={this.operation['crew'] ? this.operation['crew'].map(crew => crew['initials'] + ', '): '-'}
 						secondary='Personell'
-					/>
-				</ListItem>
-				<ListItem>
-					<ListItemText
-						primary={this.operation['equipment'] ? this.operation['equipment'].map(equip => equip + ', ') : '-'}
-						secondary='Utstyr'
 					/>
 				</ListItem>
 			</List>

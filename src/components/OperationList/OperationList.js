@@ -75,7 +75,7 @@ class OperationList extends React.Component {
 												<ListItem button>
 													<img src={Pencil} height='20px' alt='Status icon'/>
 													<img src={GreenBall} alt='Status icon'/>
-													<ListItemText primary={operation.patient} secondary={operation.diagnosis}/>
+													<ListItemText primary={operation.procedure} secondary={operation.diagnosis}/>
 												</ListItem>
 											</Link>
 										</div>
