@@ -7,8 +7,8 @@ import theme from './theme/theme'
 import Header from './containers/Header'
 import MenuDrawer from './components/MenuDrawer/MenuDrawer'
 import TodayTimeline from './containers/TodayTimeline'
-import ListView from './containers/OperationList'
-import OperationIndex from './containers/OperationDetails'
+import OperationList from './containers/OperationList'
+import OperationDetails from './containers/OperationDetails'
 
 class App extends Component {
 	constructor(props) {
@@ -54,9 +54,9 @@ class App extends Component {
 								<TodayTimeline setHeaderItems={this.setHeaderItems}/>
 							} />
 							<Route exact path="/operations" render={() =>
-								<ListView setHeaderItems={this.setHeaderItems}/>
+								<OperationList setHeaderItems={this.setHeaderItems}/>
 							} />
-							<Route exact path="/operations/:operationId" component={OperationIndex} />
+							<Route exact path="/operations/:operationId" component={OperationDetails} />
 						</div>
 					</div>
 				</Router>
