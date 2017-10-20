@@ -50,11 +50,11 @@ class App extends Component {
 						/>
 
 						<div className="App-content">
-							<Route exact path="/" render={() =>
-								<TodayTimeline setHeaderItems={this.setHeaderItems}/>
+							<Route exact path="/" render={props =>
+								<TodayTimeline setHeaderItems={this.setHeaderItems} history={props.history} />
 							} />
 							<Route exact path="/patients" render={() =>
-								<ListView setHeaderItems={this.setHeaderItems}/>
+								<ListView setHeaderItems={this.setHeaderItems} history={history} />
 							} />
 							<Route exact path="/operationDetails/:operationId" component={OperationIndex} />
 						</div>

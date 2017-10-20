@@ -17,7 +17,7 @@ const theaters = [
 	},
 	{
 		id: 4,
-		name: 'Theater5'
+		name: 'Theater5',
 	}
 ]
 

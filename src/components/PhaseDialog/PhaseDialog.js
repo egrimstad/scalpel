@@ -1,8 +1,15 @@
 import React from 'react'
-import Dialog, { DialogActions, DialogTitle } from 'material-ui/Dialog'
+import PropTypes from 'prop-types'
+import Dialog, { DialogContent, DialogActions, DialogTitle } from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
 import ScheduleIcon from 'material-ui-icons/Schedule'
+import Typography from 'material-ui/Typography'
+
+import { lastOperationEventTime, activePhase, nextPhase } from 'utils/operationUtils'
+
+import moment from 'moment'
+import isNil from 'lodash/isNil'
 
 import './PhaseDialog.css'
 
@@ -10,68 +17,97 @@ class PhaseDialog extends React.Component {
 	constructor(props) {
 		super(props)
 
+		this.onEndPhase = this.onEndPhase.bind(this)
+		this.onStartNextPhase = this.onStartNextPhase.bind(this)
+		this.onTimeChange = this.onTimeChange.bind(this)
+		this.resetState = this.resetState.bind(this)
+
 		this.state = {
-			time: props.time
+			time: moment().hours(16).minutes(10),
+			isTimeValid: true
 		}
-
-		this.handleRequestClose = this.handleRequestClose.bind(this)
-		this.handleEndPhaseClick = this.handleEndPhaseClick.bind(this)
-		this.handleChange = this.handleChange.bind(this)
-	}
-
-	handleRequestClose() {
-		this.setState({time: this.props.time})
-		this.props.onRequestClose(this.props.time)
-	}
-
-	handleEndPhaseClick() {
-		this.props.onRequestClose(this.state.time)
-	}
-
-	handleChange(event) {
-		this.setState({
-			time: event.target.value,
-		})
 	}
 
 	render() {
-		const { onRequestClose, time, title, ...other } = this.props
-
+		if(!this.props.operation) return null
+		const operation = this.props.operation
+		const active = activePhase(operation)
+		const next = nextPhase(operation)
+		const hasActive = !isNil(active)
+		const hasNext = !isNil(next)
 		return (
-			<Dialog onRequestClose={this.handleRequestClose} {...other}>
-				<DialogTitle>{this.props.title}</DialogTitle>
+			<Dialog 
+				onRequestClose={this.props.onRequestClose} 
+				open={this.props.open}
+				onExited={this.resetState} 
+			>
+				<DialogTitle>{'Operation ' + operation.id}</DialogTitle>
+				<DialogContent>
+					<form style={{display: 'flex', flexWrap: 'wrap', margin: 'auto', marginTop: 15}}>
+						<ScheduleIcon style={{marginRight: 15, marginTop: 5}}/>
+						<TextField
+							id="time"
+							type="time"
+							InputLabelProps={{ shrink: true }}
+							value={this.state.time.format('HH:mm')}
+							onChange={event => this.onTimeChange(event.target)}
+						/>
+					</form>
+				</DialogContent>
+				<DialogActions>
+					<div className='PhaseDialog-grid-container'>
+						{hasActive && 
+							<Button
+								style={{gridArea: 'primary'}}
+								color="primary" 
+								onClick={this.onEndPhase}
+								disabled={!this.state.isTimeValid}
+								raised
+								dense
+							>
+								End {active.name}
+							</Button> 
+						}
+						{hasNext && 
+							<Button
+								style={{gridArea: hasActive ? 'secondary' : 'primary'}}
+								onClick={this.onStartNextPhase}
+								disabled={!this.state.isTimeValid}
+								dense
+								color="primary"
+								raised={!hasActive}
+							>
+								Start {next.name}
+							</Button>
+						}
+						{hasActive && hasNext && 
+							<Typography 
+								style={{gridArea: 'or', textAlign: 'center'}} 
+								type="body2"
+							>
+								or
+							</Typography>
+						}
 
-				<form style={{display: 'flex', flexWrap: 'wrap', margin: 'auto', marginTop: 15}}>
-					<ScheduleIcon style={{marginRight: 15, marginTop: 5}}/>
-					<TextField
-						id="time"
-						//label="End time"
-						type="time"
-						defaultValue={this.state.time}
-						InputLabelProps={{
-							shrink: true,
-						}}
-						inputProps={{
-							step: 300, // 5 min
-						}}
-						onChange={event => this.handleChange(event)}
-					/>
-				</form>
-
-				<DialogActions /*style={{overflow: 'hidden', whiteSpace: 'nowrap'}} // The style makes the buttons single line, but does not scale well*/>
-					<Button color="primary" className="btn-small" style={{marginRight: 30}}>
-						<p>START NEW PHASE</p>
-					</Button>
-					<Button color="primary" onClick={this.handleRequestClose}>
-							CANCEL
-					</Button>
-					<Button color="primary" onClick={this.handleEndPhaseClick}>
-							END PHASE
-					</Button>
+						<Button
+							style={{gridArea: 'cancel'}}
+							onClick={this.props.onRequestClose}
+							dense
+							color="primary"
+						>
+							Cancel
+						</Button>
+					</div>
 				</DialogActions>
 			</Dialog>
 		)
 	}
+}
+
+PhaseDialog.propTypes = {
+	open: PropTypes.bool,
+	operation: PropTypes.object,
+	onRequestClose: PropTypes.func
 }
 
 export default PhaseDialog

@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import * as d3 from 'd3'
 import moment from 'moment'
 import isEmpty from 'lodash/isEmpty'
+import isNil from 'lodash/isNil'
 
 import './Timeline.css'
-import PhaseDialog from '../PhaseDialog/PhaseDialog'
+import OperationDrawer from '../../containers/OperationDrawer'
 
 const OPERATIONWIDTH = 64
 const PLANNEDWIDTH = 16
@@ -34,7 +35,6 @@ class Timeline extends Component {
 		this.container = null
 
 		this.pressTimer = null
-		this.longpress = false
 		this.pressTarget = null
 		this.operationID = null
 		this.filter = null
@@ -42,46 +42,56 @@ class Timeline extends Component {
 		this.click = this.click.bind(this)
 		this.start = this.start.bind(this)
 		this.cancel = this.cancel.bind(this)
+		this.redirect = this.redirect.bind(this)
+		this.shortPress = this.shortPress.bind(this)
 		this.closeDialog = this.closeDialog.bind(this)
 
 		this.createFilter = this.createFilter.bind(this)
 		this.buildTimeline = this.buildTimeline.bind(this)
 
 		this.state = {
-			open: false,
-			time: '10:00',
+			phaseDialogOpen: false,
+			operationDrawerOpen: false,
+			selectedOperation: null
 		}
 	}
 
-	closeDialog(value) {
-		this.setState({ time: value, open: false })
+	closeDialog() {
+		this.setState({ phaseDialogOpen: false})
 	}
 
-	click() {
+	redirect(url) {
+		this.props.history.push(url)
+	}
+
+	shortPress(operation) {
+		this.setState({
+			selectedOperation: operation,
+			operationDrawerOpen: true
+		})
+	}
+
+	click(operation) {
 		if(this.pressTimer) {
 			clearTimeout(this.pressTimer)
 			this.pressTimer = null
+			this.shortPress(operation)
 		}
-		if(!this.longpress) {
-			this.filter.transition().select('feMorphology').attr('radius','2')
-			d3.select(this.pressTarget).attr('filter', null)
-			this.pressTimer = null
-		}
-
+		this.filter.transition().select('feMorphology').attr('radius','2')
+		d3.select(this.pressTarget).attr('filter', null)
+		this.pressTimer = null
 		return false
-		
 	}
 
-	start() {
+	start(operation) {
 		if(this.pressTimer) return
 		
 		this.pressTarget = d3.event.currentTarget
 		this.operationID = operation.id
-		this.longpress = false
 		d3.select(this.pressTarget).attr('filter', 'url(#Timeline-click-filter)')
 		this.filter.transition().duration(1000).select('feMorphology').attr('radius', '5')
 		this.pressTimer = setTimeout(() => {
-			this.longpress = true
+			this.longPress(operation)
 			this.setState({ open: true })
 			this.filter.transition().select('feMorphology').attr('radius','2')
 			d3.select(this.pressTarget).attr('filter', null)
@@ -138,7 +148,7 @@ class Timeline extends Component {
 		const theaters = this.props.theaters
 		const numColumns = this.props.numColumns
 		const date = this.props.date
-		const now = moment('2017-09-20 15:59')
+		const now = moment().hours(16).minutes(10)
 
 		// Create svg if not done yet
 		const height = window.innerHeight - this.container.offsetTop - THEATERBARHEIGHT		
@@ -169,7 +179,7 @@ class Timeline extends Component {
 		let xscrollstart = 0
 		let xoffset = 0
 
-		const theaterX = theater => xoffset + theater.id*THEATERPADDING + theater.startColumn*(OPERATIONWIDTH + OPERATIONPADDING)
+		const theaterX = theater => xoffset + theater.index*THEATERPADDING + theater.startColumn*(OPERATIONWIDTH + OPERATIONPADDING)
 		const theaterWidth = theater => (OPERATIONWIDTH + OPERATIONPADDING)*theater.columns
 
 		const operationActualX = column => column*(OPERATIONWIDTH + OPERATIONPADDING)
@@ -252,7 +262,7 @@ class Timeline extends Component {
 		// Actual time spent
 		const phase = operationEnter
 			.selectAll('rect')
-			.data(op => op.phases)
+			.data(op => op.phases.filter(phase => !isNil(phase.start)))
 			.enter()
 		
 		const phaseRects = phase.append('rect')
@@ -355,11 +365,11 @@ class Timeline extends Component {
 			<div
 				ref = {element => this.container = element}
 			>
-				<PhaseDialog
-					time={this.state.time}
-					title={'Operation ' + this.operationID}
-					open={this.state.open}
-					onRequestClose={this.closeDialog}
+				<OperationDrawer
+					redirect={this.redirect}
+					operation={this.state.selectedOperation}
+					open={this.state.operationDrawerOpen}
+					onRequestClose={() => this.setState({operationDrawerOpen: false})}
 				/>
 			</div>
 		)
@@ -373,14 +383,15 @@ Timeline.propTypes = {
 		operations: PropTypes.arrayOf(PropTypes.shape({
 			phases: PropTypes.arrayOf(PropTypes.shape({
 				column: PropTypes.number,
-				start: PropTypes.object,
-				end: PropTypes.object,
+				start: PropTypes.string,
+				end: PropTypes.string,
 				color: PropTypes.string
 			})),
 			column: PropTypes.number
 		})),
 		startColumn: PropTypes.number,
 		columns: PropTypes.number,
+		index: PropTypes.number
 	})),
 	numColumns: PropTypes.number,
 	setHeaderItems: PropTypes.func

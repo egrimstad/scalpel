@@ -176,6 +176,12 @@ const operations = [
 			{
 				name: 'posttime',
 				start: '2017-09-20 15:59',
+				end: '2017-09-20 16:06'
+			},
+			{
+				name: 'postop',
+				start: '2017-09-20 16:07',
+				end: '2017-09-20 16:13'
 			}
 		],
 		crew: [
@@ -426,7 +432,18 @@ const operations = [
 			},
 			{
 				name: 'knifetime',
-				start: '2017-09-20 15:45'
+				start: '2017-09-20 15:45',
+				end: '2017-09-20 16:15'
+			},
+			{
+				name: 'posttime',
+				start: '2017-09-20 16:15',
+				end: '2017-09-20 16:20'
+			},
+			{
+				name: 'postop',
+				start: '2017-09-20 16:22',
+				end: '2017-09-20 16:35'
 			}
 		],
 		crew: [
@@ -616,6 +633,77 @@ const operations = [
 		anesthesiaCodeComment: 'Anestesi etter kl 16',
 		premedication: 'Paracet',
 		propolDate: '2017-09-20 17:00',
+		isScreeningCompleted: false,
+		needsEpiduralAnesthetic: true,
+		needsArterialCatheter: false,
+		needsCentralVenousCatheter: true,
+		height: 179,
+		weight: 60,
+		otherInformation: 'Ingen anestesi før kl 16'
+	},
+	{
+		id: 9,
+		theater: 4,
+		plannedStartTime: '2017-10-20 13:00',
+		plannedEndTime: '2017-10-20 13:58',
+		patientName: 'Ellen',
+		phases: [
+			{
+				name: 'preparation',
+				start: '2017-10-20 13:07',
+				end: '2017-10-20 13:20'
+			},
+			{
+				name: 'pretime',
+				start: '2017-10-20 13:20',
+				end: '2017-10-20 13:46'
+			},
+			{
+				name: 'knifetime',
+				start: '2017-10-20 13:48',
+			},
+			{
+				name: 'posttime'
+			},
+			{
+				name: 'postop'
+			},
+		],
+		crew: [
+			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
+			{initials: 'JSJ', fullName: 'Jenny Stange Johansen', phone: '+4712345678', position: 'assistant1'},
+			{initials: 'OPH', fullName: 'Olav Per Høyset', phone: '+4712345678', position: 'assistant2'}],
+		surgeon: 'Roger Gran Hansen',
+		assistant1: 'Jenny Stange Johansen',
+		assistant2: 'Olav Per Høyset',
+		careUnitName: 'KB2',
+		operatingDate: '2017-10-20 17:11',
+		arrivalTime: '2017-10-20 15:11',
+		surgeonTime: 15,
+		patientBirthDate: '1987-09-20',
+		bloodType: 'AA',
+		asa: 2,
+		diagnoseTypeFreeText: 'Akutt appendisitt med \ngeneralisert peritonitt',
+		procedureTypeFreeText: 'Kutt kutt appendisitt \nmed generalisert peritonitt',
+		equipment: ['Skalpell', 'Hansker', 'Frakk'],
+		tils: 'T',
+		priority: 2,
+		messageFromBedWard: 'DETTE ER TEKST 1\r\nDETTE ER TELST 2\r\n',
+		medicalInformation: 'DETTE ER TEKST 1\r\nDETTE ER TELST 2\r\n',
+		fasting: 'fra 14',
+		position: 'sideleie',
+		anesthesiaCode: 1234,
+		noAnesthesia: false,
+		trauma: false,
+		thrombosisProphylaxis: true,
+		isContaminationDanger: true,
+		intensiveRoom: false,
+		abProphylaxis: false,
+		surveillance: true,
+		anesthesiaInformation: 'Ingen anestesi før\n kl 16',
+		anesthesiaCodeComment: 'Anestesi etter kl 16',
+		premedication: 'Paracet',
+		propolDate: '2017-10-20 17:00',
 		isScreeningCompleted: false,
 		needsEpiduralAnesthetic: true,
 		needsArterialCatheter: false,

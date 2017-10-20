@@ -1,7 +1,11 @@
 @import 'styles/shared/allShared';
 
-.btn-small{
-	p{
-		font-size: $small-font;
-	}
+.PhaseDialog-grid-container {
+	display: grid;
+	grid-template-areas: 
+		"empty secondary"
+		"empty or"
+		"cancel primary";
+	grid-column-gap: 50px;
+	margin: 5px;
 }

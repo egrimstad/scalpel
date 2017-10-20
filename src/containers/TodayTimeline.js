@@ -1,5 +1,4 @@
 import Timeline from '../components/Timeline/Timeline'
-import { operationPhases } from '../data/operations'
 import { connect } from 'react-redux'
 
 import last from 'lodash/last'
@@ -36,7 +35,7 @@ const selectNonOverlappingOperations = operations => {
  * @param {*} operations 
  * @returns An object that contains of the operations with added column prop and the number of columns needed
  */
-const distributeOperations = operations => {
+const distributeOperations = (operations, state) => {
 	const result = []
 	let column = 0
 	let rest = operations
@@ -46,10 +45,8 @@ const distributeOperations = operations => {
 		result.push(...overlap.selected.map(op => {
 			const phases = op.phases.map(phase => {
 				return {
-					name: phase.name,
-					start: moment(phase.start),
-					end: phase.end ? moment(phase.end) : null,
-					color: operationPhases[phase.name].color,
+					...phase,
+					color: state.operationPhases[phase.name].color,
 					column: column
 				}
 			})
@@ -75,15 +72,16 @@ const mapStateToProps = (state, ownProps) => {
 
 	const theaters = state.theaters
 		.filter(theater => operationsToday.some(op => op.theater === theater.id))
-		.map(theater => {
-			const dist = distributeOperations(operationsToday.filter(op => op.theater === theater.id))
+		.map((theater, i) => {
+			const dist = distributeOperations(operationsToday.filter(op => op.theater === theater.id), state)
 			
 			numColumns += dist.columns
 			return {
 				...theater,
 				operations: dist.operations,
 				startColumn: numColumns - dist.columns,
-				columns: dist.columns
+				columns: dist.columns,
+				index: i
 			}
 		})
 	return {
