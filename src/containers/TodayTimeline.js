@@ -55,14 +55,14 @@ const distributeOperations = operations => {
 			})
 			let phaseStart = moment(op.plannedPhases[0].start)
 			let phaseDuration = 0
-			const plannedPhases = op.plannedPhases.map(phase => {
+			const plannedPhases = op.plannedPhases.map(plannedPhase => {
 				phaseStart = phaseStart.clone().add(phaseDuration, 'm')
-				phaseDuration = phase.duration
+				phaseDuration = plannedPhase.duration
 				return {
-					name: phase.name,
+					name: plannedPhase.name,
 					start: phaseStart,
 					end: phaseStart.clone().add(phaseDuration, 'm'),
-					color: planningPhases[phase.name].color,
+					color: planningPhases[plannedPhase.name].color,
 					column: column
 				}
 			})
