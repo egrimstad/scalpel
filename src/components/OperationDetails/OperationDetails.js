@@ -81,7 +81,7 @@ class OperationDetails extends Component {
 						indicatorColor="primary"
 						textColor="primary"
 						scrollable
-						scrollButtons="auto">
+						scrollButtons="off">
 						{tabContent(this.operation).tabs.map((tab, tIndex) => {
 							return <Tab label={tab.name} key={tIndex}/>
 						})}

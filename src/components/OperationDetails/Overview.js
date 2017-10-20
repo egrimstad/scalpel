@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import List, { ListItem, ListItemText, ListItemSecondaryAction} from 'material-ui/List'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
@@ -41,36 +41,33 @@ const styles = theme => ({
 	}
 })
 
-class Overview extends Component {
-	constructor(props) {
-		super(props)
-		this.operation = props.operation
-	}
+const Overview = (props) => {
+	const operation = props.operation
 
-	topContentFormatted() {
+	const topContentFormatted = () => {
 		return (
 			<List> {topFields.map((tuple, hIndex) =>
 				<ListItem key={hIndex}>{tuple[0]}
-					<ListItemSecondaryAction>{this.operation[tuple[1]] ? this.operation[tuple[1]] : '-'}</ListItemSecondaryAction>
+					<ListItemSecondaryAction>{operation[tuple[1]] ? operation[tuple[1]] : '-'}</ListItemSecondaryAction>
 				</ListItem>)}
 			</List>
 		)
 	}
 
-	mainContentFormatted() {
+	const mainContentFormatted = () => {
 		return (
 			<List>
 				{mainFields.map((tuple, i) =>
 					<ListItem key={i}>
 						<ListItemText
-							primary={this.operation[tuple[1]] ? this.operation[tuple[1]] : '-'}
+							primary={operation[tuple[1]] ? operation[tuple[1]] : '-'}
 							secondary={tuple[0]}
 						/>
 					</ListItem>
 				)}
 				<ListItem>
 					<ListItemText
-						primary={this.operation['crew'] ? this.operation['crew'].map(crew => crew['initials'] + ', '): '-'}
+						primary={operation['crew'] ? operation['crew'].map(crew => crew['initials']).join(', ') : '-'}
 						secondary='Personell'
 					/>
 				</ListItem>
@@ -78,7 +75,7 @@ class Overview extends Component {
 		)
 	}
 
-	iconDataFormatted() {
+	const iconDataFormatted = () => {
 		return (
 			<div>
 				<img src={Pencil} style={{width:'-webkit-fill-available'}} alt='Status icon'/>
@@ -87,46 +84,43 @@ class Overview extends Component {
 		)
 	}
 
-
-	tileData() {
+	const tileData = () => {
 		return [
 			{
 				id: 0,
 				cols: 0.5,
 				rows: 3,
-				content: this.iconDataFormatted()
+				content: iconDataFormatted()
 			},
 			{
 				id: 1,
 				cols: 1.5,
 				rows: 3,
-				content: this.topContentFormatted()
+				content: topContentFormatted()
 			},
 			{
 				id: 2,
 				cols: 2,
 				rows: 1,
-				content: <OperationTimeline operation={this.operation} />
+				content: <OperationTimeline operation={operation} />,
 			},
 			{
 				id: 3,
 				cols: 2,
 				rows: 6,
-				content: this.mainContentFormatted()
+				content: mainContentFormatted()
 			}
 		]
 	}
+	const classes = props.classes
 
-	render() {
-		const classes = this.props.classes
-		return (<div className={classes.root}>
-			<GridList cellHeight={100} spacing={1} className={classes.gridList}>
-				{this.tileData().map(tile => (
-					<GridListTile key={tile.id} cols={tile.cols} rows={tile.rows} children={tile.content}/>
-				))}
-			</GridList>
-		</div>)
-	}
+	return (<div className={classes.root}>
+		<GridList cellHeight={100} spacing={1} className={classes.gridList}>
+			{tileData().map(tile => (
+				<GridListTile key={tile.id} cols={tile.cols} rows={tile.rows} children={tile.content}/>
+			))}
+		</GridList>
+	</div>)
 }
 
 Overview.propTypes = {

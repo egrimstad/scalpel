@@ -39,28 +39,32 @@ class OperationTimeline extends Component {
 		const start = startTime(operation)
 		const end = endTime(operation)
 
-		const actualHeight = height*0.8
-		const plannedHeight = height - actualHeight
+		const padding = 5
+		const actualHeight = height*0.7
+		const plannedHeight = height - actualHeight - 3*padding
 
 		const time = d3.scaleTime()
 			.domain([moment(start), moment(end)])
-			.range([0, width])
+			.range([padding, width-padding])
 		
 		this.svg.append('g').selectAll('rect')
 			.data(startedPhases(operation))
 			.enter()
 			.append('rect')
 			.attr('x', phase => time(moment(phase.start)))
+			.attr('y', padding)
 			.attr('height', actualHeight)
 			.attr('width', phase => time(moment(phase.end || end)) - time(moment(phase.start)))
 			.attr('fill', phase => phase.color)
 		
-		this.svg.append('g').selectAll('rect')
+		this.svg.append('g')
+			.attr('style', 'outline: thin solid gray')
+			.selectAll('rect')
 			.data(operation.plannedPhases)
 			.enter()
 			.append('rect')
 			.attr('x', phase => time(moment(phase.start)))
-			.attr('y', actualHeight)
+			.attr('y', actualHeight + 2*padding)
 			.attr('height', plannedHeight)
 			.attr('width', phase => time(moment(phase.end || end)) - time(moment(phase.start)))
 			.attr('fill', phase => phase.color)
