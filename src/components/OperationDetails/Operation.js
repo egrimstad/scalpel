@@ -40,13 +40,13 @@ class Operation extends Component {
 	render() {
 		return (
 			<div>
-				<Grid container>
+				<Grid>
 					{longFields.map((item, i) =>
-						<Grid item key={i}>
+						<Grid key={i}>
 							<h4>{item[0]}</h4>
-							<p>{this.operation[item[1]] ? this.operation[item[1]] : '-'}</p>
+							<p>{this.operation[item[1]] ? this.operation[item[1]] : 'Ingen informasjon tilgjengelig'}</p>
 						</Grid>)}
-					<Grid item>
+					<Grid>
 						{shortFields.map((item,i) =>
 							<ListItem key={i}>
 								<ListItemText
@@ -55,7 +55,7 @@ class Operation extends Component {
 								/>
 							</ListItem>)}
 					</Grid>
-					<Grid item>
+					<Grid>
 						{checkboxFields.map((item, i) =>
 							<ListItem key={i}>
 								{item[0]}
@@ -68,7 +68,7 @@ class Operation extends Component {
 								</ListItemSecondaryAction>
 							</ListItem>)}
 					</Grid>
-					<Grid item>
+					<Grid>
 						<ListItem>
 							<ListItemText
 								primary='-'
