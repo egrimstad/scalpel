@@ -6,16 +6,16 @@ const operations = [
 		// pre-/post time (in minutes) (from a drop down) and knife time (in minutes)
 		plannedPhases: [
 			{
-				name: 'pretime',
+				id: 0,
 				start: '2017-09-20 14:00',
 				duration: 30
 			},
 			{
-				name: 'knifetime',
+				id: 1,
 				duration: 60
 			},
 			{
-				name: 'posttime',
+				id: 2,
 				end: '2017-09-20 15:40',
 				duration: 10
 			}
@@ -100,16 +100,16 @@ const operations = [
 		theater: 0,
 		plannedPhases: [
 			{
-				name: 'pretime',
+				id: 0,
 				start: '2017-09-20 10:27',
 				duration: 30
 			},
 			{
-				name: 'knifetime',
+				id: 1,
 				duration: 60
 			},
 			{
-				name: 'posttime',
+				id: 2,
 				end: '2017-09-20 12:07',
 				duration: 10
 			}
@@ -194,16 +194,16 @@ const operations = [
 		theater: 1,
 		plannedPhases: [
 			{
-				name: 'pretime',
+				id: 0,
 				start: '2017-09-20 14:50',
 				duration: 30
 			},
 			{
-				name: 'knifetime',
+				id: 1,
 				duration: 60
 			},
 			{
-				name: 'posttime',
+				id: 2,
 				duration: 10,
 				end: '2017-09-20 16:30'
 			}
@@ -287,16 +287,16 @@ const operations = [
 		theater: 1,
 		plannedPhases: [
 			{
-				name: 'pretime',
+				id: 0,
 				start: '2017-09-20 08:00',
 				duration: 30
 			},
 			{
-				name: 'knifetime',
+				id: 1,
 				duration: 60
 			},
 			{
-				name: 'posttime',
+				id: 2,
 				duration: 10,
 				end: '2017-09-20 09:40'
 			}
@@ -381,16 +381,16 @@ const operations = [
 		theater: 2,
 		plannedPhases: [
 			{
-				name: 'pretime',
+				id: 0,
 				start: '2017-09-20 09:20',
 				duration: 30
 			},
 			{
-				name: 'knifetime',
+				id: 1,
 				duration: 60
 			},
 			{
-				name: 'posttime',
+				id: 2,
 				duration: 10,
 				end: '2017-09-20 11:00'
 			}
@@ -475,16 +475,16 @@ const operations = [
 		theater: 2,
 		plannedPhases: [
 			{
-				name: 'pretime',
+				id: 0,
 				start: '2017-09-20 10:30',
 				duration: 30
 			},
 			{
-				name: 'knifetime',
+				id: 1,
 				duration: 60
 			},
 			{
-				name: 'posttime',
+				id: 2,
 				duration: 10,
 				end: '2017-09-20 12:10'
 			}
@@ -568,16 +568,16 @@ const operations = [
 		theater: 2,
 		plannedPhases: [
 			{
-				name: 'pretime',
+				id: 0,
 				start: '2017-09-20 15:00',
 				duration: 30
 			},
 			{
-				name: 'knifetime',
+				id: 1,
 				duration: 60
 			},
 			{
-				name: 'posttime',
+				id: 2,
 				duration: 10,
 				end: '2017-09-20 16:40'
 			}
@@ -660,16 +660,16 @@ const operations = [
 		theater: 3,
 		plannedPhases: [
 			{
-				name: 'pretime',
+				id: 0,
 				start: '2017-09-20 14:00',
 				duration: 30
 			},
 			{
-				name: 'knifetime',
+				id: 1,
 				duration: 60
 			},
 			{
-				name: 'posttime',
+				id: 2,
 				duration: 10,
 				end: '2017-09-20 15:40'
 			}
@@ -753,16 +753,16 @@ const operations = [
 		theater: 4,
 		plannedPhases: [
 			{
-				name: 'pretime',
+				id: 0,
 				start: '2017-09-20 13:00',
 				duration: 30
 			},
 			{
-				name: 'knifetime',
+				id: 1,
 				duration: 60
 			},
 			{
-				name: 'posttime',
+				id: 2,
 				duration: 10,
 				end: '2017-09-20 14:40'
 			}
@@ -846,16 +846,16 @@ const operations = [
 		patientName: 'Ellen',
 		plannedPhases: [
 			{
-				name: 'pretime',
+				id: 0,
 				start: '2017-10-20 13:00',
 				duration: 30
 			},
 			{
-				name: 'knifetime',
+				id: 1,
 				duration: 60
 			},
 			{
-				name: 'posttime',
+				id: 2,
 				duration: 10
 			}
 		],
@@ -929,19 +929,25 @@ const operations = [
 ]
 
 
-export const planningPhases = {
-	pretime: {
+export const planningPhases = [
+	{
+		id: 0,
+		name: 'pretime',
 		color: '#F9F9EE'
 	},
-	knifetime: {
+	{
+		id: 1,
+		name: 'knifetime',
 		color: '#DAD9C0'
 	},
-	posttime: {
+	{
+		id: 2,
+		name: 'posttime',
 		color: '#F9F9EE'
 	},
-}
+]
 
-export const operationPhases = [
+export const actualPhases = [
 	{
 		id: 0,
 		name: 'forberedelse',

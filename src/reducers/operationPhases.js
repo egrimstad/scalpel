@@ -1,6 +1,11 @@
-import { operationPhases as initialOperationPhases } from '../data/operations'
+import { actualPhases as initialActualPhases, planningPhases as initialPlanningPhases } from '../data/operations'
 
-const operationPhases = (state = initialOperationPhases, action) => {
+const initialState = {
+	actual: initialActualPhases,
+	planning: initialPlanningPhases
+}
+
+const operationPhases = (state = initialState, action) => {
 	switch(action.type) {
 	default:
 		return state

@@ -1,5 +1,4 @@
 import Timeline from '../components/Timeline/Timeline'
-import { planningPhases } from '../data/operations'
 import { connect } from 'react-redux'
 
 import last from 'lodash/last'
@@ -45,7 +44,7 @@ const distributeOperations = (operations, state) => {
 		rest = overlap.rest
 		result.push(...overlap.selected.map(op => {
 			const phases = op.phases.map(phase => {
-				const opPhase = state.operationPhases.find(opPhase => opPhase.id === phase.id)
+				const opPhase = state.operationPhases.actual.find(opPhase => opPhase.id === phase.id)
 				return {
 					...phase,
 					...opPhase,
@@ -57,11 +56,12 @@ const distributeOperations = (operations, state) => {
 			const plannedPhases = op.plannedPhases.map(plannedPhase => {
 				phaseStart = phaseStart.clone().add(phaseDuration, 'm')
 				phaseDuration = plannedPhase.duration
+				const opPhase = state.operationPhases.planning.find(opPhase => opPhase.id === plannedPhase.id)
 				return {
-					name: plannedPhase.name,
+					...plannedPhase,
+					...opPhase,
 					start: phaseStart,
 					end: phaseStart.clone().add(phaseDuration, 'm'),
-					color: planningPhases[plannedPhase.name].color,
 					column: column
 				}
 			})
