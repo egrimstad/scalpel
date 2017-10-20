@@ -5,7 +5,6 @@ const operations = [
 		patientName: 'Eivind',
 		// As per the documentation, preparation is calcluated given a start time, 
 		// pre-/post time (in minutes) (from a drop down) and knife time (in minutes)
-		//plannedEndTime: '2017-09-20 14:40',
 		plannedPhases: [
 			{
 				name: 'pretime',
@@ -48,6 +47,8 @@ const operations = [
 				end: '2017-09-20 15:37'
 			}
 		],
+		start: '2017-09-20 14:37',
+		end: '2017-09-20 15:37',
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'JSJ', fullName: 'Jenny Stange Johansen', phone: '+4712345678', position: 'assistant1'},
@@ -137,6 +138,8 @@ const operations = [
 				end: '2017-09-20 11:58'
 			}
 		],
+		start: '2017-09-20 10:21',
+		end: '2017-09-20 11:58',
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'JSJ', fullName: 'Jenny Stange Johansen', phone: '+4712345678', position: 'assistant1'},
@@ -220,6 +223,7 @@ const operations = [
 				start: '2017-09-20 15:59',
 			}
 		],
+		start: '2017-09-20 14:49',
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'JSJ', fullName: 'Jenny Stange Johansen', phone: '+4712345678', position: 'assistant1'},
@@ -308,7 +312,9 @@ const operations = [
 				start: '2017-09-20 09:50',
 				end: '2017-09-20 10:00'
 			}
-		]
+		],
+		start: '2017-09-20 08:11',
+		end: '2017-09-20 10:00',
 	},
 	{
 		id: 4,
@@ -356,6 +362,8 @@ const operations = [
 				end: '2017-09-20 10:23'
 			}
 		],
+		start: '2017-09-20 09:30',
+		end: '2017-09-20 10:23',
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'JSJ', fullName: 'Jenny Stange Johansen', phone: '+4712345678', position: 'assistant1'},
@@ -445,6 +453,8 @@ const operations = [
 				end: '2017-09-20 11:58'
 			}
 		],
+		start: '2017-09-20 10:05',
+		end: '2017-09-20 11:58',
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'JSJ', fullName: 'Jenny Stange Johansen', phone: '+4712345678', position: 'assistant1'},
@@ -523,6 +533,7 @@ const operations = [
 				start: '2017-09-20 15:45'
 			}
 		],
+		start: '2017-09-20 15:11',
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'JSJ', fullName: 'Jenny Stange Johansen', phone: '+4712345678', position: 'assistant1'},
@@ -612,6 +623,8 @@ const operations = [
 				end: '2017-09-20 15:30'
 			},
 		],
+		start: '2017-09-20 14:05',
+		end: '2017-09-20 15:30',
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'JSJ', fullName: 'Jenny Stange Johansen', phone: '+4712345678', position: 'assistant1'},
@@ -701,6 +714,8 @@ const operations = [
 				end: '2017-09-20 14:47'
 			},
 		],
+		start: '2017-09-20 13:07',
+		end: '2017-09-20 14:47',
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
 			{initials: 'JSJ', fullName: 'Jenny Stange Johansen', phone: '+4712345678', position: 'assistant1'},

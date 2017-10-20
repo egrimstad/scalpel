@@ -57,7 +57,6 @@ class Timeline extends Component {
 		}
 
 		return false
-		
 	}
 
 	start() {
@@ -236,9 +235,24 @@ class Timeline extends Component {
 			.on('dragstart', this.cancel)
 			.on('contextmenu', () => d3.event.preventDefault())
 		
+		const operationTimes = operationEnter.append('g')
 		const actualPhases = operationEnter.append('g')
 		const plannedPhases = operationEnter.append('g')
 		
+		const time = operationTimes
+			.selectAll('rect')
+			.data(op => op)
+			.enter()
+
+		const timeRects = operationTimes.append('rect')
+			.attr('x', op => operationActualX(op.column))
+			.attr('y', op => y(moment(op.start)))
+			.attr('width', operationActualWidth)
+			.attr('height', op => y(moment(op.end || now)) - y(moment(op.start)))			
+			.attr('fill', 'white')
+			.attr('stroke-width', STROKEWIDTH)
+			.attr('stroke', 'gray')
+
 		// Actual time spent
 		const phase = actualPhases
 			.selectAll('rect')
@@ -251,7 +265,7 @@ class Timeline extends Component {
 			.attr('width', operationActualWidth)
 			.attr('height', phase => y(moment(phase.end || now)) - y(moment(phase.start)))			
 			.attr('fill', phase => phase.color)
-		
+
 		const plannedPhase = plannedPhases
 			.selectAll('rect')
 			.data(op => op.plannedPhases)
@@ -308,6 +322,10 @@ class Timeline extends Component {
 		const zoomed = () => {
 			const transform = d3.event.transform
 			const newY = transform.rescaleY(y)
+			
+			timeRects
+				.attr('y', op => newY(moment(op.start)))
+				.attr('height', op => newY(moment(op.end || now)) - newY(moment(op.start)))
 
 			phaseRects
 				.attr('y', phase => newY(moment(phase.start)))
@@ -338,6 +356,7 @@ class Timeline extends Component {
 			xoffset = (xoffset <= xScrollDomain[0]) ? xoffset : xScrollDomain[0]
 			xoffset = (xoffset >= xScrollDomain[1]) ? xoffset : xScrollDomain[1]
 			
+			timeRects.attr('x', op => operationActualX(op.column))
 			phaseRects.attr('x', phase => operationActualX(phase.column))
 			plannedRects.attr('x', op => operationPlannedX(op.column))
 			theaterGroup.attr('transform', theater => translate(theaterX(theater), 0))
