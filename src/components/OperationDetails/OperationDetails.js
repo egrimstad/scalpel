@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import List, { ListItem, ListItemText } from 'material-ui/List'
 import SwipeableViews from 'react-swipeable-views'
-import { Link } from 'react-router-dom'
-import { Pencil, GreenBall } from 'assets/icons'
+import PhoneList from './PhoneList'
+import Overview from './Overview'
+import Operation from './Operation'
+import Anesthesia from './Anesthesia'
+import './OperationDetails.css'
 
 function TabContainer(props) {
 	return <div style={{ padding: 20 }}>{props.children}</div>
@@ -25,15 +27,38 @@ const styles = theme => ({
 	}
 })
 
-class ListView extends React.Component {
+function tabContent(operation) {
 
+	return {
+		tabs: [
+			{
+				name: 'Oversikt',
+				fields: <Overview operation={operation}/>
+			},
+			{
+				name: 'Operasjon',
+				fields: <Operation operation={operation}/>
+			},
+			{
+				name: 'Anestesi',
+				fields: <Anesthesia operation={operation}/>
+			},
+			{
+				name: 'Personell',
+				fields: <PhoneList operation={operation}/>
+			}
+
+		]
+	}
+}
+
+class OperationDetails extends Component {
 	constructor(props) {
 		super(props)
-		this.theaters = props.theaters
+		this.operation = props.operation
 		this.state = {
 			value: 0
 		}
-
 		this.handleChange = this.handleChange.bind(this)
 		this.handleChangeIndex = this.handleChangeIndex.bind(this)
 	}
@@ -50,37 +75,25 @@ class ListView extends React.Component {
 		const { classes } = this.props
 		return (
 			<div className={classes.root}>
-				<AppBar position='static' color='default'>
-					<Tabs
-						value={this.state.value}
+				<AppBar position="static" color="default">
+					<Tabs value={this.state.value}
 						onChange={this.handleChange}
-						indicatorColor='primary'
-						textColor='primary'
+						indicatorColor="primary"
+						textColor="primary"
 						scrollable
-						scrollButtons='auto'
-					>
-						{this.theaters.map((theatre, tIndex) => {
-							return <Tab label={theatre.name} key={tIndex}/>
+						scrollButtons="auto">
+						{tabContent(this.operation).tabs.map((tab, tIndex) => {
+							return <Tab label={tab.name} key={tIndex}/>
 						})}
 					</Tabs>
 				</AppBar>
 				<SwipeableViews index={this.state.value} onChangeIndex={this.handleChangeIndex}>
-					{this.theaters.map((theatre, tIndex) =>
+					{tabContent(this.operation).tabs.map((tab, tIndex) =>
 						tIndex === this.state.value ?
 							<TabContainer key={tIndex}>
-								<List>
-									{theatre.operations.map((operation, oIndex) =>
-										<div key={oIndex}>
-											<Link to={'/operationDetails/'+operation.id}  id={operation.id}>
-												<ListItem button>
-													<img src={Pencil} height='20px' alt='Status icon'/>
-													<img src={GreenBall} alt='Status icon'/>
-													<ListItemText primary={operation.patient} secondary={operation.diagnosis}/>
-												</ListItem>
-											</Link>
-										</div>
-									)}
-								</List>
+								<div>
+									{tab.fields}
+								</div>
 							</TabContainer> : <div key={tIndex}></div>)}
 				</SwipeableViews>
 			</div>
@@ -88,8 +101,8 @@ class ListView extends React.Component {
 	}
 }
 
-ListView.propTypes = {
+OperationDetails.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(ListView)
+export default withStyles(styles)(OperationDetails)
