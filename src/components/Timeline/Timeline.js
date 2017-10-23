@@ -123,7 +123,7 @@ class Timeline extends Component {
 		const theaters = this.props.theaters
 		const numColumns = this.props.numColumns
 		const date = this.props.date
-		const now = moment().hours(16).minutes(10)
+		const now = moment()
 
 		// Create svg if not done yet
 		const height = window.innerHeight - this.container.offsetTop - THEATERBARHEIGHT		
