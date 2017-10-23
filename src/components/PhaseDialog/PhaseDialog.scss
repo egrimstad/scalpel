@@ -1,0 +1,11 @@
+@import 'styles/shared/allShared';
+
+.PhaseDialog-grid-container {
+	display: grid;
+	grid-template-areas: 
+		"empty secondary"
+		"empty or"
+		"cancel primary";
+	grid-column-gap: 50px;
+	margin: 5px;
+}

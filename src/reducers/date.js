@@ -1,11 +1,12 @@
-const date = (state = new Date('2017-09-20'), action) => {
+import moment from 'moment'
+
+const date = (state = moment(), action) => {
 	switch(action.type) {
 	case 'SET_SELECTED_DATE':
 		return action.date
 	default:
 		return state
 	}
-	
 }
 
 export default date

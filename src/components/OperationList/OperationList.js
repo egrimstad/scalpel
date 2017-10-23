@@ -6,6 +6,7 @@ import Tabs, { Tab } from 'material-ui/Tabs'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import SwipeableViews from 'react-swipeable-views'
 import { Link } from 'react-router-dom'
+import { Pencil, GreenBall } from 'assets/icons'
 
 function TabContainer(props) {
 	return <div style={{ padding: 20 }}>{props.children}</div>
@@ -24,12 +25,11 @@ const styles = theme => ({
 	}
 })
 
-class ListView extends React.Component {
+class OperationList extends React.Component {
 
 	constructor(props) {
 		super(props)
-		this.props.setHeaderItems([])  // Menu button hidden for now
-
+		this.props.setHeaderItems([])
 		this.theaters = props.theaters
 		this.state = {
 			value: 0
@@ -37,6 +37,12 @@ class ListView extends React.Component {
 
 		this.handleChange = this.handleChange.bind(this)
 		this.handleChangeIndex = this.handleChangeIndex.bind(this)
+	}
+
+	componentWillReceiveProps (newProps) { //Set to first tab on change plan
+		if (this.props.plan != newProps.plan) {
+			this.handleChange(undefined, 0)
+		}
 	}
 
 	handleChange(_, value) {
@@ -60,22 +66,22 @@ class ListView extends React.Component {
 						scrollable
 						scrollButtons='auto'
 					>
-						{this.theaters.map((theatre, tIndex) => {
+						{this.props.theaters.map((theatre, tIndex) => {
 							return <Tab label={theatre.name} key={tIndex}/>
 						})}
 					</Tabs>
 				</AppBar>
 				<SwipeableViews index={this.state.value} onChangeIndex={this.handleChangeIndex}>
-					{this.theaters.map((theatre, tIndex) =>
+					{this.props.theaters.map((theatre, tIndex) =>
 						tIndex === this.state.value ?
 							<TabContainer key={tIndex}>
 								<List>
 									{theatre.operations.map((operation, oIndex) =>
 										<div key={oIndex}>
-											<Link to={'/operationDetails/'+operation.id}  id={operation.id}>
+											<Link to={'/operations/'+operation.id}>
 												<ListItem button>
-													<img src='../../../icons/pencil.png' height='20px' alt='Status icon'/>
-													<img src='../../../icons/bullet_ball_green.png' alt='Status icon'/>
+													<img src={Pencil} height='20px' alt='Status icon'/>
+													<img src={GreenBall} alt='Status icon'/>
 													<ListItemText primary={operation.procedure} secondary={operation.diagnosis}/>
 												</ListItem>
 											</Link>
@@ -89,8 +95,8 @@ class ListView extends React.Component {
 	}
 }
 
-ListView.propTypes = {
+OperationList.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(ListView)
+export default withStyles(styles)(OperationList)

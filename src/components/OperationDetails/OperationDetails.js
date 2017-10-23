@@ -27,7 +27,7 @@ const styles = theme => ({
 	}
 })
 
-function getTabContent(operation) {
+function tabContent(operation) {
 
 	return {
 		tabs: [
@@ -52,7 +52,7 @@ function getTabContent(operation) {
 	}
 }
 
-class OperationIndex extends Component {
+class OperationDetails extends Component {
 	constructor(props) {
 		super(props)
 		this.operation = props.operation
@@ -82,13 +82,13 @@ class OperationIndex extends Component {
 						textColor="primary"
 						scrollable
 						scrollButtons="auto">
-						{getTabContent(this.operation).tabs.map((tab, tIndex) => {
+						{tabContent(this.operation).tabs.map((tab, tIndex) => {
 							return <Tab label={tab.name} key={tIndex}/>
 						})}
 					</Tabs>
 				</AppBar>
 				<SwipeableViews index={this.state.value} onChangeIndex={this.handleChangeIndex}>
-					{getTabContent(this.operation).tabs.map((tab, tIndex) =>
+					{tabContent(this.operation).tabs.map((tab, tIndex) =>
 						tIndex === this.state.value ?
 							<TabContainer key={tIndex}>
 								<div>
@@ -101,8 +101,8 @@ class OperationIndex extends Component {
 	}
 }
 
-OperationIndex.propTypes = {
+OperationDetails.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(OperationIndex)
+export default withStyles(styles)(OperationDetails)

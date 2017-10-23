@@ -7,6 +7,7 @@ import moment from 'moment'
 const mapStateToProps = (state, ownProps) => {
 	return {
 		selectedDate: moment(state.date),
+		planName: state.selectedPlan.name,
 		...ownProps
 	}
 }

@@ -1,5 +1,4 @@
 import Timeline from '../components/Timeline/Timeline'
-import { operationPhases } from '../data/operations'
 import { connect } from 'react-redux'
 
 import last from 'lodash/last'
@@ -36,7 +35,7 @@ const selectNonOverlappingOperations = operations => {
  * @param {*} operations 
  * @returns An object that contains of the operations with added column prop and the number of columns needed
  */
-const distributeOperations = operations => {
+const distributeOperations = (operations, state) => {
 	const result = []
 	let column = 0
 	let rest = operations
@@ -45,17 +44,31 @@ const distributeOperations = operations => {
 		rest = overlap.rest
 		result.push(...overlap.selected.map(op => {
 			const phases = op.phases.map(phase => {
+				const opPhase = state.operationPhases.actual.find(opPhase => opPhase.id === phase.id)
 				return {
-					name: phase.name,
-					start: moment(phase.start),
-					end: phase.end ? moment(phase.end) : null,
-					color: operationPhases[phase.name].color,
+					...phase,
+					...opPhase,
+					column: column
+				}
+			})
+			let phaseStart = moment(op.plannedPhases[0].start)
+			let phaseDuration = 0
+			const plannedPhases = op.plannedPhases.map(plannedPhase => {
+				phaseStart = phaseStart.clone().add(phaseDuration, 'm')
+				phaseDuration = plannedPhase.duration
+				const opPhase = state.operationPhases.planning.find(opPhase => opPhase.id === plannedPhase.id)
+				return {
+					...plannedPhase,
+					...opPhase,
+					start: phaseStart,
+					end: phaseStart.clone().add(phaseDuration, 'm'),
 					column: column
 				}
 			})
 			return {
 				...op,
 				phases: phases,
+				plannedPhases: plannedPhases,
 				column: column
 			}
 		}))
@@ -67,23 +80,27 @@ const distributeOperations = operations => {
 	}
 }
 
+const theatersFromPlan = (allTheaters, plan) =>
+	allTheaters.filter(theater => plan.theaters.includes(theater.id))
+
 const mapStateToProps = (state, ownProps) => {
 	const date = moment(state.date)
 	const operationsToday = state.operations.filter(op => moment(op.phases[0].start).isSame(date, 'day'))
 
 	let numColumns = 0
 
-	const theaters = state.theaters
+	const theaters = theatersFromPlan(state.theaters, state.selectedPlan)
 		.filter(theater => operationsToday.some(op => op.theater === theater.id))
-		.map(theater => {
-			const dist = distributeOperations(operationsToday.filter(op => op.theater === theater.id))
+		.map((theater, i) => {
+			const dist = distributeOperations(operationsToday.filter(op => op.theater === theater.id), state)
 			
 			numColumns += dist.columns
 			return {
 				...theater,
 				operations: dist.operations,
 				startColumn: numColumns - dist.columns,
-				columns: dist.columns
+				columns: dist.columns,
+				index: i
 			}
 		})
 	return {

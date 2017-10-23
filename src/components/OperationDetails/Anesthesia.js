@@ -39,12 +39,12 @@ class Anesthesia extends Component {
 	render() {
 		return (
 			<div>
-				<Grid container>
-					<Grid item>
+				<Grid>
+					<Grid>
 						<h4>Anestesiologiske forhold</h4>
 						<p>{this.operation['anesthesiaInformation'] ? this.operation['anesthesiaInformation'] : '-'}</p>
 					</Grid>
-					<Grid item>
+					<Grid>
 						{fields1.map((item, i) =>
 							<ListItem key={i}>
 								<ListItemText
@@ -53,7 +53,7 @@ class Anesthesia extends Component {
 								/>
 							</ListItem>)}
 					</Grid>
-					<Grid item>
+					<Grid>
 						{checkboxFields.map((item, i) =>
 							<ListItem key={i}>
 								{item[0]}
@@ -66,7 +66,7 @@ class Anesthesia extends Component {
 								</ListItemSecondaryAction>
 							</ListItem>)}
 					</Grid>
-					<Grid item>
+					<Grid>
 						{fields2.map((item, i) =>
 							<ListItem key={i}>
 								<ListItemText
@@ -81,11 +81,11 @@ class Anesthesia extends Component {
 							/>
 						</ListItem>
 					</Grid>
-					<Grid item>
+					<Grid>
 						<h4>Annet</h4>
 						<p>{this.operation['otherInformation'] ? this.operation['otherInformation'] : '-'}</p>
 					</Grid>
-					<Grid item>
+					<Grid>
 						{fields3.map((item, i) =>
 							<ListItem key={i}>
 								<ListItemText

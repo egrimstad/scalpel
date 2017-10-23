@@ -8,12 +8,25 @@ import Divider from 'material-ui/Divider'
 
 import SettingsIcon from 'material-ui-icons/Settings'
 import StopIcon from 'material-ui-icons/Stop'
-import EventIcon from 'material-ui-icons/Event'
-import SupervisorAccountIcon from 'material-ui-icons/SupervisorAccount'
+import ViewList from 'material-ui-icons/ViewList'
+import ViewWeek from 'material-ui-icons/ViewWeek'
 import './MenuDrawer.css'
 import TopBackground from './background.png'
 import Logo from './logo.png'
-import PlusIcon from 'material-ui-icons/Add'
+
+const menuOptions = [
+	{
+		text: 'Tidslinje',
+		icon: <ViewWeek/>,
+		link: '/'
+	},
+	{
+		text: 'Listevisning',
+		icon: <ViewList/>,
+		link: '/operations'
+	}
+]
+
 
 class MenuDrawer extends Component {
 	render() {
@@ -24,68 +37,42 @@ class MenuDrawer extends Component {
 			>
 				<div onClick={this.props.onRequestClose}>
 					<div id="top-content">
-						<img id="drawer-top-background" alt="background" src={TopBackground} />
-						<img id="drawer-logo" alt="logo" src={Logo} />
+						<img id="drawer-top-background" alt="background" src={TopBackground}/>
+						<img id="drawer-logo" alt="logo" src={Logo}/>
 						<List dense id="account-name">
 							<ListItem>
-								<ListItemText primary="Olivia Heldens" secondary="cheyanne_hauck@hotmail.com" />
+								<ListItemText primary="Olivia Heldens" secondary="cheyanne_hauck@hotmail.com"/>
 							</ListItem>
 						</List>
 					</div>
 					<List id="testtest">
-						<ListItem button>
-							<ListItemIcon>
-								<div style={{color: '#FC7777'}}>
-									<StopIcon size={32}/>
-								</div>
-							</ListItemIcon>
-							<ListItemText primary="Plan 1" />
-						</ListItem>
-						<ListItem button>
-							<ListItemIcon>
-								<div style={{color: '#9C639D'}}>
-									<StopIcon size={32}/>
-								</div>
-							</ListItemIcon>
-							<ListItemText primary="Plan 2" />
-						</ListItem>
-						<ListItem button>
-							<ListItemIcon>
-								<div style={{color: '#3B4EC2'}}>
-									<StopIcon size={32}/>
-								</div>
-							</ListItemIcon>
-							<ListItemText primary="Plan 3" />
-						</ListItem>
-						<ListItem button>
-							<ListItemIcon>
-								<PlusIcon/>
-							</ListItemIcon>
-							<ListItemText primary="Add a plan" />
-						</ListItem>
+						{this.props.plans.map((plan, index) =>
+							<ListItem button key={index} onClick={() => this.props.onSelectPlan(plan)}>
+								<ListItemIcon>
+									<div style={{color: '#9C639D'}}>
+										<StopIcon size={32}/>
+									</div>
+								</ListItemIcon>
+								<ListItemText primary={plan.name}/>
+							</ListItem>
+						)}
 						<Divider />
-						<Link to="/">
-							<ListItem button>
-								<ListItemIcon>
-									<SupervisorAccountIcon />
-								</ListItemIcon>
-								<ListItemText primary="Timeline" />
-							</ListItem>
-						</Link>
-						<Link to="/patients">
-							<ListItem button>
-								<ListItemIcon>
-									<EventIcon />
-								</ListItemIcon>
-								<ListItemText primary="Patients" />
-							</ListItem>
-						</Link>
+						{menuOptions.map((item, index) =>
+							<Link to={item.link} key={index}>
+								<ListItem button>
+									<ListItemIcon>
+										{item.icon}
+									</ListItemIcon>
+									<ListItemText primary={item.text}/>
+								</ListItem>
+							</Link>
+						)}
 						<Divider />
 						<ListItem button>
 							<ListItemIcon>
 								<SettingsIcon />
 							</ListItemIcon>
-							<ListItemText primary="Settings" />
+							<ListItemText primary="Instillinger"/>
 						</ListItem>
 					</List>
 				</div>
@@ -96,7 +83,7 @@ class MenuDrawer extends Component {
 
 MenuDrawer.propTypes = {
 	open: PropTypes.bool,
-	onRequestClose: PropTypes.func
+	onRequestClose: PropTypes.func,
 }
 
 export default MenuDrawer
