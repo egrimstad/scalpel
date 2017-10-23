@@ -29,6 +29,8 @@ class OperationList extends React.Component {
 
 	constructor(props) {
 		super(props)
+		this.props.setHeaderItems(['calendar'])
+		this.theaters = props.theaters
 		this.state = {
 			value: 0
 		}

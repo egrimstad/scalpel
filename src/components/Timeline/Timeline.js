@@ -31,6 +31,7 @@ const mouseX = (event) => {
 class Timeline extends Component {
 	constructor(props) {
 		super(props)
+		this.props.setHeaderItems(['calendar'])
 
 		this.container = null
 		this.filter = null
