@@ -23,7 +23,7 @@ class PhaseDialog extends React.Component {
 		this.resetState = this.resetState.bind(this)
 
 		this.state = {
-			time: moment().hours(16).minutes(10),
+			time: moment(),
 			isTimeValid: true
 		}
 	}

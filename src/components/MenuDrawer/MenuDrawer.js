@@ -11,8 +11,7 @@ import StopIcon from 'material-ui-icons/Stop'
 import ViewList from 'material-ui-icons/ViewList'
 import ViewWeek from 'material-ui-icons/ViewWeek'
 import './MenuDrawer.css'
-import TopBackground from './background.png'
-import Logo from './logo.png'
+import {Background, Logo} from '../../assets'
 
 const menuOptions = [
 	{
@@ -37,7 +36,7 @@ class MenuDrawer extends Component {
 			>
 				<div onClick={this.props.onRequestClose}>
 					<div id="top-content">
-						<img id="drawer-top-background" alt="background" src={TopBackground}/>
+						<img id="drawer-top-background" alt="background" src={Background}/>
 						<img id="drawer-logo" alt="logo" src={Logo}/>
 						<List dense id="account-name">
 							<ListItem>

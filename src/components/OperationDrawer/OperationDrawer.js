@@ -21,13 +21,13 @@ class OperationDrawer extends Component {
 		this.resetState = this.resetState.bind(this)
 
 		this.state = {
-			time: moment().hours(16).minutes(10),
+			time: moment(),
 			isTimeValid: true
 		}
 	}
 
 	resetState() {
-		this.setState({time: moment().hours(16).minutes(10)})
+		this.setState({time: moment()})
 	}
 
 	onStartNextPhase() {
