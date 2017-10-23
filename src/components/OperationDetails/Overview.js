@@ -5,7 +5,7 @@ import { withStyles } from 'material-ui/styles'
 import { GridList, GridListTile } from 'material-ui/GridList'
 import './OperationDetails.css'
 
-import { Pencil, GreenBall } from 'assets/icons'
+import { Pencil, GreenBall } from 'assets'
 
 const topFields = ([
 	['Dato', 'operatingDate'],

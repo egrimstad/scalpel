@@ -6,7 +6,7 @@ import Tabs, { Tab } from 'material-ui/Tabs'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import SwipeableViews from 'react-swipeable-views'
 import { Link } from 'react-router-dom'
-import { Pencil, GreenBall } from 'assets/icons'
+import { Pencil, GreenBall } from 'assets'
 
 function TabContainer(props) {
 	return <div style={{ padding: 20 }}>{props.children}</div>
