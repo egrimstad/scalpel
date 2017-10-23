@@ -90,6 +90,7 @@ class OperationList extends React.Component {
 								</List>
 							</TabContainer> : <div key={tIndex}></div>)}
 				</SwipeableViews>
+				{this.props.theaters.length > 0 ? '' : <p>Ingen operasjoner i dag!</p>}
 			</div>
 		)
 	}
