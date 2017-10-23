@@ -28,6 +28,7 @@ const mapStateToProps = (state, ownProps) => {
 			
 		}
 	})
+	operation.patientAge = moment().diff(moment(operation.patientBirthDate), 'years')
 	return {
 		operation: operation,
 		...ownProps

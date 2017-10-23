@@ -83,7 +83,7 @@ class OperationDetails extends Component {
 						scrollable
 						scrollButtons="off">
 						{tabContent(this.operation).tabs.map((tab, tIndex) => {
-							return <Tab label={tab.name} key={tIndex} disableFocusRipple={true}/>
+							return <Tab label={tab.name} key={tIndex} />
 						})}
 					</Tabs>
 				</AppBar>

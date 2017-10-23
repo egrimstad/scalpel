@@ -29,7 +29,7 @@ class OperationTimeline extends Component {
 		}else {
 			this.svg = d3.select(this.container).append('svg')
 				.attr('width', '100%')
-				.attr('height', '100%')
+				.attr('height', this.props.height || '100%')
 		}
 
 		const operation = this.props.operation
@@ -39,8 +39,8 @@ class OperationTimeline extends Component {
 		const start = startTime(operation)
 		const end = endTime(operation)
 
-		const padding = 5
-		const actualHeight = height*0.7
+		const padding = 2
+		const actualHeight = height*0.6
 		const plannedHeight = height - actualHeight - 3*padding
 
 		const time = d3.scaleTime()
@@ -84,7 +84,8 @@ class OperationTimeline extends Component {
 }
 
 OperationTimeline.propTypes = {
-	operation: PropTypes.object
+	operation: PropTypes.object,
+	height: PropTypes.number
 }
 
 export default OperationTimeline
