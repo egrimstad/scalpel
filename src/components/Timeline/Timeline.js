@@ -49,6 +49,7 @@ class Timeline extends Component {
 		this.buildTimeline = this.buildTimeline.bind(this)
 
 		this.zoomTransformEvent = null
+		this.xscrollstart = 0
 
 		this.state = {
 			operationDrawerOpen: false,
@@ -156,7 +157,6 @@ class Timeline extends Component {
 		const timelineHeight = height - THEATERBARHEIGHT
 		
 		const xScrollDomain = [0, -(timelineWidth-(width-timelineX))]
-		let xscrollstart = 0
 		let xoffset = 0
 
 		const theaterX = theater => xoffset + theater.index*THEATERPADDING + theater.startColumn*(OPERATIONWIDTH + OPERATIONPADDING)
@@ -324,7 +324,7 @@ class Timeline extends Component {
 		}
 
 		const startZoom = () => {
-			xscrollstart = mouseX(d3.event.sourceEvent) - xoffset
+			this.xscrollstart = mouseX(d3.event.sourceEvent) - xoffset
 		}
 
 		const zoomed = () => {
@@ -363,7 +363,7 @@ class Timeline extends Component {
 				return
 			}
 
-			xoffset =  mouseX(event.sourceEvent) - xscrollstart
+			xoffset =  mouseX(event.sourceEvent) - this.xscrollstart
 
 			// Limit scroll
 			xoffset = (xoffset <= xScrollDomain[0]) ? xoffset : xScrollDomain[0]
