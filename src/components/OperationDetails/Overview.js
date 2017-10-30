@@ -8,7 +8,7 @@ import OperationTimeline from './OperationTimeline'
 
 import OperationDrawer from '../OperationDrawer/OperationDrawer'
 
-import { Pencil, GreenBall } from 'assets/icons'
+import { Pencil, GreenBall } from 'assets'
 
 import moment from 'moment'
 

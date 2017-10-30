@@ -31,26 +31,23 @@ const mouseX = (event) => {
 class Timeline extends Component {
 	constructor(props) {
 		super(props)
+		this.props.setHeaderItems(['calendar'])
 
 		this.container = null
-
-		this.pressTimer = null
-		this.pressTarget = null
-		this.operationID = null
 		this.filter = null
 
 		this.click = this.click.bind(this)
 		this.start = this.start.bind(this)
 		this.cancel = this.cancel.bind(this)
 		this.redirect = this.redirect.bind(this)
-		this.shortPress = this.shortPress.bind(this)
 		this.closeDialog = this.closeDialog.bind(this)
 
 		this.createFilter = this.createFilter.bind(this)
 		this.buildTimeline = this.buildTimeline.bind(this)
 
+		this.zoomTransformEvent = null
+
 		this.state = {
-			phaseDialogOpen: false,
 			operationDrawerOpen: false,
 			selectedOperation: null
 		}
@@ -64,60 +61,34 @@ class Timeline extends Component {
 		this.props.history.push(url)
 	}
 
-	shortPress(operation) {
+	click(operation) {
 		this.setState({
 			selectedOperation: operation,
 			operationDrawerOpen: true
 		})
-	}
 
-	click(operation) {
-		if(this.pressTimer) {
-			clearTimeout(this.pressTimer)
-			this.pressTimer = null
-			this.shortPress(operation)
-		}
-		if(!this.longpress) {
-			d3.select(this.pressTarget)
-				.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
-				.classed('Timeline-operation-click', false)
-			d3.select(this.pressTarget).attr('filter', null)
-			this.pressTimer = null
-		}
+		d3.select(d3.event.currentTarget)
+			.attr('filter', null)		
+			.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
+			.classed('Timeline-operation-click', false)
 
 		return false
 	}
 
-	start(operation) {
-		if(this.pressTimer) return
-		
-		this.pressTarget = d3.event.currentTarget
-		this.operationID = operation.id
-		d3.select(this.pressTarget).attr('filter', 'url(#Timeline-click-filter)')
-		d3.select(this.pressTarget)
+	start() {
+		d3.select(d3.event.currentTarget)
+			.attr('filter', 'url(#Timeline-click-filter)')
 			.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
 			.classed('Timeline-operation-click', true)
-		this.pressTimer = setTimeout(() => {
-			this.longpress = true
-			d3.select(this.pressTarget)
-				.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
-				.classed('Timeline-operation-click', false)
-			d3.select(this.pressTarget).attr('filter', null)
-			this.pressTimer = null
-		}, 1000)
 
 		return false
 	}
 
 	cancel() {
-		if(this.pressTimer) {
-			clearTimeout(this.pressTimer)
-			this.pressTimer = null
-			d3.select(this.pressTarget)
-				.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
-				.classed('Timeline-operation-click', false)
-			d3.select(this.pressTarget).attr('filter', null)
-		}
+		d3.select(d3.event.currentTarget)
+			.attr('filter', null)		
+			.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
+			.classed('Timeline-operation-click', false)
 		return false
 	}
 
@@ -154,7 +125,7 @@ class Timeline extends Component {
 		const theaters = this.props.theaters
 		const numColumns = this.props.numColumns
 		const date = this.props.date
-		const now = moment().hours(16).minutes(10)
+		const now = moment()
 
 		// Create svg if not done yet
 		const height = window.innerHeight - this.container.offsetTop - THEATERBARHEIGHT		
@@ -342,7 +313,12 @@ class Timeline extends Component {
 		}
 
 		const zoomed = () => {
-			const transform = d3.event.transform
+			zoomer(d3.event)
+		}
+
+		const zoomer = (event) => {
+			this.zoomTransformEvent = event
+			const transform = event.transform
 			const newY = transform.rescaleY(y)
 			
 			timeRects
@@ -368,11 +344,11 @@ class Timeline extends Component {
 			yGroup.call(yLabels)
 			yLinesGroup.call(yLines)
 
-			if(!canScrollX || d3.event.sourceEvent.type === 'wheel') {
+			if(!canScrollX || event.sourceEvent.type === 'wheel') {
 				return
 			}
 
-			xoffset =  mouseX(d3.event.sourceEvent) - xscrollstart
+			xoffset =  mouseX(event.sourceEvent) - xscrollstart
 
 			// Limit scroll
 			xoffset = (xoffset <= xScrollDomain[0]) ? xoffset : xScrollDomain[0]
@@ -382,6 +358,10 @@ class Timeline extends Component {
 			phaseRects.attr('x', phase => operationActualX(phase.column))
 			plannedRects.attr('x', op => operationPlannedX(op.column))
 			theaterGroup.attr('transform', theater => translate(theaterX(theater), 0))
+		}
+
+		if(this.zoomTransformEvent) {
+			zoomer(this.zoomTransformEvent)
 		}
 	}
 
