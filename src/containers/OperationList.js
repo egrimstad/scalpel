@@ -2,6 +2,8 @@ import { connect } from 'react-redux'
 import OperationList from '../components/OperationList/OperationList'
 import moment from 'moment'
 
+import { patientAge, patientGender } from 'utils/operationUtils'
+
 const theatersFromPlan = (allTheaters, plan) =>
 	allTheaters.filter(theater => plan.theaters.includes(theater.id))
 
@@ -20,7 +22,7 @@ const operationsByTheater = (todayOperations, theaterId, date) =>
 				patientName: operation.patientName,
 				diagnosis: operation.diagnoseTypeFreeText ? operation.diagnoseTypeFreeText.replace(/(\r\n|\n|\r)/gm,'') : 'Ukjent diagnose',
 				procedure: operation.procedureTypeFreeText ? operation.procedureTypeFreeText.replace(/(\r\n|\n|\r)/gm,'') : 'Ukjent inngrep',
-				genderAge: operation.socialSecurityNum ? (operation.socialSecurityNum.charAt(8) % 2 === 0 ? 'K' : 'M') + getAge(new Date(operation.patientBirthDate), date): '-'
+				genderAge: `${patientGender(operation)}${patientAge(operation)}`
 			}
 		})
 
