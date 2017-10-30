@@ -6,11 +6,19 @@ import Divider from 'material-ui/Divider'
 import './OperationDetails.css'
 import OperationTimeline from './OperationTimeline'
 
-import OperationDrawer from '../OperationDrawer/OperationDrawer'
+import OperationDrawer from '../../containers/OperationDrawer'
 
 import { Pencil, GreenBall } from 'assets'
 
 import moment from 'moment'
+
+const smallFields = ([
+	['Alder', 'patientAge'],
+	['Tils', 'tils'],
+	['Pri', 'priority'],
+	['ASA', 'asa'],
+	['Blod', 'bloodType'],
+])
 
 const topFields = ([
 	{
@@ -23,14 +31,6 @@ const topFields = ([
 		key: 'diagnoseTypeFreeText',
 		format: diagnosis => diagnosis || '-'
 	}
-])
-
-const smallFields = ([
-	['Alder', 'patientAge'],
-	['Tils', 'tils'],
-	['Pri', 'priority'],
-	['ASA', 'asa'],
-	['Blod', 'bloodType'],
 ])
 
 const mainFields = ([
@@ -48,6 +48,14 @@ const mainFields = ([
 		}
 	},
 	{
+		label: 'Personell',
+		key: 'crew',
+		format: crew => {
+			if(!crew) return '-'
+			return crew.map(person => person['initials']).join(', ')
+		}
+	},
+	{
 		label: 'Enhet',
 		key: 'careUnitName',
 		format: unit => unit || '-'
@@ -57,14 +65,6 @@ const mainFields = ([
 		key: 'careUnitName',
 		format: name => name || '-'
 	},
-	{
-		label: 'Personell',
-		key: 'crew',
-		format: crew => {
-			if(!crew) return '-'
-			return crew.map(person => person['initials']).join(', ')
-		}
-	}
 ])
 
 const topContentFormatted = operation => {

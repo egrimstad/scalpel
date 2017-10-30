@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Drawer from 'material-ui/Drawer'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
@@ -157,6 +158,14 @@ class OperationDrawer extends Component {
 			</Drawer>
 		)
 	}
+}
+
+OperationDrawer.propTypes = {
+	operation: PropTypes.object.isRequired,
+	showDetails: PropTypes.bool,
+	onRequestClose: PropTypes.func,
+	onStartNextPhase: PropTypes.func,
+	onEndPhase: PropTypes.func
 }
 
 export default OperationDrawer

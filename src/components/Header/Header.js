@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
-import Button from 'material-ui/Button'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import MenuIcon from 'material-ui-icons/Menu'
@@ -12,8 +11,6 @@ import DateRange from'material-ui-icons/DateRange'
 
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-
-import moment from 'moment'
 
 class Header extends Component {
 	constructor(props) {
