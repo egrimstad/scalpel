@@ -108,8 +108,7 @@ class Timeline extends Component {
 		this.filter = this.svg.select('defs')
 			.append('filter')
 			.attr('id', 'Timeline-click-filter')
-
-		this.filter.append('feColorMatrix')  // Adds a saturation filter
+			.append('feColorMatrix')  // Adds a saturation filter
 			.attr('type', 'saturate')
 			.attr('values', '0.4')
 	}
@@ -179,6 +178,7 @@ class Timeline extends Component {
 			.translateExtent([[0, 0], [timelineWidth, timelineHeight]])
 			.on('start', () => startZoom())
 			.on('zoom', () => zoomed())
+			.on('end', () => endZoom())
 		
 		this.svg.call(zoom)
 			.on('dblclick.zoom', null)
@@ -314,6 +314,7 @@ class Timeline extends Component {
 		let scrollBar = null
 		if(canScrollX) {
 			scrollBar = this.svg.append('rect')
+				.attr('id', 'Timeline-scrollbar')
 				.attr('x', timelineX)
 				.attr('y', timelineY + timelineHeight - SCROLLBARHEIGHT)
 				.attr('width', 2*width - 2*timelineX - timelineWidth)
@@ -321,10 +322,22 @@ class Timeline extends Component {
 				.attr('rx', '3px')
 				.attr('ry', '3px')
 				.attr('fill', theme.options.primary)
+				.attr('opacity', 0)
 		}
 
 		const startZoom = () => {
 			this.xscrollstart = mouseX(d3.event.sourceEvent) - xoffset
+
+			this.svg.select('#Timeline-scrollbar')
+				.transition()
+				.attr('opacity', 1)
+		}
+
+		const endZoom = () => {
+			this.svg.select('#Timeline-scrollbar')
+				.transition()
+				.delay(1000)
+				.attr('opacity', 0)
 		}
 
 		const zoomed = () => {
