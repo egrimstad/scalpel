@@ -10,6 +10,8 @@ import Operation from './Operation'
 import Anesthesia from './Anesthesia'
 import './OperationDetails.css'
 
+import DetailsHeader from '../Header/DetailsHeader'
+
 function TabContainer(props) {
 	return <div style={{ padding: 10, paddingTop:0 }}>{props.children}</div>
 }
@@ -60,6 +62,7 @@ class OperationDetails extends Component {
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleChangeIndex = this.handleChangeIndex.bind(this)
+		this.onBackClick = this.onBackClick.bind(this)
 	}
 
 	handleChange(_, value) {
@@ -70,11 +73,19 @@ class OperationDetails extends Component {
 		this.setState({value: index})
 	}
 
+	onBackClick() {
+		this.props.history.goBack()
+	}
+
 	render() {
 		const { classes } = this.props
 		const operation = this.props.operation
 		return (
 			<div className={classes.root}>
+				<DetailsHeader
+					operation={operation}
+					onBackClick={this.onBackClick}
+				/>
 				<AppBar position="fixed" color="default" className="AppBar-offset">
 					<Tabs value={this.state.value}
 						onChange={this.handleChange}

@@ -1,22 +1,21 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import './styles/App.css'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import theme from './theme/theme'
-import Header from './containers/Header'
 import MenuDrawer from './containers/MenuDrawer'
 import TodayTimeline from './containers/TodayTimeline'
 import OperationList from './containers/OperationList'
 import OperationDetails from './containers/OperationDetails'
+
+import './styles/App.css'
 
 class App extends Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			menuOpen: false,
-			headerItems: ['calendar']
+			menuOpen: false
 		}
 
 		this.openMenu = this.openMenu.bind(this)
@@ -44,19 +43,17 @@ class App extends Component {
 				<Router>
 					<div>
 						<MenuDrawer open={this.state.menuOpen} onRequestClose={this.closeMenu} />
-						<Header 
-							onMenuButtonClick={this.openMenu} 
-							headerItems={this.state.headerItems}
-						/>
 
 						<div className="App-content">
 							<Route exact path="/" render={props =>
-								<TodayTimeline setHeaderItems={this.setHeaderItems} history={props.history} />
+								<TodayTimeline openMenu={this.openMenu} history={props.history} />
 							} />
 							<Route exact path="/operations" render={() =>
-								<OperationList setHeaderItems={this.setHeaderItems}/>
+								<OperationList openMenu={this.openMenu} />
 							} />
-							<Route exact path="/operations/:operationId" component={OperationDetails} />
+							<Route exact path="/operations/:operationId" render={props =>
+								<OperationDetails {...props} />
+							} />
 						</div>
 					</div>
 				</Router>

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Header from '../components/Header/Header'
+import MainHeader from '../components/Header/MainHeader'
 import { setSelectedDate } from '../actions'
 
 import moment from 'moment'
@@ -20,7 +20,4 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(MainHeader)

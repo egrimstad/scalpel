@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import List, { ListItem, ListItemText } from 'material-ui/List'
@@ -8,28 +7,22 @@ import SwipeableViews from 'react-swipeable-views'
 import { Link } from 'react-router-dom'
 import { Pencil, GreenBall } from 'assets'
 
+import MainHeader from '../../containers/MainHeader'
+
+import './OperationList.css'
+
 function TabContainer(props) {
-	return <div style={{ padding: 20 }}>{props.children}</div>
+	return <div className="Tabs-offset" style={{ padding: 20 }}>{props.children}</div>
 }
 
 TabContainer.propTypes = {
 	children: PropTypes.node.isRequired
 }
 
-const styles = theme => ({
-	root: {
-		flexGrow: 1,
-		width: '100%',
-		marginTop: 0,
-		backgroundColor: theme.palette.background.paper,
-	}
-})
-
 class OperationList extends React.Component {
 
 	constructor(props) {
 		super(props)
-		this.props.setHeaderItems(['calendar'])
 		this.theaters = props.theaters
 		this.state = {
 			value: 0
@@ -54,24 +47,35 @@ class OperationList extends React.Component {
 	}
 
 	render() {
-		const { classes } = this.props
 		return (
-			<div className={classes.root}>
-				<AppBar position='static' color='default'>
-					<Tabs
-						value={this.state.value}
-						onChange={this.handleChange}
-						indicatorColor='primary'
-						textColor='primary'
-						scrollable
-						scrollButtons='auto'
-					>
-						{this.props.theaters.map((theatre, tIndex) => {
-							return <Tab label={theatre.name} key={tIndex}/>
-						})}
-					</Tabs>
-				</AppBar>
-				<SwipeableViews index={this.state.value} onChangeIndex={this.handleChangeIndex}>
+			<div>
+				<MainHeader
+					onMenuClick={this.props.openMenu} 
+				/>
+				{this.props.theaters.length > 0 &&
+					<AppBar 
+						position='fixed' 
+						color='default' 
+						className="AppBar-offset" 
+						style={{zIndex: 0}}>
+						<Tabs
+							value={this.state.value}
+							onChange={this.handleChange}
+							indicatorColor='primary'
+							textColor='primary'
+							scrollable
+							scrollButtons='auto'
+						>
+							{this.props.theaters.map((theatre, tIndex) => {
+								return <Tab label={theatre.name} key={tIndex}/>
+							})}
+						</Tabs>
+					</AppBar>
+				}
+				<SwipeableViews 
+					index={this.state.value} 
+					onChangeIndex={this.handleChangeIndex}
+				>
 					{this.props.theaters.map((theatre, tIndex) =>
 						tIndex === this.state.value ?
 							<TabContainer key={tIndex}>
@@ -97,7 +101,7 @@ class OperationList extends React.Component {
 }
 
 OperationList.propTypes = {
-	classes: PropTypes.object.isRequired,
+	openMenu: PropTypes.func
 }
 
-export default withStyles(styles)(OperationList)
+export default OperationList

@@ -35,11 +35,6 @@ const topFields = ([
 
 const mainFields = ([
 	{
-		label: 'Navn',
-		key: 'patientName',
-		format: name => name || '-'
-	},
-	{
 		label: 'Født',
 		key: 'patientBirthDate',
 		format: date => {

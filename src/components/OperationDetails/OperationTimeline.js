@@ -45,7 +45,7 @@ class OperationTimeline extends Component {
 		const verticalPadding = 2
 		const horizontalPadding = 15
 		const timelineHeight = height - actualY - verticalPadding
-		const actualHeight = timelineHeight*0.6
+		const actualHeight = timelineHeight*0.7
 		const plannedY = actualY + actualHeight + verticalPadding
 		const plannedHeight = timelineHeight-actualHeight - verticalPadding
 

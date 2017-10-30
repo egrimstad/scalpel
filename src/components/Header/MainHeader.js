@@ -5,14 +5,14 @@ import Toolbar from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import MenuIcon from 'material-ui-icons/Menu'
-import MoreMenu from '../MoreMenu/MoreMenu'
-import MoreVert from 'material-ui-icons/MoreVert'
-import DateRange from'material-ui-icons/DateRange'
+import Button from 'material-ui/Button'
 
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
-class Header extends Component {
+import moment from 'moment'
+
+class MainHeader extends Component {
 	constructor(props) {
 		super(props)
 
@@ -46,42 +46,22 @@ class Header extends Component {
 	}
 
 	render() {
-		let menu = null
-		let calendar = null
-		if (this.props.headerItems.some(item => 'menu' === item)) {
-			menu = <IconButton
-				aria-owns={this.state.open ? 'more-menu' : null}
-				aria-haspopup="true"
-				onClick={this.handleClick}
-				style={{color: '#fff'}}
-			>
-				<MoreVert />
-			</IconButton>
-		}
-
-		if (this.props.headerItems.some(item => 'calendar' === item)) {
-			calendar = <IconButton
-				aria-owns={this.state.pickerOpen ? 'date-picker' : null}
-				aria-haspopup="true"
-				onClick={this.toggleDatePicker}
-				style={{color: '#fff'}}
-			>
-				<DateRange />
-			</IconButton>
-		}
-		
 		return (
 			<AppBar position="fixed">
 				<Toolbar>
-					<IconButton onClick={this.props.onMenuButtonClick} style={{color: '#fff'}}>
+					<IconButton onClick={this.props.onMenuClick} style={{color: '#fff'}}>
 						<MenuIcon />
 					</IconButton>
 					<Typography color="inherit" noWrap style={{flex:1}}>
 						{this.props.planName}
 					</Typography>
-					{calendar}
-					{menu}
-					<MoreMenu open={this.state.open} anchorEl={this.state.anchorEl} handleRequestClose={this.handleRequestClose}/>
+					<Button
+						onClick={this.toggleDatePicker}
+						color="primary"
+						raised
+					>
+						{moment(this.props.selectedDate).format('DD. MMM')}
+					</Button>
 				</Toolbar>
 				{this.state.pickerOpen && 
 				<DatePicker
@@ -98,11 +78,10 @@ class Header extends Component {
 	}
 }
 
-Header.propTypes = {
-	onMenuButtonClick: PropTypes.func,
-	headerItems: PropTypes.array,
+MainHeader.propTypes = {
+	onMenuClick: PropTypes.func,
 	onSelectDate: PropTypes.func,
 	selectedDate: PropTypes.object
 }
 
-export default Header
+export default MainHeader
