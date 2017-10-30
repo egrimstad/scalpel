@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Drawer from 'material-ui/Drawer'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
@@ -73,31 +74,38 @@ class OperationDrawer extends Component {
 					onExited: this.resetState
 				}}
 			>
-				<div className="OperationDrawer-container">
-					<Typography type="headline" style={{gridArea: 'details-header'}} >
-						Detaljer
-					</Typography>
-
-					<div style={{gridArea: 'details'}}>
-						<Typography type="body1">
-							Pasient: {operation.patientName}
+				<div 
+					className="OperationDrawer-container" 
+					style={!this.props.showDetails ? {gridAutoColumns: 'max-content', gridColumnGap: '0px'} : {}}
+				>
+					{this.props.showDetails && 
+						<Typography type="headline" style={{gridArea: 'details-header'}} >
+							Detaljer
 						</Typography>
-						<Typography type="body1">
-							{operation.diagnoseTypeFreeText}
-						</Typography>
-						<Typography type="body1">
-							{operation.procedureTypeFreeText}
-						</Typography>
-					</div>
-
-					<Button
-						style={{gridArea: 'goto'}}
-						dense
-						raised
-						onClick={() => this.props.redirect('/operations/' + operation.id)}
-					>
-						Flere detaljer
-					</Button>
+					}
+					{this.props.showDetails && 
+						<div style={{gridArea: 'details'}}>
+							<Typography type="body1">
+								Pasient: {operation.patientName}
+							</Typography>
+							<Typography type="body1">
+								{operation.diagnoseTypeFreeText}
+							</Typography>
+							<Typography type="body1">
+								{operation.procedureTypeFreeText}
+							</Typography>
+						</div>
+					}
+					{this.props.showDetails && 					
+						<Button
+							style={{gridArea: 'goto'}}
+							dense
+							raised
+							onClick={() => this.props.redirect('/operations/' + operation.id)}
+						>
+								Flere detaljer
+						</Button>
+					}
 
 					<Typography type="headline" style={{gridArea: 'phase-header'}} >
 						Endre faser
@@ -150,6 +158,14 @@ class OperationDrawer extends Component {
 			</Drawer>
 		)
 	}
+}
+
+OperationDrawer.propTypes = {
+	operation: PropTypes.object,
+	showDetails: PropTypes.bool,
+	onRequestClose: PropTypes.func,
+	onStartNextPhase: PropTypes.func,
+	onEndPhase: PropTypes.func
 }
 
 export default OperationDrawer

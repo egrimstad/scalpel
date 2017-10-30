@@ -1,134 +1,166 @@
 import React, { Component } from 'react'
-import List, { ListItem, ListItemText, ListItemSecondaryAction} from 'material-ui/List'
+import List, { ListItem, ListItemText} from 'material-ui/List'
+import Typography from 'material-ui/Typography'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import { GridList, GridListTile } from 'material-ui/GridList'
+import Divider from 'material-ui/Divider'
 import './OperationDetails.css'
+import OperationTimeline from './OperationTimeline'
+
+import OperationDrawer from '../../containers/OperationDrawer'
 
 import { Pencil, GreenBall } from 'assets'
 
-const topFields = ([
-	['Dato', 'operatingDate'],
-	['Inn', 'arrivalTime'],
+import moment from 'moment'
+
+const smallFields = ([
+	['Alder', 'patientAge'],
 	['Tils', 'tils'],
 	['Pri', 'priority'],
 	['ASA', 'asa'],
-	['Blod', 'bloodType']
+	['Blod', 'bloodType'],
+])
+
+const topFields = ([
+	{
+		label: 'Diagnose',
+		key: 'procedureTypeFreeText',
+		format: procedure => procedure || '-'
+	},
+	{
+		label: 'Inngrep',
+		key: 'diagnoseTypeFreeText',
+		format: diagnosis => diagnosis || '-'
+	}
 ])
 
 const mainFields = ([
-	['Diagnose', 'procedureTypeFreeText'],
-	['Inngrep', 'diagnoseTypeFreeText'],
-	['Navn', 'patientName'],
-	['Født', 'patientBirthDate'],
-	['Enhet', 'careUnitName'],
-	['Utstyr', 'equipment']
+	{
+		label: 'Navn',
+		key: 'patientName',
+		format: name => name || '-'
+	},
+	{
+		label: 'Født',
+		key: 'patientBirthDate',
+		format: date => {
+			if(!date) return '-'
+			return moment(date).format('DD/MM/YY')
+		}
+	},
+	{
+		label: 'Personell',
+		key: 'crew',
+		format: crew => {
+			if(!crew) return '-'
+			return crew.map(person => person['initials']).join(', ')
+		}
+	},
+	{
+		label: 'Enhet',
+		key: 'careUnitName',
+		format: unit => unit || '-'
+	},
+	{
+		label: 'Utstyr',
+		key: 'careUnitName',
+		format: name => name || '-'
+	},
 ])
 
-const styles = theme => ({
-	root: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'space-around',
-		overflow: 'hidden',
-		background: theme.palette.background.paper,
-	},
-	gridList: {
-		width: '100%',
-		transform: 'translateZ(0)',
-	}
-})
+const topContentFormatted = operation => {
+	return (
+		<List>
+			{topFields.map((field, i) => {
+				return (
+					<ListItem key={i}>
+						<ListItemText
+							primary={field.format(operation[field.key])}
+							secondary={field.label}
+						/>
+					</ListItem>
+				)
+			})}
+		</List>
+	)
+}
+
+const mainContentFormatted = operation => {
+	return (
+		<List dense>
+			{mainFields.map((field, i) =>
+				<ListItem key={i}>
+					<ListItemText
+						primary={field.format(operation[field.key])}
+						secondary={field.label}
+					/>
+				</ListItem>
+			)}
+		</List>
+	)
+}
+
+const iconDataFormatted = operation => {
+	return (
+		<div style={{position: 'relative', margin: '10px'}}>
+			<img src={Pencil} style={{width:'-webkit-fill-available'}} alt='Status icon'/>
+			<img src={GreenBall} alt='Status icon' style={{position: 'absolute', bottom: 0, right: 0}} />
+		</div>
+	)
+}
 
 class Overview extends Component {
 	constructor(props) {
 		super(props)
-		this.operation = props.operation
+
+		this.state = {
+			phaseDrawerOpen: false
+		}
+
+		this.phaseDrawerOpen = this.phaseDrawerOpen.bind(this)
+		this.phaseDrawerClose = this.phaseDrawerClose.bind(this)
 	}
 
-	topContentFormatted() {
-		return (
-			<List> {topFields.map((tuple, hIndex) =>
-				<ListItem key={hIndex}>{tuple[0]}
-					<ListItemSecondaryAction>{this.operation[tuple[1]] ? this.operation[tuple[1]] : '-'}</ListItemSecondaryAction>
-				</ListItem>)}
-			</List>
-		)
+	phaseDrawerOpen() {
+		this.setState({phaseDrawerOpen: true})
 	}
 
-	mainContentFormatted() {
-		return (
-			<List>
-				{mainFields.map((tuple, i) =>
-					<ListItem key={i}>
-						<ListItemText
-							primary={this.operation[tuple[1]] ? this.operation[tuple[1]] : '-'}
-							secondary={tuple[0]}
-						/>
-					</ListItem>
-				)}
-				<ListItem>
-					<ListItemText
-						primary={this.operation['crew'] ? this.operation['crew'].map(crew => crew['initials'] + ', '): '-'}
-						secondary='Personell'
-					/>
-				</ListItem>
-			</List>
-		)
-	}
-
-	iconDataFormatted() {
-		return (
-			<div>
-				<img src={Pencil} style={{width:'-webkit-fill-available'}} alt='Status icon'/>
-				<img src={GreenBall} alt='Status icon' />
-			</div>
-		)
-	}
-
-
-	tileData() {
-		return [
-			{
-				id: 0,
-				cols: 0.5,
-				rows: 3,
-				content: this.iconDataFormatted()
-			},
-			{
-				id: 1,
-				cols: 1.5,
-				rows: 3,
-				content: this.topContentFormatted()
-			},
-			{
-				id: 2,
-				cols: 2,
-				rows: 1,
-				content: <div>Timeline</div>
-			},
-			{
-				id: 3,
-				cols: 2,
-				rows: 6,
-				content: this.mainContentFormatted()
-			}
-		]
+	phaseDrawerClose() {
+		this.setState({phaseDrawerOpen: false})
 	}
 
 	render() {
-		const classes = this.props.classes
-		return (<div className={classes.root}>
-			<GridList cellHeight={100} spacing={1} className={classes.gridList}>
-				{this.tileData().map(tile => (
-					<GridListTile key={tile.id} cols={tile.cols} rows={tile.rows} children={tile.content}/>
-				))}
-			</GridList>
-		</div>)
+		const operation = this.props.operation
+		return (
+			<div>
+				<div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+					{iconDataFormatted(operation)}
+					{smallFields.map((field, i) =>
+						<div key={i} style={{margin: 10}} >
+							<Typography type="body2">{field[0]}</Typography>
+							<Typography>{operation[field[1]]}</Typography>
+						</div>
+					)}
+				</div>
+				<Divider className="OperationDetails-divider" />
+				<OperationTimeline 
+					height={50} 
+					operation={operation}
+					onClick={this.phaseDrawerOpen} />
+				<OperationDrawer 
+					operation={operation} 
+					open={this.state.phaseDrawerOpen}
+					onRequestClose={this.phaseDrawerClose} />
+				<Divider className="OperationDetails-divider" />
+				{topContentFormatted(operation)}
+				<Divider className="OperationDetails-divider" />
+				{mainContentFormatted(operation)}
+			</div>
+		)
 	}
 }
 
 Overview.propTypes = {
-	classes: PropTypes.object.isRequired,
+	operation: PropTypes.object
 }
 
-export default withStyles(styles)(Overview)
+export default Overview
