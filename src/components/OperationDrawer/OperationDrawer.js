@@ -76,7 +76,7 @@ class OperationDrawer extends Component {
 			>
 				<div 
 					className="OperationDrawer-container" 
-					style={!this.props.showDetails && {gridAutoColumns: 'max-content', gridColumnGap: '0px'}}
+					style={!this.props.showDetails ? {gridAutoColumns: 'max-content', gridColumnGap: '0px'} : {}}
 				>
 					{this.props.showDetails && 
 						<Typography type="headline" style={{gridArea: 'details-header'}} >
@@ -161,7 +161,7 @@ class OperationDrawer extends Component {
 }
 
 OperationDrawer.propTypes = {
-	operation: PropTypes.object.isRequired,
+	operation: PropTypes.object,
 	showDetails: PropTypes.bool,
 	onRequestClose: PropTypes.func,
 	onStartNextPhase: PropTypes.func,
