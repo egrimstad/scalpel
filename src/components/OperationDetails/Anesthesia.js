@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Grid from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
 import { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
@@ -29,74 +29,67 @@ const checkboxFields = ([
 	['CVK', 'needsCentralVenousCatheter']
 ])
 
-class Anesthesia extends Component {
-
-	constructor(props) {
-		super(props)
-		this.operation = props.operation
-	}
-
-	render() {
-		return (
-			<div>
+const Anesthesia = (props) => {
+	return (
+		<div>
+			<Grid>
 				<Grid>
-					<Grid>
-						<h4>Anestesiologiske forhold</h4>
-						<p>{this.operation['anesthesiaInformation'] ? this.operation['anesthesiaInformation'] : '-'}</p>
-					</Grid>
-					<Grid>
-						{fields1.map((item, i) =>
-							<ListItem key={i}>
-								<ListItemText
-									primary={this.operation[item[1]] ? this.operation[item[1]] : '-'}
-									secondary={item[0]}
-								/>
-							</ListItem>)}
-					</Grid>
-					<Grid>
-						{checkboxFields.map((item, i) =>
-							<ListItem key={i}>
-								{item[0]}
-								<ListItemSecondaryAction>
-									<Checkbox
-										checked={this.operation[item[1]]}
-										tabIndex={-1}
-										disabled
-									/>
-								</ListItemSecondaryAction>
-							</ListItem>)}
-					</Grid>
-					<Grid>
-						{fields2.map((item, i) =>
-							<ListItem key={i}>
-								<ListItemText
-									primary={this.operation[item[1]] ? this.operation[item[1]] : '-'}
-									secondary={item[0]}
-								/>
-							</ListItem>)}
-						<ListItem>
-							<ListItemText
-								primary={this.operation['weight'] && this.operation['height'] ? this.operation['weight']/((this.operation['height'])^2) : '-'}
-								secondary='BMI'
-							/>
-						</ListItem>
-					</Grid>
-					<Grid>
-						<h4>Annet</h4>
-						<p>{this.operation['otherInformation'] ? this.operation['otherInformation'] : '-'}</p>
-					</Grid>
-					<Grid>
-						{fields3.map((item, i) =>
-							<ListItem key={i}>
-								<ListItemText
-									primary={item[1]}
-									secondary={item[0]}
-								/>
-							</ListItem>)}
-					</Grid>
+					<h4>Anestesiologiske forhold</h4>
+					<p>{props.operation['anesthesiaInformation'] ? props.operation['anesthesiaInformation'] : '-'}</p>
 				</Grid>
-			</div>)
-	}
+				<Grid>
+					{fields1.map((item, i) =>
+						<ListItem key={i}>
+							<ListItemText
+								primary={props.operation[item[1]] ? props.operation[item[1]] : '-'}
+								secondary={item[0]}
+							/>
+						</ListItem>)}
+				</Grid>
+				<Grid>
+					{checkboxFields.map((item, i) =>
+						<ListItem key={i}>
+							{item[0]}
+							<ListItemSecondaryAction>
+								<Checkbox
+									checked={props.operation[item[1]]}
+									tabIndex={-1}
+									disabled
+								/>
+							</ListItemSecondaryAction>
+						</ListItem>)}
+				</Grid>
+				<Grid>
+					{fields2.map((item, i) =>
+						<ListItem key={i}>
+							<ListItemText
+								primary={props.operation[item[1]] ? props.operation[item[1]] : '-'}
+								secondary={item[0]}
+							/>
+						</ListItem>)}
+					<ListItem>
+						<ListItemText
+							primary={props.operation['weight'] && props.operation['height'] ? props.operation['weight']/((props.operation['height'])^2) : '-'}
+							secondary='BMI'
+						/>
+					</ListItem>
+				</Grid>
+				<Grid>
+					<h4>Annet</h4>
+					<p>{props.operation['otherInformation'] ? props.operation['otherInformation'] : '-'}</p>
+				</Grid>
+				<Grid>
+					{fields3.map((item, i) =>
+						<ListItem key={i}>
+							<ListItemText
+								primary={item[1]}
+								secondary={item[0]}
+							/>
+						</ListItem>)}
+				</Grid>
+			</Grid>
+		</div>
+	)
 }
 
 export default Anesthesia

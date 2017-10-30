@@ -71,7 +71,7 @@ class Header extends Component {
 		}
 		
 		return (
-			<AppBar position="fixed" style={{backgroundColor: '#224C90'}}>
+			<AppBar position="fixed">
 				<Toolbar>
 					<IconButton onClick={this.props.onMenuButtonClick} style={{color: '#fff'}}>
 						<MenuIcon />

@@ -371,6 +371,7 @@ class Timeline extends Component {
 				ref = {element => this.container = element}
 			>
 				<OperationDrawer
+					showDetails
 					redirect={this.redirect}
 					operation={this.state.selectedOperation}
 					open={this.state.operationDrawerOpen}
