@@ -93,7 +93,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 160,
 		weight: 65,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22105749992'
 	},
 	{
 		id: 1,
@@ -157,7 +158,7 @@ const operations = [
 		operatingDate: '2017-10-22 17:11',
 		arrivalTime: '2017-10-22 15:11',
 		surgeonTime: 15,
-		patientBirthDate: '2017-10-22',
+		patientBirthDate: '1995-10-22',
 		bloodType: 'AB',
 		asa: 3,
 		diagnoseTypeFreeText: 'Arr abdomen',
@@ -187,7 +188,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 159,
 		weight: 50,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22109549492'
 	},
 	{
 		id: 2,
@@ -280,7 +282,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 170,
 		weight: 62,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22100549292'
 	},
 	{
 		id: 3,
@@ -374,7 +377,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 170,
 		weight: 62,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22100549992'
 	},
 	{
 		id: 4,
@@ -438,7 +442,7 @@ const operations = [
 		operatingDate: '2017-10-22 12:11',
 		arrivalTime: '2017-10-22 15:11',
 		surgeonTime: 15,
-		patientBirthDate: '2017-07-16',
+		patientBirthDate: '1982-07-16',
 		bloodType: 'A',
 		asa: 1,
 		diagnoseTypeFreeText: 'Fremmedlegme finger hø hånd',
@@ -468,7 +472,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 190,
 		weight: 100,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '16078249292'
 	},
 	{
 		id: 5,
@@ -561,7 +566,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 179,
 		weight: 60,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22108749992'
 	},
 	{
 		id: 6,
@@ -653,7 +659,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 180,
 		weight: 90,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22108249992'
 	},
 	{
 		id: 7,
@@ -746,7 +753,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 122,
 		weight: 50,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22100149692'
 	},
 	{
 		id: 8,
@@ -838,12 +846,13 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 145,
 		weight: 57,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22108749692'
 	},
 	{
 		id: 9,
 		theater: 4,
-		patientName: 'Ellen',
+		patientName: 'Ellen Skien',
 		plannedPhases: [
 			{
 				id: 0,
@@ -923,7 +932,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 145,
 		weight: 57,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22108749092'
 	}
 ]
 
