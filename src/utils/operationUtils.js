@@ -41,3 +41,10 @@ export const endTime = operation => {
 	}
 	return moment(plannedFinishTime)
 }
+
+export const patientGender = operation => {
+	const socialSec = operation.socialSecurityNum
+	return socialSec ? (socialSec.charAt(8) % 2 === 0 ? 'K' : 'M') : null
+}
+
+export const patientAge = (operation, fromDate) => moment(fromDate).diff(moment(operation.patientBirthDate), 'years')

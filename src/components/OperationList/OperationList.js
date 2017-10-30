@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import List, { ListItem, ListItemText } from 'material-ui/List'
+import List, { ListItem, ListItemText, ListItemSecondaryAction} from 'material-ui/List'
 import SwipeableViews from 'react-swipeable-views'
 import { Link } from 'react-router-dom'
 import { Pencil, GreenBall } from 'assets'
+import './OperationList.css'
 
 function TabContainer(props) {
 	return <div style={{ padding: 20 }}>{props.children}</div>
@@ -78,11 +79,12 @@ class OperationList extends React.Component {
 								<List>
 									{theatre.operations.map((operation, oIndex) =>
 										<div key={oIndex}>
-											<Link to={'/operations/'+operation.id}>
-												<ListItem button>
+											<Link to={'/operations/'+operation.id} style={{color:'black'}}>
+												<ListItem button style={{paddingTop:'0px'}}>
 													<img src={Pencil} height='20px' alt='Status icon'/>
 													<img src={GreenBall} alt='Status icon'/>
 													<ListItemText primary={operation.procedure} secondary={operation.diagnosis}/>
+													<ListItemSecondaryAction style="color:black">{operation.genderAge}</ListItemSecondaryAction>
 												</ListItem>
 											</Link>
 										</div>

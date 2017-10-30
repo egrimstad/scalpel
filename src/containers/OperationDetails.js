@@ -1,6 +1,8 @@
 import { connect } from 'react-redux'
 import OperationDetails from '../components/OperationDetails/OperationDetails'
 
+import { patientAge } from 'utils/operationUtils'
+
 import moment from 'moment'
 
 
@@ -28,7 +30,7 @@ const mapStateToProps = (state, ownProps) => {
 			
 		}
 	})
-	operation.patientAge = moment().diff(moment(operation.patientBirthDate), 'years')
+	operation.patientAge = patientAge(operation)
 	return {
 		operation: operation,
 		...ownProps
