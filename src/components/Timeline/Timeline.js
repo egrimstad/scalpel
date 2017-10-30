@@ -8,6 +8,8 @@ import isNil from 'lodash/isNil'
 import './Timeline.css'
 import OperationDrawer from '../../containers/OperationDrawer'
 
+import theme from '../../theme/theme'
+
 const OPERATIONWIDTH = 64
 const PLANNEDWIDTH = 16
 const STROKEWIDTH = 1
@@ -15,6 +17,7 @@ const THEATERPADDING = 16
 const OPERATIONPADDING = 0
 const THEATERBARHEIGHT = 30
 const TIMEBARWIDTH = 40
+const SCROLLBARHEIGHT = 6
 
 const translate = (x, y) => {
 	return 'translate('+x+','+y+')'
@@ -308,6 +311,18 @@ class Timeline extends Component {
 				.attr('clip-path', 'url(#Timeline-ymask)')
 		}
 
+		let scrollBar = null
+		if(canScrollX) {
+			scrollBar = this.svg.append('rect')
+				.attr('x', timelineX)
+				.attr('y', timelineY + timelineHeight - SCROLLBARHEIGHT)
+				.attr('width', 2*width - 2*timelineX - timelineWidth)
+				.attr('height', SCROLLBARHEIGHT)
+				.attr('rx', '3px')
+				.attr('ry', '3px')
+				.attr('fill', theme.options.primary)
+		}
+
 		const startZoom = () => {
 			xscrollstart = mouseX(d3.event.sourceEvent) - xoffset
 		}
@@ -358,6 +373,9 @@ class Timeline extends Component {
 			phaseRects.attr('x', phase => operationActualX(phase.column))
 			plannedRects.attr('x', op => operationPlannedX(op.column))
 			theaterGroup.attr('transform', theater => translate(theaterX(theater), 0))
+			if(scrollBar) {
+				scrollBar.attr('x', timelineX - xoffset)
+			}
 		}
 
 		if(this.zoomTransformEvent) {
