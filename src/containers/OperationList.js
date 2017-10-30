@@ -7,13 +7,7 @@ import { patientAge, patientGender } from 'utils/operationUtils'
 const theatersFromPlan = (allTheaters, plan) =>
 	allTheaters.filter(theater => plan.theaters.includes(theater.id))
 
-const getAge = (birthDate, currentDay) => {
-	var ageDifMs = currentDay.getTime() - birthDate.getTime()
-	var ageDate = new Date(ageDifMs)
-	return(Math.abs(ageDate.getUTCFullYear() - 1970))
-}
-
-const operationsByTheater = (todayOperations, theaterId, date) =>
+const operationsByTheater = (todayOperations, theaterId) =>
 	todayOperations
 		.filter(operation => operation.theater == theaterId) //correct theatre and today
 		.map(operation => {
@@ -28,13 +22,12 @@ const operationsByTheater = (todayOperations, theaterId, date) =>
 
 const mapStateToProps = (state, ownProps) => {
 	const operationsToday = state.operations.filter(op => moment(op.phases[0].start).isSame(moment(state.date), 'day'))
-	const currentDate = new Date(state.date)
 	const theaters = theatersFromPlan(state.theaters, state.selectedPlan)
 		.filter(theater => operationsToday.some(op => op.theater === theater.id))
 		.map(theater => {
 			return {
 				...theater,
-				operations: operationsByTheater(operationsToday, theater.id, currentDate),
+				operations: operationsByTheater(operationsToday, theater.id),
 			}
 		})
 	return {

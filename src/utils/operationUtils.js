@@ -47,4 +47,4 @@ export const patientGender = operation => {
 	return socialSec ? (socialSec.charAt(8) % 2 === 0 ? 'K' : 'M') : null
 }
 
-export const patientAge = (operation, fromDate) => moment(fromDate).diff(moment(operation.patientBirthDate), 'years')
+export const patientAge = (operation) => moment(operation.operatingDate).diff(moment(operation.patientBirthDate), 'years')
