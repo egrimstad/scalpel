@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
+import Button from 'material-ui/Button'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import MenuIcon from 'material-ui-icons/Menu'
@@ -11,6 +12,8 @@ import DateRange from'material-ui-icons/DateRange'
 
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+
+import moment from 'moment'
 
 class Header extends Component {
 	constructor(props) {
@@ -47,7 +50,7 @@ class Header extends Component {
 
 	render() {
 		return (
-			<AppBar position="fixed" style={{backgroundColor: '#224C90'}}>
+			<AppBar position="fixed">
 				<Toolbar>
 					<IconButton onClick={this.props.onMenuButtonClick} style={{color: '#fff'}}>
 						<MenuIcon />
@@ -56,22 +59,15 @@ class Header extends Component {
 						{this.props.planName}
 					</Typography>
 					{this.props.headerItems}
-					<IconButton
+					<Button
 						aria-owns={this.state.pickerOpen ? 'date-picker' : null}
 						aria-haspopup="true"
 						onClick={this.toggleDatePicker}
 						style={{color: '#fff'}}
-					>
-						<DateRange />
-					</IconButton>
-					<IconButton
-						aria-owns={this.state.open ? 'more-menu' : null}
-						aria-haspopup="true"
-						onClick={this.handleClick}
-						style={{color: '#fff'}}
-					>
-						<MoreVert />
-					</IconButton>
+						raised
+						color="primary"
+					>{moment(this.props.selectedDate).format('Do MMM')}
+					</Button>
 					<MoreMenu open={this.state.open} anchorEl={this.state.anchorEl} handleRequestClose={this.handleRequestClose}/>
 				</Toolbar>
 				{this.state.pickerOpen && 

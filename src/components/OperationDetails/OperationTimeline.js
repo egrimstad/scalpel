@@ -30,6 +30,8 @@ class OperationTimeline extends Component {
 			this.svg = d3.select(this.container).append('svg')
 				.attr('width', '100%')
 				.attr('height', this.props.height || '100%')
+				.attr('class', 'OperationTimeline-svg')
+				.on('click', this.props.onClick)
 		}
 
 		const operation = this.props.operation
@@ -39,20 +41,32 @@ class OperationTimeline extends Component {
 		const start = startTime(operation)
 		const end = endTime(operation)
 
-		const padding = 2
-		const actualHeight = height*0.6
-		const plannedHeight = height - actualHeight - 3*padding
+		const actualY = 20
+		const verticalPadding = 2
+		const horizontalPadding = 15
+		const timelineHeight = height - actualY - verticalPadding
+		const actualHeight = timelineHeight*0.6
+		const plannedY = actualY + actualHeight + verticalPadding
+		const plannedHeight = timelineHeight-actualHeight - verticalPadding
+
 
 		const time = d3.scaleTime()
 			.domain([moment(start), moment(end)])
-			.range([padding, width-padding])
+			.range([horizontalPadding, width-horizontalPadding])
+		
+		const labels = d3.axisBottom(time)
+			.tickSizeOuter(10)
+			.ticks(5)
+			.tickFormat(d3.timeFormat('%H:%M'))
+		
+		this.svg.call(labels)
 		
 		this.svg.append('g').selectAll('rect')
 			.data(startedPhases(operation))
 			.enter()
 			.append('rect')
 			.attr('x', phase => time(moment(phase.start)))
-			.attr('y', padding)
+			.attr('y', actualY)
 			.attr('height', actualHeight)
 			.attr('width', phase => time(moment(phase.end || end)) - time(moment(phase.start)))
 			.attr('fill', phase => phase.color)
@@ -64,7 +78,7 @@ class OperationTimeline extends Component {
 			.enter()
 			.append('rect')
 			.attr('x', phase => time(moment(phase.start)))
-			.attr('y', actualHeight + 2*padding)
+			.attr('y', plannedY)
 			.attr('height', plannedHeight)
 			.attr('width', phase => time(moment(phase.end || end)) - time(moment(phase.start)))
 			.attr('fill', phase => phase.color)
@@ -85,7 +99,8 @@ class OperationTimeline extends Component {
 
 OperationTimeline.propTypes = {
 	operation: PropTypes.object,
-	height: PropTypes.number
+	height: PropTypes.number,
+	onClick: PropTypes.func
 }
 
 export default OperationTimeline

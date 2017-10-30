@@ -11,7 +11,7 @@ import Anesthesia from './Anesthesia'
 import './OperationDetails.css'
 
 function TabContainer(props) {
-	return <div style={{ padding: 20 }}>{props.children}</div>
+	return <div style={{ padding: 10, paddingTop:0 }}>{props.children}</div>
 }
 
 TabContainer.propTypes = {
@@ -55,7 +55,6 @@ function tabContent(operation) {
 class OperationDetails extends Component {
 	constructor(props) {
 		super(props)
-		this.operation = props.operation
 		this.state = {
 			value: 0
 		}
@@ -73,16 +72,18 @@ class OperationDetails extends Component {
 
 	render() {
 		const { classes } = this.props
+		const operation = this.props.operation
 		return (
 			<div className={classes.root}>
-				<AppBar position="static" color="default">
+				<AppBar position="fixed" color="default" className="AppBar-offset">
 					<Tabs value={this.state.value}
 						onChange={this.handleChange}
 						indicatorColor="primary"
 						textColor="primary"
 						scrollable
-						scrollButtons="off">
-						{tabContent(this.operation).tabs.map((tab, tIndex) => {
+						scrollButtons="on"
+					>
+						{tabContent(operation).tabs.map((tab, tIndex) => {
 							return <Tab label={tab.name} key={tIndex} />
 						})}
 					</Tabs>
@@ -91,11 +92,11 @@ class OperationDetails extends Component {
 					index={this.state.value} 
 					onChangeIndex={this.handleChangeIndex}
 					animateTransitions={false}
-					disableLazyLoading={true} >
-					{tabContent(this.operation).tabs.map((tab, tIndex) =>
+					disableLazyLoading={true}>
+					{tabContent(operation).tabs.map((tab, tIndex) =>
 						tIndex === this.state.value ?
 							<TabContainer key={tIndex}>
-								<div>
+								<div className="Tabs-offset">
 									{tab.fields}
 								</div>
 							</TabContainer> : <div key={tIndex}></div>)}

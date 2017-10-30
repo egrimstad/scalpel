@@ -1,6 +1,8 @@
+@import '../../styles/shared/allShared';
+
 .Timeline-theater-name {
 	font-size: 10px;
-	fill: rgb(75, 75, 75);
+	fill: $text-color;
 	font-weight: bold;
 	text-anchor: middle;
 }
@@ -20,7 +22,7 @@
 }
 
 .Timeline-axis text {
-	fill: rgb(75, 75, 75);
+	fill: $text-color;
 }
 
 .Timeline-operation-click {
