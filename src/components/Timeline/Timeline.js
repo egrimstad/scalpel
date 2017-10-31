@@ -234,7 +234,7 @@ class Timeline extends Component {
 			.on('mousedown', this.start)
 			.on('touchstart', this.start)
 			.on('mouseout', this.cancel)
-			.on('touchend', this.cancel)
+			.on('touchend', this.cancel)  // This triggers on a regular click as well
 			.on('touchleave', this.cancel)
 			.on('touchmove', this.cancel)
 			.on('touchcancel', this.cancel)

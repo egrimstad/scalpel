@@ -94,6 +94,7 @@ class OperationDetails extends Component {
 					</Tabs>
 				</AppBar>
 				<SwipeableViews 
+					style={{height: '100vh'}}
 					index={this.state.value} 
 					onChangeIndex={this.handleChangeIndex}
 					animateTransitions={false}
