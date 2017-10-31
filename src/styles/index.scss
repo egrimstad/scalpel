@@ -4,13 +4,6 @@ body {
   font-family: roboto;
 }
 
-.AppBar-offset {
-	top: 64px !important;
-	@media (max-width: 600px) {
-		top: 56px !important;
-	}
-}
-
 /* Disable ugly border on clicked buttons in Firefox */
 :focus {outline:none;}
 ::-moz-focus-inner {border:0;}

@@ -11,3 +11,10 @@ more Scalpel specifc.
 
 @import 'colors';
 @import 'sizes';
+
+.AppBar-offset {
+	top: 64px !important;
+	@media (max-width: 600px) {
+		top: 56px !important;
+	}
+}
