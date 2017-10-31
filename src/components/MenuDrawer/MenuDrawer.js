@@ -10,10 +10,16 @@ import SettingsIcon from 'material-ui-icons/Settings'
 import StopIcon from 'material-ui-icons/Stop'
 import ViewList from 'material-ui-icons/ViewList'
 import ViewWeek from 'material-ui-icons/ViewWeek'
+import PermContactCalendar from 'material-ui-icons/PermContactCalendar'
 import './MenuDrawer.css'
 import {Background, Logo} from '../../assets'
 
 const menuOptions = [
+	{
+		text: 'Min plan',
+		icon: <PermContactCalendar/>,
+		link: '/plan'
+	},
 	{
 		text: 'Tidslinje',
 		icon: <ViewWeek/>,
