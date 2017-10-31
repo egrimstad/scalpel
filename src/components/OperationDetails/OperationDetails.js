@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import SwipeableViews from 'react-swipeable-views'
@@ -19,15 +18,6 @@ function TabContainer(props) {
 TabContainer.propTypes = {
 	children: PropTypes.node.isRequired
 }
-
-const styles = theme => ({
-	root: {
-		flexGrow: 1,
-		width: '100%',
-		marginTop: 0,
-		backgroundColor: theme.palette.background.paper,
-	}
-})
 
 function tabContent(operation) {
 
@@ -78,15 +68,19 @@ class OperationDetails extends Component {
 	}
 
 	render() {
-		const { classes } = this.props
 		const operation = this.props.operation
 		return (
-			<div className={classes.root}>
+			<div>
 				<DetailsHeader
 					operation={operation}
 					onBackClick={this.onBackClick}
 				/>
-				<AppBar position="fixed" color="default" className="AppBar-offset">
+				<AppBar 
+					position="fixed" 
+					color="default" 
+					className="AppBar-offset"
+					style={{zIndex: 10}}
+				>
 					<Tabs value={this.state.value}
 						onChange={this.handleChange}
 						indicatorColor="primary"
@@ -117,8 +111,4 @@ class OperationDetails extends Component {
 	}
 }
 
-OperationDetails.propTypes = {
-	classes: PropTypes.object.isRequired,
-}
-
-export default withStyles(styles)(OperationDetails)
+export default OperationDetails

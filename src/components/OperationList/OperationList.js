@@ -54,10 +54,11 @@ class OperationList extends React.Component {
 				/>
 				{this.props.theaters.length > 0 &&
 					<AppBar 
-						position='fixed' 
-						color='default' 
-						className="AppBar-offset" 
-						style={{zIndex: 0}}>
+						position='fixed'
+						color='default'
+						className='AppBar-offset'
+						style={{zIndex: 10}}
+					>
 						<Tabs
 							value={this.state.value}
 							onChange={this.handleChange}

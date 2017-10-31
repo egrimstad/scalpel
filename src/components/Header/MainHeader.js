@@ -66,8 +66,8 @@ class MainHeader extends Component {
 				{this.state.pickerOpen && 
 				<DatePicker
 					selected={this.props.selectedDate}
-					inline
 					withPortal
+					inline
 					onClickOutside={this.toggleDatePicker}
 					onSelect={this.onSelectDate}
 					locale='nb'
