@@ -68,14 +68,9 @@ class UserPlan extends Component {
 		// zoom
 		const zoom = d3.zoom()
 			.extent([[0, 0], [0, height]])
-			.scaleExtent([1, 20])
+			.scaleExtent([1.5, 20])
 			.translateExtent([[0, 0], [0, height]])
-			.on('start', () => startZoom())
 			.on('zoom', () => zoomed())
-			.on('end', () => endZoom())
-	
-		this.svg.call(zoom)
-			.on('dblclick.zoom', null)
 		
 		// y-axis scale
 		const y = d3.scaleTime()
@@ -198,20 +193,12 @@ class UserPlan extends Component {
 	
 		yLinesGroup
 			.call(yLines)
-		
-		const startZoom = () => {
-		}
-	
-		const endZoom = () => {
-		}
 	
 		const zoomed = () => {
-			zoomer(d3.event)
+			zoomer(d3.event.transform)
 		}
 	
-		const zoomer = (event) => {
-			this.zoomTransformEvent = event
-			const transform = event.transform
+		const zoomer = transform => {
 			const newY = transform.rescaleY(y)
 
 			timeRects
@@ -235,8 +222,18 @@ class UserPlan extends Component {
 			yLinesGroup.call(yLines)
 		}
 
+		const initialDiff = moment(date).endOf('day').diff(moment(date).startOf('day'))
+		const zoomDiff = moment(date).hours(18).minutes(0).diff(moment(date).hours(8).minutes(0))
 
+		const scale = initialDiff/zoomDiff
 
+		const initialZoomTransform = d3.zoomIdentity.translate(0, -y(moment(date).hours(17).minutes(0))).scale(scale)
+
+		this.svg
+			.call(zoom)
+			.call(zoom.transform, initialZoomTransform)
+
+		zoomer(initialZoomTransform)
 	}
 	render() {
 		return (
