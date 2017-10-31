@@ -6,6 +6,8 @@ import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
 
 import OperationDrawer from '../../containers/OperationDrawer'
+import MainHeader from '../../containers/MainHeader'
+
 import { startTime, endTime, hasActivePhase } from 'utils/operationUtils'
 
 import './Timeline.css'
@@ -35,7 +37,6 @@ const mouseX = (event) => {
 class Timeline extends Component {
 	constructor(props) {
 		super(props)
-		this.props.setHeaderItems(['calendar'])
 
 		this.container = null
 		this.filter = null
@@ -402,6 +403,9 @@ class Timeline extends Component {
 			<div
 				ref = {element => this.container = element}
 			>
+				<MainHeader
+					onMenuClick={this.props.openMenu} 
+				/>
 				<OperationDrawer
 					showDetails
 					redirect={this.redirect}
@@ -432,7 +436,7 @@ Timeline.propTypes = {
 		index: PropTypes.number
 	})),
 	numColumns: PropTypes.number,
-	setHeaderItems: PropTypes.func
+	openMenu: PropTypes.func
 }
 
 export default Timeline

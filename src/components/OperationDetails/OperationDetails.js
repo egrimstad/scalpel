@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import SwipeableViews from 'react-swipeable-views'
@@ -10,6 +9,8 @@ import Operation from './Operation'
 import Anesthesia from './Anesthesia'
 import './OperationDetails.css'
 
+import DetailsHeader from '../Header/DetailsHeader'
+
 function TabContainer(props) {
 	return <div style={{ padding: 10, paddingTop:0 }}>{props.children}</div>
 }
@@ -17,15 +18,6 @@ function TabContainer(props) {
 TabContainer.propTypes = {
 	children: PropTypes.node.isRequired
 }
-
-const styles = theme => ({
-	root: {
-		flexGrow: 1,
-		width: '100%',
-		marginTop: 0,
-		backgroundColor: theme.palette.background.paper,
-	}
-})
 
 function tabContent(operation) {
 
@@ -60,6 +52,7 @@ class OperationDetails extends Component {
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleChangeIndex = this.handleChangeIndex.bind(this)
+		this.onBackClick = this.onBackClick.bind(this)
 	}
 
 	handleChange(_, value) {
@@ -70,12 +63,24 @@ class OperationDetails extends Component {
 		this.setState({value: index})
 	}
 
+	onBackClick() {
+		this.props.history.goBack()
+	}
+
 	render() {
-		const { classes } = this.props
 		const operation = this.props.operation
 		return (
-			<div className={classes.root}>
-				<AppBar position="fixed" color="default" className="AppBar-offset">
+			<div>
+				<DetailsHeader
+					operation={operation}
+					onBackClick={this.onBackClick}
+				/>
+				<AppBar 
+					position="fixed" 
+					color="default" 
+					className="AppBar-offset"
+					style={{zIndex: 10}}
+				>
 					<Tabs value={this.state.value}
 						onChange={this.handleChange}
 						indicatorColor="primary"
@@ -106,8 +111,4 @@ class OperationDetails extends Component {
 	}
 }
 
-OperationDetails.propTypes = {
-	classes: PropTypes.object.isRequired,
-}
-
-export default withStyles(styles)(OperationDetails)
+export default OperationDetails
