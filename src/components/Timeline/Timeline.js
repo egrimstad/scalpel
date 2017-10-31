@@ -9,6 +9,7 @@ import OperationDrawer from '../../containers/OperationDrawer'
 import MainHeader from '../../containers/MainHeader'
 
 import { startTime, endTime, hasActivePhase } from 'utils/operationUtils'
+import { translate } from 'utils/d3Utils'
 
 import './Timeline.css'
 import theme from '../../theme/theme'
@@ -21,10 +22,6 @@ const OPERATIONPADDING = 0
 const THEATERBARHEIGHT = 30
 const TIMEBARWIDTH = 40
 const SCROLLBARHEIGHT = 6
-
-const translate = (x, y) => {
-	return 'translate('+x+','+y+')'
-}
 
 const mouseX = (event) => {
 	if(event instanceof MouseEvent) { 

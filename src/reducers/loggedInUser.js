@@ -1,4 +1,4 @@
-const loggedInUser = (state = 2, action) => {
+const loggedInUser = (state = 3, action) => {
 	switch(action.type) {
 	default:
 		return state

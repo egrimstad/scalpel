@@ -51,7 +51,7 @@ const operations = [
 			}
 		],
 		crew: [
-			{id: 2, position: 'Kirurg'},
+			{id: 1, position: 'Kirurg'},
 			{id: 3, position: 'Assistent 1'},
 			{id: 4, position: 'Assistent 2'}],
 		careUnitName: 'KB2',
@@ -679,7 +679,7 @@ const operations = [
 			},
 		],
 		crew: [
-			{id: 2, position: 'Kirurg'},
+			{id: 4, position: 'Kirurg'},
 			{id: 6, position: 'Assistent 1'}],
 		careUnitName: 'OFS',
 		operatingDate: '2017-10-22 11:11',
