@@ -5,9 +5,10 @@ import moment from 'moment'
 import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
 
-import './Timeline.css'
 import OperationDrawer from '../../containers/OperationDrawer'
+import { startTime, endTime, hasActivePhase } from 'utils/operationUtils'
 
+import './Timeline.css'
 import theme from '../../theme/theme'
 
 const OPERATIONWIDTH = 64
@@ -248,9 +249,9 @@ class Timeline extends Component {
 		const timeRects =  operationEnter.append('g').append('rect')
 			.attr('class', 'Timeline-operation-backdrop')
 			.attr('x', op => operationActualX(op.column))
-			.attr('y', op => y(moment(op.start)))
+			.attr('y', op => y(startTime(op)))
 			.attr('width', operationActualWidth)
-			.attr('height', op => y(moment(op.end || now)) - y(moment(op.start)))
+			.attr('height', op => y(hasActivePhase(op) ? now : endTime(op)) - y(startTime(op)))
 			
 		const phaseRects = phase.append('rect')
 			.attr('x', phase => operationActualX(phase.column))
@@ -350,8 +351,8 @@ class Timeline extends Component {
 			const newY = transform.rescaleY(y)
 			
 			timeRects
-				.attr('y', op => newY(moment(op.start)))
-				.attr('height', op => newY(moment(op.end || now)) - newY(moment(op.start)))
+				.attr('y', op => newY(startTime(op)))
+				.attr('height', op => newY(hasActivePhase(op) ? now : endTime(op)) - newY(startTime(op)))
 
 			phaseRects
 				.attr('y', phase => newY(moment(phase.start)))

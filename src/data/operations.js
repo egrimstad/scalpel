@@ -50,8 +50,6 @@ const operations = [
 				end: '2017-10-22 15:37'
 			}
 		],
-		start: '2017-10-22 14:37',
-		end: '2017-10-22 15:37',
 		crew: [
 			{initials: 'AB', fullName: 'Aurora Bentsen', phone: '+4712345678', position: 'Kirurg'},
 			{initials: 'EG', fullName: 'Erik Grønvold', phone: '+4712345678', position: 'Assistent 1'},
@@ -145,8 +143,6 @@ const operations = [
 				end: '2017-10-22 11:58'
 			}
 		],
-		start: '2017-10-22 10:21',
-		end: '2017-10-22 11:58',
 		crew: [
 			{initials: 'EG', fullName: 'Eldar Gjervik', phone: '+4712345678', position: 'Kirurg'},
 			{initials: 'TN', fullName: 'Thomas Nygård', phone: '+4712345678', position: 'Assistent 1'},
@@ -240,7 +236,6 @@ const operations = [
 				end: '2017-10-22 16:13'
 			}
 		],
-		start: '2017-10-22 14:49',
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'Kirurg'},
 			{initials: 'EG', fullName: 'Eldar Gjervik', phone: '+4712345678', position: 'Assistent 1'},
@@ -334,8 +329,6 @@ const operations = [
 				end: '2017-10-22 10:00'
 			}
 		],
-		start: '2017-10-22 08:11',
-		end: '2017-10-22 10:00',
 		crew: [
 			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'Kirurg'},
 			{initials: 'EG', fullName: 'Eldar Gjervik', phone: '+4712345678', position: 'Assistent 1'},
@@ -429,8 +422,6 @@ const operations = [
 				end: '2017-10-22 10:23'
 			}
 		],
-		start: '2017-10-22 09:30',
-		end: '2017-10-22 10:23',
 		crew: [
 			{initials: 'ØI', fullName: 'Øyvind Iversen', phone: '+4712345678', position: 'Kirurg'},
 			{initials: 'KK', fullName: 'Kaja Khan', phone: '+4712345678', position: 'Assistent 1'},
@@ -524,8 +515,6 @@ const operations = [
 				end: '2017-10-22 11:58'
 			}
 		],
-		start: '2017-10-22 10:05',
-		end: '2017-10-22 11:58',
 		crew: [
 			{initials: 'KK', fullName: 'Kaja Khan', phone: '+4712345678', position: 'Kirurg'},
 			{initials: 'EM', fullName: 'Erland Marstein', phone: '+4712345678', position: 'Assistent 1'},
@@ -618,7 +607,6 @@ const operations = [
 				end: '2017-10-22 16:35'
 			}
 		],
-		start: '2017-10-22 15:11',
 		crew: [
 			{initials: 'LS', fullName: 'Laila Selle', phone: '+4712345678', position: 'Kirurg'},
 			{initials: 'HW', fullName: 'Hans Westbye', phone: '+4712345678', position: 'Assistent 1'}],
@@ -711,8 +699,6 @@ const operations = [
 				end: '2017-10-22 15:30'
 			},
 		],
-		start: '2017-10-22 14:05',
-		end: '2017-10-22 15:30',
 		crew: [
 			{initials: 'HT', fullName: 'Heidi Tollefsen', phone: '+4712345678', position: 'Kirurg'},
 			{initials: 'KT', fullName: 'Kåre Tveit', phone: '+4712345678', position: 'Assistent 1'}],
@@ -805,8 +791,6 @@ const operations = [
 				end: '2017-10-22 14:47'
 			},
 		],
-		start: '2017-10-22 13:07',
-		end: '2017-10-22 14:47',
 		crew: [
 			{initials: 'KT', fullName: 'Kåre Tveit', phone: '+4712345678', position: 'Kirurg'}],
 		surgeon: 'Kåre Tveit',
@@ -890,8 +874,6 @@ const operations = [
 				id: 4
 			},
 		],
-		start: '2017-10-23 13:07',
-		end: '2017-10-23 13:48',
 		crew: [
 			{initials: 'HT', fullName: 'Heidi Tollefsen', phone: '+4793868562', position: 'Kirurg'},
 			{initials: 'KT', fullName: 'Kåre Tveit', phone: '+4712345678', position: 'Assistent 1'}],
