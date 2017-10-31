@@ -20,6 +20,8 @@ export const hasActivePhase = operation => startedPhases(operation).some(phase =
 
 export const hasPhaseEnded = phase => !isNil(phase.end)
 
+export const hasOperationFinished = operation => !isNil(last(operation.phases).end)
+
 export const startTime = operation => {
 	const actualStartTime = firstPhase(operation) && firstPhase(operation).start
 	const plannedStartTime = operation.plannedPhases[0].start
