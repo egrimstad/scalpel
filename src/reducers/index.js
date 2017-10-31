@@ -6,6 +6,7 @@ import operationPhases from './operationPhases'
 import selectedPlan from './selectedPlan'
 import plans from './plans'
 import persons from './persons'
+import loggedInUser from './loggedInUser'
 
 const scalpelReducer = combineReducers({
 	date,
@@ -14,7 +15,8 @@ const scalpelReducer = combineReducers({
 	theaters,
 	plans,
 	selectedPlan,
-	persons
+	persons,
+	loggedInUser
 })
 
 export default scalpelReducer

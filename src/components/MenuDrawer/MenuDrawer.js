@@ -40,7 +40,7 @@ class MenuDrawer extends Component {
 						<img id="drawer-logo" alt="logo" src={Logo}/>
 						<List dense id="account-name">
 							<ListItem>
-								<ListItemText primary="Olivia Heldens" secondary="cheyanne_hauck@hotmail.com"/>
+								<ListItemText primary={this.props.user.fullName}/>
 							</ListItem>
 						</List>
 					</div>
@@ -83,6 +83,9 @@ class MenuDrawer extends Component {
 MenuDrawer.propTypes = {
 	open: PropTypes.bool,
 	onRequestClose: PropTypes.func,
+	plans: PropTypes.array,
+	selectedPlan: PropTypes.object,
+	user: PropTypes.object
 }
 
 export default MenuDrawer

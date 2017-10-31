@@ -6,7 +6,8 @@ const mapStateToProps = (state, ownProps) => {
 	return {
 		...ownProps,
 		plans: state.plans,
-		selectedPlan: state.selectedPlan
+		selectedPlan: state.selectedPlan,
+		user: state.persons.find(person => person.id === state.loggedInUser)
 	}
 }
 
