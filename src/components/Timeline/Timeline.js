@@ -231,12 +231,13 @@ class Timeline extends Component {
 			.on('mousedown', this.start)
 			.on('touchstart', this.start)
 			.on('mouseout', this.cancel)
-			.on('touchend', this.cancel)
+			.on('touchend', this.cancel)  // This triggers on a regular click as well
 			.on('touchleave', this.cancel)
 			.on('touchmove', this.cancel)
 			.on('touchcancel', this.cancel)
 			.on('dragstart', this.cancel)
 			.on('contextmenu', () => d3.event.preventDefault())
+			.attr('gid', op => op.id)
 
 		// Actual time spent
 		const phase = operationEnter.append('g')
@@ -392,6 +393,19 @@ class Timeline extends Component {
 
 		if(this.zoomTransformEvent) {
 			zoomer(this.zoomTransformEvent)
+		}
+
+		if(this.state.operationDrawerOpen) {
+			let selectedID = d3.select(d3.event.currentTarget).attr('gid')
+			d3.selectAll('g').each(function(d,i) {
+				let elt = d3.select(this)
+				if (elt.attr('gid') === selectedID) {
+					elt
+						.attr('filter', 'url(#Timeline-click-filter)')
+						.selectAll('.Timeline-operation-backdrop, .Timeline-planned')
+						.classed('Timeline-operation-click', true)
+				}
+			})
 		}
 	}
 
