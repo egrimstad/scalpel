@@ -10,7 +10,7 @@ import moment from 'moment'
 
 import './OperationDrawer.css'
 
-import { activePhase, nextPhase, lastOperationEventTime } from 'utils/operationUtils'
+import { activePhase, nextPhase, lastOperationEventTime, hasOperationFinished } from 'utils/operationUtils'
 
 class OperationDrawer extends Component {
 	constructor(props) {
@@ -65,6 +65,8 @@ class OperationDrawer extends Component {
 		const hasActive = !isNil(active)
 		const hasNext = !isNil(next)
 
+		const isFinished = hasOperationFinished(operation)
+
 		return (
 			<Drawer
 				open={this.props.open}
@@ -111,19 +113,29 @@ class OperationDrawer extends Component {
 						Endre faser
 					</Typography>
 
-					<Typography type="body2" style={{gridArea: 'phase-at'}} >
-						klokken
-					</Typography>
-					
-					<TextField
-						style={{gridArea: 'phase-time'}}
-						type="time"
-						InputLabelProps={{ shrink: true }}
-						value={this.state.time.format('HH:mm')}
-						onChange={event => this.onTimeChange(event.target)}
-					/>
+					{isFinished &&
+						<Typography type="body2" style={{gridArea: 'phase-at'}} >
+							Operasjonen er ferdig!
+						</Typography>
+					}
 
-					{hasActive && 
+					{!isFinished &&
+						<Typography type="body2" style={{gridArea: 'phase-at'}} >
+							klokken
+						</Typography>
+					}
+					
+					{!isFinished &&
+						<TextField
+							style={{gridArea: 'phase-time'}}
+							type="time"
+							InputLabelProps={{ shrink: true }}
+							value={this.state.time.format('HH:mm')}
+							onChange={event => this.onTimeChange(event.target)}
+						/>
+					}
+
+					{!isFinished && hasActive && 
 						<Button
 							style={{gridArea: 'phase-primary'}}
 							color="primary" 
@@ -136,13 +148,13 @@ class OperationDrawer extends Component {
 						</Button> 
 					}
 
-					{hasActive && hasNext && 
+					{!isFinished && hasActive && hasNext && 
 						<Typography type="body2" style={{gridArea: 'phase-or'}}>
 							eller
 						</Typography>
 					}
 					
-					{hasNext && 
+					{!isFinished && hasNext && 
 						<Button
 							style={{gridArea: hasActive ? 'phase-secondary' : 'phase-primary'}}
 							dense

@@ -8,8 +8,10 @@ import isNil from 'lodash/isNil'
 import OperationDrawer from '../../containers/OperationDrawer'
 import MainHeader from '../../containers/MainHeader'
 
-import './Timeline.css'
+import { startTime, endTime, hasActivePhase } from 'utils/operationUtils'
 
+import './Timeline.css'
+import theme from '../../theme/theme'
 
 const OPERATIONWIDTH = 64
 const PLANNEDWIDTH = 16
@@ -18,6 +20,7 @@ const THEATERPADDING = 16
 const OPERATIONPADDING = 0
 const THEATERBARHEIGHT = 30
 const TIMEBARWIDTH = 40
+const SCROLLBARHEIGHT = 6
 
 const translate = (x, y) => {
 	return 'translate('+x+','+y+')'
@@ -48,6 +51,7 @@ class Timeline extends Component {
 		this.buildTimeline = this.buildTimeline.bind(this)
 
 		this.zoomTransformEvent = null
+		this.xscrollstart = 0
 
 		this.state = {
 			operationDrawerOpen: false,
@@ -106,8 +110,7 @@ class Timeline extends Component {
 		this.filter = this.svg.select('defs')
 			.append('filter')
 			.attr('id', 'Timeline-click-filter')
-
-		this.filter.append('feColorMatrix')  // Adds a saturation filter
+			.append('feColorMatrix')  // Adds a saturation filter
 			.attr('type', 'saturate')
 			.attr('values', '0.4')
 	}
@@ -155,7 +158,6 @@ class Timeline extends Component {
 		const timelineHeight = height - THEATERBARHEIGHT
 		
 		const xScrollDomain = [0, -(timelineWidth-(width-timelineX))]
-		let xscrollstart = 0
 		let xoffset = 0
 
 		const theaterX = theater => xoffset + theater.index*THEATERPADDING + theater.startColumn*(OPERATIONWIDTH + OPERATIONPADDING)
@@ -178,6 +180,7 @@ class Timeline extends Component {
 			.translateExtent([[0, 0], [timelineWidth, timelineHeight]])
 			.on('start', () => startZoom())
 			.on('zoom', () => zoomed())
+			.on('end', () => endZoom())
 		
 		this.svg.call(zoom)
 			.on('dblclick.zoom', null)
@@ -247,9 +250,9 @@ class Timeline extends Component {
 		const timeRects =  operationEnter.append('g').append('rect')
 			.attr('class', 'Timeline-operation-backdrop')
 			.attr('x', op => operationActualX(op.column))
-			.attr('y', op => y(moment(op.start)))
+			.attr('y', op => y(startTime(op)))
 			.attr('width', operationActualWidth)
-			.attr('height', op => y(moment(op.end || now)) - y(moment(op.start)))
+			.attr('height', op => y(hasActivePhase(op) ? now : endTime(op)) - y(startTime(op)))
 			
 		const phaseRects = phase.append('rect')
 			.attr('x', phase => operationActualX(phase.column))
@@ -310,8 +313,33 @@ class Timeline extends Component {
 				.attr('clip-path', 'url(#Timeline-ymask)')
 		}
 
+		let scrollBar = null
+		if(canScrollX) {
+			scrollBar = this.svg.append('rect')
+				.attr('id', 'Timeline-scrollbar')
+				.attr('x', timelineX)
+				.attr('y', timelineY + timelineHeight - SCROLLBARHEIGHT)
+				.attr('width', 2*width - 2*timelineX - timelineWidth)
+				.attr('height', SCROLLBARHEIGHT)
+				.attr('rx', '3px')
+				.attr('ry', '3px')
+				.attr('fill', theme.options.primary)
+				.attr('opacity', 0)
+		}
+
 		const startZoom = () => {
-			xscrollstart = mouseX(d3.event.sourceEvent) - xoffset
+			this.xscrollstart = mouseX(d3.event.sourceEvent) - xoffset
+
+			this.svg.select('#Timeline-scrollbar')
+				.transition()
+				.attr('opacity', 1)
+		}
+
+		const endZoom = () => {
+			this.svg.select('#Timeline-scrollbar')
+				.transition()
+				.delay(1000)
+				.attr('opacity', 0)
 		}
 
 		const zoomed = () => {
@@ -324,8 +352,8 @@ class Timeline extends Component {
 			const newY = transform.rescaleY(y)
 			
 			timeRects
-				.attr('y', op => newY(moment(op.start)))
-				.attr('height', op => newY(moment(op.end || now)) - newY(moment(op.start)))
+				.attr('y', op => newY(startTime(op)))
+				.attr('height', op => newY(hasActivePhase(op) ? now : endTime(op)) - newY(startTime(op)))
 
 			phaseRects
 				.attr('y', phase => newY(moment(phase.start)))
@@ -350,7 +378,7 @@ class Timeline extends Component {
 				return
 			}
 
-			xoffset =  mouseX(event.sourceEvent) - xscrollstart
+			xoffset =  mouseX(event.sourceEvent) - this.xscrollstart
 
 			// Limit scroll
 			xoffset = (xoffset <= xScrollDomain[0]) ? xoffset : xScrollDomain[0]
@@ -360,6 +388,9 @@ class Timeline extends Component {
 			phaseRects.attr('x', phase => operationActualX(phase.column))
 			plannedRects.attr('x', op => operationPlannedX(op.column))
 			theaterGroup.attr('transform', theater => translate(theaterX(theater), 0))
+			if(scrollBar) {
+				scrollBar.attr('x', timelineX - xoffset)
+			}
 		}
 
 		if(this.zoomTransformEvent) {

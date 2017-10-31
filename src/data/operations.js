@@ -50,12 +50,10 @@ const operations = [
 				end: '2017-10-22 15:37'
 			}
 		],
-		start: '2017-10-22 14:37',
-		end: '2017-10-22 15:37',
 		crew: [
-			{initials: 'AB', fullName: 'Aurora Bentsen', phone: '+4712345678', position: 'kirurg'},
-			{initials: 'EG', fullName: 'Erik Grønvold', phone: '+4712345678', position: 'assistant1'},
-			{initials: 'RM', fullName: 'Robin Moan', phone: '+4712345678', position: 'assistant2'}],
+			{initials: 'AB', fullName: 'Aurora Bentsen', phone: '+4712345678', position: 'Kirurg'},
+			{initials: 'EG', fullName: 'Erik Grønvold', phone: '+4712345678', position: 'Assistent 1'},
+			{initials: 'RM', fullName: 'Robin Moan', phone: '+4712345678', position: 'Assistent 2'}],
 		surgeon: 'Aurora Bentsen',
 		assistant1: 'Erik Grønvold',
 		assistant2: 'Robin Moan',
@@ -93,7 +91,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 160,
 		weight: 65,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22105749992'
 	},
 	{
 		id: 1,
@@ -144,12 +143,10 @@ const operations = [
 				end: '2017-10-22 11:58'
 			}
 		],
-		start: '2017-10-22 10:21',
-		end: '2017-10-22 11:58',
 		crew: [
-			{initials: 'EG', fullName: 'Eldar Gjervik', phone: '+4712345678', position: 'kirurg'},
-			{initials: 'TN', fullName: 'Thomas Nygård', phone: '+4712345678', position: 'assistant1'},
-			{initials: 'OPH', fullName: 'Olav Per Høyset', phone: '+4712345678', position: 'assistant2'}],
+			{initials: 'EG', fullName: 'Eldar Gjervik', phone: '+4712345678', position: 'Kirurg'},
+			{initials: 'TN', fullName: 'Thomas Nygård', phone: '+4712345678', position: 'Assistent 1'},
+			{initials: 'OPH', fullName: 'Olav Per Høyset', phone: '+4712345678', position: 'Assistent 2'}],
 		surgeon: 'Eldar Gjervik',
 		assistant1: 'Thomas Nygård',
 		assistant2: 'Olav Per Høyset',
@@ -157,7 +154,7 @@ const operations = [
 		operatingDate: '2017-10-22 17:11',
 		arrivalTime: '2017-10-22 15:11',
 		surgeonTime: 15,
-		patientBirthDate: '2017-10-22',
+		patientBirthDate: '1995-10-22',
 		bloodType: 'AB',
 		asa: 3,
 		diagnoseTypeFreeText: 'Arr abdomen',
@@ -187,7 +184,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 159,
 		weight: 50,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22109549492'
 	},
 	{
 		id: 2,
@@ -238,11 +236,10 @@ const operations = [
 				end: '2017-10-22 16:13'
 			}
 		],
-		start: '2017-10-22 14:49',
 		crew: [
-			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
-			{initials: 'EG', fullName: 'Eldar Gjervik', phone: '+4712345678', position: 'assistant1'},
-			{initials: 'TN', fullName: 'Thomas Nygård', phone: '+4712345678', position: 'assistant2'}],
+			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'Kirurg'},
+			{initials: 'EG', fullName: 'Eldar Gjervik', phone: '+4712345678', position: 'Assistent 1'},
+			{initials: 'TN', fullName: 'Thomas Nygård', phone: '+4712345678', position: 'Assistent 2'}],
 		surgeon: 'Roger Gran Hansen',
 		assistant1: 'Eldar Gjervik',
 		assistant2: 'Thomas Nygård',
@@ -280,7 +277,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 170,
 		weight: 62,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22100549292'
 	},
 	{
 		id: 3,
@@ -331,12 +329,10 @@ const operations = [
 				end: '2017-10-22 10:00'
 			}
 		],
-		start: '2017-10-22 08:11',
-		end: '2017-10-22 10:00',
 		crew: [
-			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'kirurg'},
-			{initials: 'EG', fullName: 'Eldar Gjervik', phone: '+4712345678', position: 'assistant1'},
-			{initials: 'TN', fullName: 'Thomas Nygård', phone: '+4712345678', position: 'assistant2'}],
+			{initials: 'RGH', fullName: 'Roger Gran Hansen', phone: '+4712345678', position: 'Kirurg'},
+			{initials: 'EG', fullName: 'Eldar Gjervik', phone: '+4712345678', position: 'Assistent 1'},
+			{initials: 'TN', fullName: 'Thomas Nygård', phone: '+4712345678', position: 'Assistent 2'}],
 		surgeon: 'Roger Gran Hansen',
 		assistant1: 'Eldar Gjervik',
 		assistant2: 'Thomas Nygård',
@@ -374,7 +370,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 170,
 		weight: 62,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22100549992'
 	},
 	{
 		id: 4,
@@ -425,12 +422,10 @@ const operations = [
 				end: '2017-10-22 10:23'
 			}
 		],
-		start: '2017-10-22 09:30',
-		end: '2017-10-22 10:23',
 		crew: [
-			{initials: 'ØI', fullName: 'Øyvind Iversen', phone: '+4712345678', position: 'kirurg'},
-			{initials: 'KK', fullName: 'Kaja Khan', phone: '+4712345678', position: 'assistant1'},
-			{initials: 'OPH', fullName: 'Olav Per Høyset', phone: '+4712345678', position: 'assistant2'}],
+			{initials: 'ØI', fullName: 'Øyvind Iversen', phone: '+4712345678', position: 'Kirurg'},
+			{initials: 'KK', fullName: 'Kaja Khan', phone: '+4712345678', position: 'Assistent 1'},
+			{initials: 'OPH', fullName: 'Olav Per Høyset', phone: '+4712345678', position: 'Assistent 2'}],
 		surgeon: 'Øyvind Iversen',
 		assistant1: 'Kaja Khan',
 		assistant2: 'Olav Per Høyset',
@@ -438,7 +433,7 @@ const operations = [
 		operatingDate: '2017-10-22 12:11',
 		arrivalTime: '2017-10-22 15:11',
 		surgeonTime: 15,
-		patientBirthDate: '2017-07-16',
+		patientBirthDate: '1982-07-16',
 		bloodType: 'A',
 		asa: 1,
 		diagnoseTypeFreeText: 'Fremmedlegme finger hø hånd',
@@ -468,7 +463,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 190,
 		weight: 100,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '16078249292'
 	},
 	{
 		id: 5,
@@ -519,12 +515,10 @@ const operations = [
 				end: '2017-10-22 11:58'
 			}
 		],
-		start: '2017-10-22 10:05',
-		end: '2017-10-22 11:58',
 		crew: [
-			{initials: 'KK', fullName: 'Kaja Khan', phone: '+4712345678', position: 'kirurg'},
-			{initials: 'EM', fullName: 'Erland Marstein', phone: '+4712345678', position: 'assistant1'},
-			{initials: 'IL', fullName: 'Ida Larsen', phone: '+4712345678', position: 'assistant2'}],
+			{initials: 'KK', fullName: 'Kaja Khan', phone: '+4712345678', position: 'Kirurg'},
+			{initials: 'EM', fullName: 'Erland Marstein', phone: '+4712345678', position: 'Assistent 1'},
+			{initials: 'IL', fullName: 'Ida Larsen', phone: '+4712345678', position: 'Assistent 2'}],
 		surgeon: 'Kaja Khan',
 		assistant1: 'Erland Marstein',
 		assistant2: 'Ida Larsen',
@@ -561,7 +555,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 179,
 		weight: 60,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22108749992'
 	},
 	{
 		id: 6,
@@ -612,10 +607,9 @@ const operations = [
 				end: '2017-10-22 16:35'
 			}
 		],
-		start: '2017-10-22 15:11',
 		crew: [
-			{initials: 'LS', fullName: 'Laila Selle', phone: '+4712345678', position: 'kirurg'},
-			{initials: 'HW', fullName: 'Hans Westbye', phone: '+4712345678', position: 'assistant1'}],
+			{initials: 'LS', fullName: 'Laila Selle', phone: '+4712345678', position: 'Kirurg'},
+			{initials: 'HW', fullName: 'Hans Westbye', phone: '+4712345678', position: 'Assistent 1'}],
 		surgeon: 'Laila Selle',
 		assistant1: 'Hans Westbye',
 		assistant2: '',
@@ -653,7 +647,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 180,
 		weight: 90,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22108249992'
 	},
 	{
 		id: 7,
@@ -704,11 +699,9 @@ const operations = [
 				end: '2017-10-22 15:30'
 			},
 		],
-		start: '2017-10-22 14:05',
-		end: '2017-10-22 15:30',
 		crew: [
-			{initials: 'HT', fullName: 'Heidi Tollefsen', phone: '+4712345678', position: 'kirurg'},
-			{initials: 'KT', fullName: 'Kåre Tveit', phone: '+4712345678', position: 'assistant1'}],
+			{initials: 'HT', fullName: 'Heidi Tollefsen', phone: '+4712345678', position: 'Kirurg'},
+			{initials: 'KT', fullName: 'Kåre Tveit', phone: '+4712345678', position: 'Assistent 1'}],
 		surgeon: 'Roger Gran Hansen',
 		assistant1: 'Kåre Tveit',
 		assistant2: '',
@@ -746,7 +739,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 122,
 		weight: 50,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22100149692'
 	},
 	{
 		id: 8,
@@ -797,10 +791,8 @@ const operations = [
 				end: '2017-10-22 14:47'
 			},
 		],
-		start: '2017-10-22 13:07',
-		end: '2017-10-22 14:47',
 		crew: [
-			{initials: 'KT', fullName: 'Kåre Tveit', phone: '+4712345678', position: 'kirurg'}],
+			{initials: 'KT', fullName: 'Kåre Tveit', phone: '+4712345678', position: 'Kirurg'}],
 		surgeon: 'Kåre Tveit',
 		assistant1: '',
 		assistant2: '',
@@ -838,12 +830,13 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 145,
 		weight: 57,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22108749692'
 	},
 	{
 		id: 9,
 		theater: 4,
-		patientName: 'Ellen',
+		patientName: 'Ellen Skien',
 		plannedPhases: [
 			{
 				id: 0,
@@ -881,11 +874,9 @@ const operations = [
 				id: 4
 			},
 		],
-		start: '2017-10-23 13:07',
-		end: '2017-10-23 13:48',
 		crew: [
-			{initials: 'HT', fullName: 'Heidi Tollefsen', phone: '+4793868562', position: 'kirurg'},
-			{initials: 'KT', fullName: 'Kåre Tveit', phone: '+4712345678', position: 'assistant1'}],
+			{initials: 'HT', fullName: 'Heidi Tollefsen', phone: '+4793868562', position: 'Kirurg'},
+			{initials: 'KT', fullName: 'Kåre Tveit', phone: '+4712345678', position: 'Assistent 1'}],
 		surgeon: 'Roger Gran Hansen',
 		assistant1: 'Kåre Tveit',
 		assistant2: '',
@@ -923,7 +914,8 @@ const operations = [
 		needsCentralVenousCatheter: true,
 		height: 145,
 		weight: 57,
-		otherInformation: 'Ingen anestesi før kl 16'
+		otherInformation: 'Ingen anestesi før kl 16',
+		socialSecurityNum: '22108749092'
 	}
 ]
 
