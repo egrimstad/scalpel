@@ -40,7 +40,7 @@ class App extends Component {
 	render() {
 		return (
 			<MuiThemeProvider theme={theme}>
-				<Router>
+				<Router basename="/Scalpel2">
 					<div>
 						<MenuDrawer open={this.state.menuOpen} onRequestClose={this.closeMenu} />
 
