@@ -815,7 +815,7 @@ const operations = [
 		plannedPhases: [
 			{
 				id: 0,
-				start: '2017-10-23 13:00',
+				start: '2017-11-01 13:00',
 				duration: 30
 			},
 			{
@@ -830,17 +830,17 @@ const operations = [
 		phases: [
 			{
 				id: 0,
-				start: '2017-10-23 13:07',
-				end: '2017-10-23 13:20'
+				start: '2017-11-01 13:07',
+				end: '2017-11-01 13:20'
 			},
 			{
 				id: 1,
-				start: '2017-10-23 13:20',
-				end: '2017-10-23 13:46'
+				start: '2017-11-01 13:20',
+				end: '2017-11-01 13:46'
 			},
 			{
 				id: 2,
-				start: '2017-10-23 13:48',
+				start: '2017-11-01 13:48',
 			},
 			{
 				id: 3
@@ -850,11 +850,11 @@ const operations = [
 			},
 		],
 		crew: [
-			{id:0, position: 'Kirurg'},
+			{id: 3, position: 'Kirurg'},
 			{id: 1, position: 'Assistent 1'}],
 		careUnitName: 'KB2',
-		operatingDate: '2017-10-23 17:11',
-		arrivalTime: '2017-10-23 15:11',
+		operatingDate: '2017-11-01 17:11',
+		arrivalTime: '2017-11-01 15:11',
 		surgeonTime: 15,
 		patientBirthDate: '1987-10-22',
 		bloodType: 'AA',

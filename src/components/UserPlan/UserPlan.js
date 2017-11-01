@@ -26,6 +26,8 @@ class UserPlan extends Component {
 		this.container = null
 
 		this.buildPlan = this.buildPlan.bind(this)
+
+		this.redirectToOperation = this.redirectToOperation.bind(this)
 	}
 
 	componentDidMount() {
@@ -34,6 +36,10 @@ class UserPlan extends Component {
 
 	componentDidUpdate() {
 		this.buildPlan()
+	}
+
+	redirectToOperation(operation) {
+		this.props.history.push('/operations/' + operation.id)
 	}
 
 	buildPlan() {
@@ -68,7 +74,7 @@ class UserPlan extends Component {
 		// zoom
 		const zoom = d3.zoom()
 			.extent([[0, 0], [0, height]])
-			.scaleExtent([1.5, 20])
+			.scaleExtent([1.5, 5])
 			.translateExtent([[0, 0], [0, height]])
 			.on('zoom', () => zoomed())
 		
@@ -93,15 +99,7 @@ class UserPlan extends Component {
 			.data(operations)
 		
 		const operationEnter = operation.enter().append('g')
-			.on('click', this.click)
-			.on('mousedown', this.start)
-			.on('touchstart', this.start)
-			.on('mouseout', this.cancel)
-			.on('touchend', this.cancel)
-			.on('touchleave', this.cancel)
-			.on('touchmove', this.cancel)
-			.on('touchcancel', this.cancel)
-			.on('dragstart', this.cancel)
+			.on('click', op => this.redirectToOperation(op))
 			.on('contextmenu', () => d3.event.preventDefault())
 		
 		// Actual time spent
@@ -193,6 +191,19 @@ class UserPlan extends Component {
 	
 		yLinesGroup
 			.call(yLines)
+
+		// Add line representing current time
+		let nowLine = null
+		if(now.isSame(date, 'day')) {
+			nowLine = this.svg.append('line')
+				.attr('transform', translate(planX, 0))
+				.attr('x1', 0)
+				.attr('y1', y(now))
+				.attr('x2', OPERATIONWIDTH)
+				.attr('y2', y(now))
+				.attr('class', 'Timeline-now-line')
+				.attr('clip-path', 'url(#Timeline-ymask)')
+		}
 	
 		const zoomed = () => {
 			zoomer(d3.event.transform)
@@ -215,6 +226,12 @@ class UserPlan extends Component {
 			
 			info
 				.attr('transform', op => translate(planX + OPERATIONWIDTH + PADDING, newY(startTime(op))))
+			
+			if(nowLine) {
+				nowLine
+					.attr('y1', newY(now))
+					.attr('y2', newY(now))
+			}
 			
 			yLabels.scale(newY)
 			yLines.scale(newY)
