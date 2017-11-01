@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { Pencil, GreenBall } from 'assets'
 import './OperationList.css'
 
-import MainHeader from '../../containers/MainHeader'
+import OperationPlanHeader from '../../containers/OperationPlanHeader'
 
 import './OperationList.css'
 
@@ -50,7 +50,7 @@ class OperationList extends React.Component {
 	render() {
 		return (
 			<div>
-				<MainHeader
+				<OperationPlanHeader
 					onMenuClick={this.props.openMenu} 
 				/>
 				{this.props.theaters.length > 0 &&

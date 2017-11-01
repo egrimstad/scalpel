@@ -2,14 +2,17 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
+import ArrowBack from 'material-ui-icons/ArrowBack'
 import SwipeableViews from 'react-swipeable-views'
+import moment from 'moment'
+
 import PhoneList from './PhoneList'
 import Overview from './Overview'
 import Operation from './Operation'
 import Anesthesia from './Anesthesia'
-import './OperationDetails.css'
+import DateHeader from '../Header/DateHeader'
 
-import DetailsHeader from '../Header/DetailsHeader'
+import './OperationDetails.css'
 
 function TabContainer(props) {
 	return <div style={{ padding: 10, paddingTop:0 }}>{props.children}</div>
@@ -71,9 +74,12 @@ class OperationDetails extends Component {
 		const operation = this.props.operation
 		return (
 			<div>
-				<DetailsHeader
-					operation={operation}
-					onBackClick={this.onBackClick}
+				<DateHeader
+					title={operation.patientName}
+					date={moment(operation.operatingDate)}
+					leftButtonIcon={<ArrowBack />}
+					onLeftButtonClick={this.onBackClick}					
+					dateEditable={false}
 				/>
 				<AppBar 
 					position="fixed" 

@@ -5,8 +5,10 @@ import theaters from './theaters'
 import operationPhases from './operationPhases'
 import selectedPlan from './selectedPlan'
 import plans from './plans'
+import menuDrawerOpen from './menuDrawerOpen'
 
 const scalpelReducer = combineReducers({
+	menuDrawerOpen,
 	date,
 	operations,
 	operationPhases,
