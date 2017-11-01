@@ -1,6 +1,7 @@
 import React from 'react'
 import Grid from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
+import Divider from 'material-ui/Divider'
 import { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
 import './OperationDetails.css'
 
@@ -20,7 +21,7 @@ const fields2 = ([
 const fields3 = ([
 	['Anestesitilsyn', 'Journaltilsyn uten pas. tilstede'],
 	['Verifisert', 'Larsen, Tor']
-]) //TODO
+])
 
 const checkboxFields = ([
 	['Screening utført', 'isScreeningCompleted'],
@@ -37,6 +38,7 @@ const Anesthesia = (props) => {
 					<h4>Anestesiologiske forhold</h4>
 					<p>{props.operation['anesthesiaInformation'] ? props.operation['anesthesiaInformation'] : '-'}</p>
 				</Grid>
+				<Divider />
 				<Grid>
 					{fields1.map((item, i) =>
 						<ListItem key={i}>
@@ -46,6 +48,7 @@ const Anesthesia = (props) => {
 							/>
 						</ListItem>)}
 				</Grid>
+				<Divider />
 				<Grid>
 					{checkboxFields.map((item, i) =>
 						<ListItem key={i}>
@@ -59,6 +62,7 @@ const Anesthesia = (props) => {
 							</ListItemSecondaryAction>
 						</ListItem>)}
 				</Grid>
+				<Divider />
 				<Grid>
 					{fields2.map((item, i) =>
 						<ListItem key={i}>
@@ -74,10 +78,12 @@ const Anesthesia = (props) => {
 						/>
 					</ListItem>
 				</Grid>
+				<Divider />
 				<Grid>
 					<h4>Annet</h4>
 					<p>{props.operation['otherInformation'] ? props.operation['otherInformation'] : '-'}</p>
 				</Grid>
+				<Divider />
 				<Grid>
 					{fields3.map((item, i) =>
 						<ListItem key={i}>

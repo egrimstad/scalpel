@@ -1,6 +1,8 @@
 import React from 'react'
 import Grid from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
+import Divider from 'material-ui/Divider'
+import './OperationDetails.css'
 import { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
 
 const shortFields = ([
@@ -38,6 +40,7 @@ const Operation = (props) => {
 					<Grid key={i}>
 						<h4>{item[0]}</h4>
 						<p>{props.operation[item[1]] ? props.operation[item[1]] : 'Ingen informasjon tilgjengelig'}</p>
+						<Divider/>
 					</Grid>)}
 				<Grid>
 					{shortFields.map((item,i) =>
@@ -48,6 +51,7 @@ const Operation = (props) => {
 							/>
 						</ListItem>)}
 				</Grid>
+				<Divider />
 				<Grid>
 					{checkboxFields.map((item, i) =>
 						<ListItem key={i}>
@@ -61,6 +65,7 @@ const Operation = (props) => {
 							</ListItemSecondaryAction>
 						</ListItem>)}
 				</Grid>
+				<Divider />
 				<Grid>
 					<ListItem>
 						<ListItemText
