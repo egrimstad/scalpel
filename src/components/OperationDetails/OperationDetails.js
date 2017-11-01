@@ -11,56 +11,38 @@ import './OperationDetails.css'
 
 import DetailsHeader from '../Header/DetailsHeader'
 
-function TabContainer(props) {
-	return <div style={{ padding: 10, paddingTop:0 }}>{props.children}</div>
-}
-
-TabContainer.propTypes = {
-	children: PropTypes.node.isRequired
-}
-
-function tabContent(operation) {
-
-	return {
-		tabs: [
-			{
-				name: 'Oversikt',
-				fields: <Overview operation={operation}/>
-			},
-			{
-				name: 'Operasjon',
-				fields: <Operation operation={operation}/>
-			},
-			{
-				name: 'Anestesi',
-				fields: <Anesthesia operation={operation}/>
-			},
-			{
-				name: 'Personell',
-				fields: <PhoneList operation={operation}/>
-			}
-
-		]
+const tabContent = operation => [
+	{
+		name: 'Oversikt',
+		fields: <Overview operation={operation}/>
+	},
+	{
+		name: 'Operasjon',
+		fields: <Operation operation={operation}/>
+	},
+	{
+		name: 'Anestesi',
+		fields: <Anesthesia operation={operation}/>
+	},
+	{
+		name: 'Personell',
+		fields: <PhoneList operation={operation}/>
 	}
-}
+]
 
 class OperationDetails extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			value: 0
+			currentTab: 0
 		}
-		this.handleChange = this.handleChange.bind(this)
-		this.handleChangeIndex = this.handleChangeIndex.bind(this)
+
+		this.onChangeTab = this.onChangeTab.bind(this)
 		this.onBackClick = this.onBackClick.bind(this)
 	}
 
-	handleChange(_, value) {
-		this.setState({value})
-	}
-
-	handleChangeIndex(index) {
-		this.setState({value: index})
+	onChangeTab(tabIndex) {
+		this.setState({currentTab: tabIndex})
 	}
 
 	onBackClick() {
@@ -81,31 +63,30 @@ class OperationDetails extends Component {
 					className="AppBar-offset"
 					style={{zIndex: 10}}
 				>
-					<Tabs value={this.state.value}
-						onChange={this.handleChange}
+					<Tabs value={this.state.currentTab}
+						onChange={(_, tabIndex) => this.onChangeTab(tabIndex)}
 						indicatorColor="primary"
 						textColor="primary"
 						scrollable
 						scrollButtons="on"
 					>
-						{tabContent(operation).tabs.map((tab, tIndex) => {
-							return <Tab label={tab.name} key={tIndex} />
-						})}
+						{tabContent(operation).map((tab, i) => <Tab label={tab.name} key={i} />)}
 					</Tabs>
 				</AppBar>
 				<SwipeableViews 
 					style={{height: '100vh'}}
-					index={this.state.value} 
-					onChangeIndex={this.handleChangeIndex}
-					animateTransitions={false}
+					index={this.state.currentTab} 
+					onChangeIndex={this.onChangeTab}
 					disableLazyLoading={true}>
-					{tabContent(operation).tabs.map((tab, tIndex) =>
-						tIndex === this.state.value ?
-							<TabContainer key={tIndex}>
-								<div className="Tabs-offset">
-									{tab.fields}
-								</div>
-							</TabContainer> : <div key={tIndex}></div>)}
+					{tabContent(operation).map((tab, i) =>
+						<div 
+							key={i} 
+							style={{ padding: 10, paddingTop:0 }}
+							className="Tabs-offset"
+						>
+							{this.state.currentTab === i ? tab.fields : null}
+						</div>
+					)}
 				</SwipeableViews>
 			</div>
 		)
