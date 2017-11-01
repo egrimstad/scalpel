@@ -417,9 +417,7 @@ class Timeline extends Component {
 			<div
 				ref = {element => this.container = element}
 			>
-				<OperationPlanHeader
-					onLeftButtonClick={this.props.openMenu} 
-				/>
+				<OperationPlanHeader />
 				<OperationDrawer
 					showDetails
 					redirect={this.redirect}

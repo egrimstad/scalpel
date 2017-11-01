@@ -28,9 +28,6 @@ const App = () => {
 							<Route exact path="/operations/:operationId" render={props =>
 								<OperationDetails {...props} />
 							} />
-							<Route exact path="/operations/:operationId" render={props =>
-								<OperationDetails {...props} />
-							} />
 							<Redirect from="*" to="/" />
 						</Switch>
 					</div>

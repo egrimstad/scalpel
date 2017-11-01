@@ -50,9 +50,7 @@ class OperationList extends React.Component {
 	render() {
 		return (
 			<div>
-				<OperationPlanHeader
-					onMenuClick={this.props.openMenu} 
-				/>
+				<OperationPlanHeader />
 				{this.props.theaters.length > 0 &&
 					<AppBar 
 						position='fixed'
