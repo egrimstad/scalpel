@@ -29,7 +29,7 @@ class DateHeader extends Component {
 
 	onSelectDate(date) {
 		this.toggleDatePicker()
-		this.props.onEditDate(date)
+		this.props.onEditDate(moment(date))
 	}
 
 	render() {
@@ -49,12 +49,12 @@ class DateHeader extends Component {
 						raised={dateEditable}
 						disableRipple={!dateEditable}
 					>
-						{moment(this.props.selectedDate).format('DD. MMM')}
+						{moment(this.props.date).format('DD. MMM')}
 					</Button>
 				</Toolbar>
 				{this.state.pickerOpen && 
 					<DatePicker
-						selected={this.props.selectedDate}
+						selected={this.props.date}
 						withPortal
 						inline
 						onClickOutside={this.toggleDatePicker}
