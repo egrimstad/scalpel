@@ -45,7 +45,6 @@ class UserPlan extends Component {
 	buildPlan() {
 		const operations = this.props.operations
 		const date = this.props.date
-		const user = this.props.user
 		const now = moment()
 		// Create svg if not done yet
 		const height = window.innerHeight - this.container.offsetTop		
@@ -141,7 +140,7 @@ class UserPlan extends Component {
 		const info = operationEnter.append('g')
 			.attr('transform', op => translate(planX + OPERATIONWIDTH + PADDING, y(startTime(op))))
 		
-		const infoArrow = info.append('line')
+		info.append('line')
 			.attr('x1', 0)
 			.attr('x2', LINELENGTH)
 			.attr('style', 'stroke:lightgrey;stroke-width:2')
@@ -150,7 +149,7 @@ class UserPlan extends Component {
 			.attr('transform', translate(LINELENGTH + PADDING,0))
 			.attr('class', 'UserPlan-infobox')
 		
-		const infoBg = infoBox.append('rect')
+		infoBox.append('rect')
 			.attr('width', infoBoxWidth)
 			.attr('height', 44)
 			.attr('fill', 'white')

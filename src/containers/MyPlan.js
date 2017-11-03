@@ -1,6 +1,6 @@
 import UserPlan from '../components/UserPlan/UserPlan'
 import { connect } from 'react-redux'
-import { startTime, endTime, hasActivePhase, patientAge } from 'utils/operationUtils'
+import { patientAge } from 'utils/operationUtils'
 
 import moment from 'moment'
 
