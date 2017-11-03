@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import MainHeader from '../../containers/MainHeader'
+import OperationDrawer from '../OperationDrawer/OperationDrawer'
 import { translate } from 'utils/d3Utils'
 import { startTime, endTime, hasActivePhase } from 'utils/operationUtils'
 
@@ -23,11 +24,18 @@ class UserPlan extends Component {
 	constructor(props) {
 		super(props)
 
+		this.state = {
+			selectedOperation: null,
+			operationDrawerOpen: false
+		}
+
 		this.container = null
+		this.zoomTransformEvent = null
 
 		this.buildPlan = this.buildPlan.bind(this)
-
-		this.redirectToOperation = this.redirectToOperation.bind(this)
+		this.redirect = this.redirect.bind(this)
+		this.openDrawer = this.openDrawer.bind(this)
+		this.closeDrawer = this.closeDrawer.bind(this)
 	}
 
 	componentDidMount() {
@@ -38,8 +46,21 @@ class UserPlan extends Component {
 		this.buildPlan()
 	}
 
-	redirectToOperation(operation) {
-		this.props.history.push('/operations/' + operation.id)
+	openDrawer(operation) {
+		this.setState({ 
+			selectedOperation: operation,
+			operationDrawerOpen: true
+		})
+	}
+
+	closeDrawer() {
+		this.setState({
+			operationDrawerOpen: false
+		})
+	}
+
+	redirect(url) {
+		this.props.history.push(url)
 	}
 
 	buildPlan() {
@@ -73,7 +94,7 @@ class UserPlan extends Component {
 		// zoom
 		const zoom = d3.zoom()
 			.extent([[0, 0], [0, height]])
-			.scaleExtent([1.5, 5])
+			.scaleExtent([1, 5])
 			.translateExtent([[0, 0], [0, height]])
 			.on('zoom', () => zoomed())
 		
@@ -98,7 +119,7 @@ class UserPlan extends Component {
 			.data(operations)
 		
 		const operationEnter = operation.enter().append('g')
-			.on('click', op => this.redirectToOperation(op))
+			.on('click', op => this.openDrawer(op))
 			.on('contextmenu', () => d3.event.preventDefault())
 		
 		// Actual time spent
@@ -146,34 +167,40 @@ class UserPlan extends Component {
 			.attr('style', 'stroke:lightgrey;stroke-width:2')
 		
 		const infoBox = info.append('g')
-			.attr('transform', translate(LINELENGTH + PADDING,0))
+			.attr('transform', translate(LINELENGTH + PADDING, 0))
 			.attr('class', 'UserPlan-infobox')
 		
+		// box
 		infoBox.append('rect')
+			.attr('class', 'UserPlan-extrainfo')
 			.attr('width', infoBoxWidth)
-			.attr('height', 44)
+			.attr('height', '3em')
 			.attr('fill', 'white')
 			.attr('stroke', 'lightgrey')
 			.attr('stroke-width', 1)
 			.attr('shapeRendering', 'crispEdges')
-			.attr('y', '-1em')
+			.attr('y', '-0.5em')
 		
 		// patient name
 		infoBox.append('text')
 			.text(op => `${op.patientName} (${op.patientAge})`)
 			.attr('x', PADDING)
-		
-		infoBox.append('text')
-			.text(op => `Diagnose: ${op.diagnoseTypeFreeText}`)
-			.attr('x', PADDING)
-			.attr('y', 12)
-			.attr('font-size', '0.8em')
+			.attr('y', '0.5em')
 		
 		// theater
 		infoBox.append('text')
+			.attr('class', 'UserPlan-extrainfo')
 			.text(op => `Rom: ${op.theater.name}`)
 			.attr('x', PADDING)
-			.attr('y', 24)
+			.attr('y', '1.5em')
+			.attr('font-size', '0.8em')
+		
+		// role
+		infoBox.append('text')
+			.attr('class', 'UserPlan-extrainfo')
+			.text(op => `Rolle: ${op.role}`)
+			.attr('x', PADDING)
+			.attr('y', '2.5em')
 			.attr('font-size', '0.8em')
 		
 		// y-axis group
@@ -206,6 +233,16 @@ class UserPlan extends Component {
 	
 		const zoomed = () => {
 			zoomer(d3.event.transform)
+			this.zoomTransformEvent = d3.event
+		}
+
+		const opacity = scale => {
+			const lower = 1
+			const upper = 2
+			if(scale < lower) return 0
+			if(scale > upper) return 1
+
+			return (scale-lower)/(upper-lower)
 		}
 	
 		const zoomer = transform => {
@@ -226,6 +263,9 @@ class UserPlan extends Component {
 			info
 				.attr('transform', op => translate(planX + OPERATIONWIDTH + PADDING, newY(startTime(op))))
 			
+			d3.selectAll('.UserPlan-extrainfo')
+				.attr('opacity', opacity(transform.k))
+			
 			if(nowLine) {
 				nowLine
 					.attr('y1', newY(now))
@@ -238,19 +278,29 @@ class UserPlan extends Component {
 			yLinesGroup.call(yLines)
 		}
 
-		const initialDiff = moment(date).endOf('day').diff(moment(date).startOf('day'))
-		const zoomDiff = moment(date).hours(18).minutes(0).diff(moment(date).hours(8).minutes(0))
+		const dayDiff = moment(date).endOf('day').diff(moment(date).startOf('day'))
 
-		const scale = initialDiff/zoomDiff
+		const startShow = moment(date).hours(8).minutes(0)
+		const endShow = moment(date).hours(18).minutes(0)
+		const initialDiff = endShow.diff(startShow)
 
-		const initialZoomTransform = d3.zoomIdentity.translate(0, -y(moment(date).hours(17).minutes(0))).scale(scale)
+		const scale = dayDiff/initialDiff
+
+		const endofDayY = y(moment(date).endOf('day'))
+		const startY = y(startShow)		
+
+		const initialZoomTransform = d3.zoomIdentity.translate(0, startY - endofDayY).scale(scale)
+
+		const zoomTransform = this.zoomTransformEvent ?
+			this.zoomTransformEvent.transform : initialZoomTransform
 
 		this.svg
 			.call(zoom)
-			.call(zoom.transform, initialZoomTransform)
+			.call(zoom.transform, zoomTransform)
 
-		zoomer(initialZoomTransform)
+		zoomer(zoomTransform)
 	}
+
 	render() {
 		return (
 			<div
@@ -258,6 +308,13 @@ class UserPlan extends Component {
 			>
 				<MainHeader
 					onMenuClick={this.props.openMenu} 
+				/>
+				<OperationDrawer
+					showDetails
+					redirect={this.redirect}
+					operation={this.state.selectedOperation}
+					open={this.state.operationDrawerOpen}
+					onRequestClose={this.closeDrawer}
 				/>
 			</div>
 		)
