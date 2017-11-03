@@ -99,6 +99,9 @@
       "web.jsx",
       "jsx",
       "node"
+    ],
+    "modulePaths": [
+      "src"
     ]
   },
   "babel": {

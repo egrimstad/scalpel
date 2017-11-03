@@ -400,7 +400,7 @@ class Timeline extends Component {
 
 		if(this.state.operationDrawerOpen) {
 			let selectedID = d3.select(d3.event.currentTarget).attr('gid')
-			d3.selectAll('g').each(function(d,i) {
+			d3.selectAll('g').each(function() {
 				let elt = d3.select(this)
 				if (elt.attr('gid') === selectedID) {
 					elt
@@ -446,8 +446,7 @@ Timeline.propTypes = {
 			column: PropTypes.number
 		})),
 		startColumn: PropTypes.number,
-		columns: PropTypes.number,
-		index: PropTypes.number
+		columns: PropTypes.number
 	})),
 	numColumns: PropTypes.number,
 	openMenu: PropTypes.func

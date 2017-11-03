@@ -41,7 +41,7 @@ const colorizedPhase = (phase, phaseTypes) => {
  * @param {*} state State of the application
  * @param {*} phaseTransform Transform to pass planned and actual phases through if extra properties are wanted
  */
-const transformOperation = (operation, state, phaseTransform = phase => phase) => {
+export const transformOperation = (operation, state, phaseTransform = phase => phase) => {
 	const phases = operation.phases.map(phase => {
 		return phaseTransform(
 			colorizedPhase(phase, state.operationPhases.actual)
@@ -53,8 +53,8 @@ const transformOperation = (operation, state, phaseTransform = phase => phase) =
 		phaseDuration = plannedPhase.duration
 		return phaseTransform({
 			...colorizedPhase(plannedPhase, state.operationPhases.planning),
-			start: phaseStart,
-			end: phaseStart.clone().add(phaseDuration, 'm'),
+			start: phaseStart.format('YYYY-MM-DD HH:mm'),
+			end: phaseStart.clone().add(phaseDuration, 'm').format('YYYY-MM-DD HH:mm'),
 		})
 	})
 	return {

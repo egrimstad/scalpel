@@ -17,7 +17,7 @@ const mapStateToProps = (state, ownProps) => {
 	const theaters = state.theaters
 		.filter(theater => theaterInPlan(theater, state.selectedPlan))
 		.filter(theater => theaterHasOperation(theater, operationsToday))
-		.map((theater, i) => {
+		.map(theater => {
 			const distribution = distributeOperations(
 				operationsToday.filter(op => op.theater === theater.id), 
 				state)
@@ -27,8 +27,7 @@ const mapStateToProps = (state, ownProps) => {
 				...theater,
 				operations: distribution.operations,
 				startColumn: numColumns - distribution.columns,
-				columns: distribution.columns,
-				index: i
+				columns: distribution.columns
 			}
 		})
 	return {
