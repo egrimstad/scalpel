@@ -87,7 +87,6 @@ class UserPlan extends Component {
 
 		const width = this.svg.node().getBoundingClientRect().width
 		const planX = TIMEBARWIDTH
-		const planWidth = width - planX
 		const operationActualWidth = OPERATIONWIDTH - PLANNEDWIDTH - STROKEWIDTH
 		const infoBoxWidth = width - planX - OPERATIONWIDTH - LINELENGTH - 4*PADDING
 
