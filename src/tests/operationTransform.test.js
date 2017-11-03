@@ -1,4 +1,5 @@
 import { actualPhases, planningPhases } from '../data/operations'
+import state from './mockState'
 import { transformOperation, distributeOperations } from '../utils/operationTransform'
 
 const operation = {
@@ -50,13 +51,6 @@ const operation3 = {
 		{ id: 3, start: '2017-10-22 16:45', end: '2017-10-22 16:51' },
 		{ id: 4, start: '2017-10-22 16:55', end: '2017-10-22 17:27' },
 	],
-}
-
-const state = {
-	operationPhases: {
-		actual: actualPhases,
-		planning: planningPhases
-	}
 }
 
 describe('operation transformation utils', () => {
