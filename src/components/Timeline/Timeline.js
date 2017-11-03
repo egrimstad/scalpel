@@ -157,7 +157,7 @@ class Timeline extends Component {
 		const xScrollDomain = [0, -(timelineWidth-(width-timelineX))]
 		let xoffset = 0
 
-		const theaterX = theater => xoffset + theater.index*THEATERPADDING + theater.startColumn*(OPERATIONWIDTH + OPERATIONPADDING)
+		const theaterX = (theater, i) => xoffset + i*THEATERPADDING + theater.startColumn*(OPERATIONWIDTH + OPERATIONPADDING)
 		const theaterWidth = theater => (OPERATIONWIDTH + OPERATIONPADDING)*theater.columns
 
 		const operationActualX = column => column*(OPERATIONWIDTH + OPERATIONPADDING)
@@ -204,7 +204,7 @@ class Timeline extends Component {
 			.data(theaters)
 			.enter()
 			.append('g')
-			.attr('transform', theater => translate(theaterX(theater), 0))
+			.attr('transform', (theater, i) => translate(theaterX(theater, i), 0))
 		
 		// Grey background behind theater
 		theaterGroup.append('rect')
@@ -239,40 +239,40 @@ class Timeline extends Component {
 			.on('contextmenu', () => d3.event.preventDefault())
 			.attr('gid', op => op.id)
 
-		// Actual time spent
-		const phase = operationEnter.append('g')
+		// Actual phases
+		const actualRects = operationEnter.append('g')
 			.selectAll('rect')
 			.data(op => op.phases.filter(phase => !isNil(phase.start)))
 			.enter()
+			.append('rect')
+			.attr('x', phase => operationActualX(phase.column))
+			.attr('y', phase => y(moment(phase.start)))
+			.attr('width', operationActualWidth)
+			.attr('height', phase => y(moment(phase.end || now)) - y(moment(phase.start)))
+			.attr('fill', phase => phase.color)
+			.attr('stroke-width', 0)
 		
+		// Background, to enable clicking outside phases
 		const timeRects =  operationEnter.append('g').append('rect')
 			.attr('class', 'Timeline-operation-backdrop')
 			.attr('x', op => operationActualX(op.column))
 			.attr('y', op => y(startTime(op)))
 			.attr('width', operationActualWidth)
 			.attr('height', op => y(hasActivePhase(op) ? now : endTime(op)) - y(startTime(op)))
-			
-		const phaseRects = phase.append('rect')
-			.attr('x', phase => operationActualX(phase.column))
-			.attr('y', phase => y(moment(phase.start)))
-			.attr('width', operationActualWidth)
-			.attr('height', phase => y(moment(phase.end || now)) - y(moment(phase.start)))			
-			.attr('fill', phase => phase.color)
-			.attr('stroke-width', 0)
 
-		const plannedPhase = operationEnter.append('g')
+		// Planned phases
+		const plannedRects = operationEnter.append('g')
 			.attr('class', 'Timeline-planned')
 			.attr('stroke-width', STROKEWIDTH)
 			.attr('stroke', 'gray')
 			.selectAll('rect')
 			.data(op => op.plannedPhases)
 			.enter()
-
-		const plannedRects = plannedPhase.append('rect')
+			.append('rect')
 			.attr('x', plannedPhase => operationPlannedX(plannedPhase.column))
 			.attr('y', plannedPhase => y(moment(plannedPhase.start)))
 			.attr('width', PLANNEDWIDTH)
-			.attr('height', plannedPhase => y(moment(plannedPhase.end)) - y(moment(plannedPhase.start)))			
+			.attr('height', plannedPhase => y(moment(plannedPhase.end)) - y(moment(plannedPhase.start)))
 			.attr('fill', plannedPhase => plannedPhase.color)
 			
 
@@ -353,7 +353,7 @@ class Timeline extends Component {
 				.attr('y', op => newY(startTime(op)))
 				.attr('height', op => newY(hasActivePhase(op) ? now : endTime(op)) - newY(startTime(op)))
 
-			phaseRects
+			actualRects
 				.attr('y', phase => newY(moment(phase.start)))
 				.attr('height', phase => newY(moment(phase.end || now)) - newY(moment(phase.start)))
 			
@@ -383,9 +383,9 @@ class Timeline extends Component {
 			xoffset = (xoffset >= xScrollDomain[1]) ? xoffset : xScrollDomain[1]
 			
 			timeRects.attr('x', op => operationActualX(op.column))
-			phaseRects.attr('x', phase => operationActualX(phase.column))
+			actualRects.attr('x', phase => operationActualX(phase.column))
 			plannedRects.attr('x', op => operationPlannedX(op.column))
-			theaterGroup.attr('transform', theater => translate(theaterX(theater), 0))
+			theaterGroup.attr('transform', (theater, i) => translate(theaterX(theater, i), 0))
 			if(scrollBar) {
 				scrollBar.attr('x', timelineX - xoffset)
 			}
@@ -397,7 +397,7 @@ class Timeline extends Component {
 
 		if(this.state.operationDrawerOpen) {
 			let selectedID = d3.select(d3.event.currentTarget).attr('gid')
-			d3.selectAll('g').each(function(d,i) {
+			d3.selectAll('g').each(function() {
 				let elt = d3.select(this)
 				if (elt.attr('gid') === selectedID) {
 					elt
@@ -443,8 +443,7 @@ Timeline.propTypes = {
 			column: PropTypes.number
 		})),
 		startColumn: PropTypes.number,
-		columns: PropTypes.number,
-		index: PropTypes.number
+		columns: PropTypes.number
 	})),
 	numColumns: PropTypes.number,
 	openMenu: PropTypes.func
