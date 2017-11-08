@@ -7,6 +7,8 @@ import MenuDrawer from './containers/MenuDrawer'
 import TodayTimeline from './containers/TodayTimeline'
 import OperationList from './containers/OperationList'
 import OperationDetails from './containers/OperationDetails'
+import axios from 'axios'
+import * as request from './request'
 
 import './styles/App.css'
 
@@ -43,8 +45,7 @@ class App extends Component {
 				{// FOR TESTING!! 
 				}
 				<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<h1 className="App-title">Welcome to React</h1>
+				<h1 className="App-title">Testing! :)</h1>
 				</header>
 				<div>
 				<button onClick={() => request.get('http://httpbin.org/get')}>Download data!</button>
