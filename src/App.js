@@ -39,27 +39,45 @@ class App extends Component {
 
 	render() {
 		return (
-			<MuiThemeProvider theme={theme}>
-				<Router basename="/scalpel">
-					<div>
-						<MenuDrawer open={this.state.menuOpen} onRequestClose={this.closeMenu} />
+			<div className="App">
+				{// FOR TESTING!! 
+				}
+				<header className="App-header">
+				<img src={logo} className="App-logo" alt="logo" />
+				<h1 className="App-title">Welcome to React</h1>
+				</header>
+				<div>
+				<button onClick={() => request.get('http://httpbin.org/get')}>Download data!</button>
+				<div>
+					{JSON.stringify(request.get("http://httpbin.org/html"))}
+				</div>
+				</div>
+			</div>
 
-						<div className="App-content">
-							<Route exact path="/" render={props =>
-								<TodayTimeline openMenu={this.openMenu} history={props.history} />
-							} />
-							<Route exact path="/operations" render={() =>
-								<OperationList openMenu={this.openMenu} />
-							} />
-							<Route exact path="/operations/:operationId" render={props =>
-								<OperationDetails {...props} />
-							} />
-						</div>
-					</div>
-				</Router>
-			</MuiThemeProvider>
 		)
 	}
 }
 
 export default App
+
+{ /*
+	<MuiThemeProvider theme={theme}>
+		<Router basename="/scalpel">
+			<div>
+				<MenuDrawer open={this.state.menuOpen} onRequestClose={this.closeMenu} />
+
+				<div className="App-content">
+					<Route exact path="/" render={props =>
+						<TodayTimeline openMenu={this.openMenu} history={props.history} />
+					} />
+					<Route exact path="/operations" render={() =>
+						<OperationList openMenu={this.openMenu} />
+					} />
+					<Route exact path="/operations/:operationId" render={props =>
+						<OperationDetails {...props} />
+					} />
+				</div>
+			</div>
+		</Router>
+	</MuiThemeProvider> 
+				*/}
