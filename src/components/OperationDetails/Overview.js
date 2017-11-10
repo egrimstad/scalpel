@@ -94,7 +94,7 @@ const mainContentFormatted = operation => {
 	)
 }
 
-const iconDataFormatted = operation => {
+const iconDataFormatted = () => {
 	return (
 		<div style={{position: 'relative', margin: '10px'}}>
 			<img src={Pencil} style={{width:'-webkit-fill-available'}} alt='Status icon'/>

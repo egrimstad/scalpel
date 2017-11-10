@@ -99,4 +99,8 @@ class OperationDetails extends Component {
 	}
 }
 
+OperationDetails.propTypes = {
+	operation: PropTypes.object
+}
+
 export default OperationDetails
