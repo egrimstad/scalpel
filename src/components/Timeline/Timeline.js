@@ -6,9 +6,10 @@ import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
 
 import OperationDrawer from '../../containers/OperationDrawer'
-import OperationPlanHeader from '../../containers/OperationPlanHeader'
+import MenuHeader from '../../containers/MenuHeader'
 
 import { startTime, endTime, hasActivePhase } from 'utils/operationUtils'
+import { translate } from 'utils/d3Utils'
 
 import './Timeline.css'
 import theme from '../../theme/theme'
@@ -21,10 +22,6 @@ const OPERATIONPADDING = 0
 const THEATERBARHEIGHT = 30
 const TIMEBARWIDTH = 40
 const SCROLLBARHEIGHT = 6
-
-const translate = (x, y) => {
-	return 'translate('+x+','+y+')'
-}
 
 const mouseX = (event) => {
 	if(event instanceof MouseEvent) { 
@@ -417,7 +414,7 @@ class Timeline extends Component {
 			<div
 				ref = {element => this.container = element}
 			>
-				<OperationPlanHeader />
+				<MenuHeader />
 				<OperationDrawer
 					showDetails
 					redirect={this.redirect}

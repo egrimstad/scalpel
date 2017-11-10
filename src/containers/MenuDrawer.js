@@ -7,6 +7,7 @@ const mapStateToProps = (state, ownProps) => {
 		...ownProps,
 		plans: state.plans,
 		selectedPlan: state.selectedPlan,
+		user: state.persons.find(person => person.id === state.loggedInUser),
 		open: state.menuDrawerOpen
 	}
 }

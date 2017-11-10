@@ -31,6 +31,12 @@ const mapStateToProps = (state, ownProps) => {
 		}
 	})
 	operation.patientAge = patientAge(operation)
+	operation.crew = operation.crew.map(person => {
+		return {
+			...person,
+			...state.persons.find(other => person.id === other.id)
+		}
+	})
 	return {
 		operation: operation,
 		...ownProps

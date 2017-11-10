@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { Pencil, GreenBall } from 'assets'
 import './OperationList.css'
 
-import OperationPlanHeader from '../../containers/OperationPlanHeader'
+import MenuHeader from '../../containers/MenuHeader'
 
 import './OperationList.css'
 
@@ -50,7 +50,7 @@ class OperationList extends React.Component {
 	render() {
 		return (
 			<div>
-				<OperationPlanHeader />
+				<MenuHeader />
 				{this.props.theaters.length > 0 &&
 					<AppBar 
 						position='fixed'

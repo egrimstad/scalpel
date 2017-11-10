@@ -10,10 +10,16 @@ import SettingsIcon from 'material-ui-icons/Settings'
 import StopIcon from 'material-ui-icons/Stop'
 import ViewList from 'material-ui-icons/ViewList'
 import ViewWeek from 'material-ui-icons/ViewWeek'
+import PermContactCalendar from 'material-ui-icons/PermContactCalendar'
 import './MenuDrawer.css'
 import {Background, Logo} from '../../assets'
 
 const menuOptions = [
+	{
+		text: 'Min plan',
+		icon: <PermContactCalendar/>,
+		link: '/plan'
+	},
 	{
 		text: 'Tidslinje',
 		icon: <ViewWeek/>,
@@ -40,7 +46,7 @@ class MenuDrawer extends Component {
 						<img id="drawer-logo" alt="logo" src={Logo}/>
 						<List dense id="account-name">
 							<ListItem>
-								<ListItemText primary="Olivia Heldens" secondary="cheyanne_hauck@hotmail.com"/>
+								<ListItemText primary={this.props.user.fullName}/>
 							</ListItem>
 						</List>
 					</div>
@@ -86,6 +92,7 @@ MenuDrawer.propTypes = {
 	selectedPlan: PropTypes.object,
 	onSelectPlan: PropTypes.func,
 	onRequestClose: PropTypes.func,
+	user: PropTypes.object
 }
 
 export default MenuDrawer

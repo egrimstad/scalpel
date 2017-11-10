@@ -6,6 +6,7 @@ import theme from './theme/theme'
 import MenuDrawer from './containers/MenuDrawer'
 import TodayTimeline from './containers/TodayTimeline'
 import OperationList from './containers/OperationList'
+import MyPlan from './containers/MyPlan'
 import OperationDetails from './containers/OperationDetails'
 
 import './styles/App.css'
@@ -27,6 +28,9 @@ const App = () => {
 							} />
 							<Route exact path="/operations/:operationId" render={props =>
 								<OperationDetails {...props} />
+							} />
+							<Route exact path="/plan" render={props =>
+								<MyPlan {...props} openMenu={this.openMenu} />
 							} />
 							<Redirect from="*" to="/" />
 						</Switch>

@@ -8,9 +8,6 @@ import { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/Lis
 const shortFields = ([
 	['Fastende', 'fasting'],
 	['Knivtid', 'surgeonTime'],
-	['Kirurg', 'surgeon'],
-	['1. Assistent', 'assistant1'],
-	['2. Assistent', 'assistant2'],
 	['Leie', 'position'],
 	['Blod', 'bloodType'],
 	['Anest. kode', 'anesthesiaCode'],
