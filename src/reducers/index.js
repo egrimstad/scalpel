@@ -7,8 +7,10 @@ import selectedPlan from './selectedPlan'
 import plans from './plans'
 import persons from './persons'
 import loggedInUser from './loggedInUser'
+import menuDrawerOpen from './menuDrawerOpen'
 
 const scalpelReducer = combineReducers({
+	menuDrawerOpen,
 	date,
 	operations,
 	operationPhases,
