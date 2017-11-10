@@ -3,6 +3,14 @@ export const setSelectedDate = date => ({
 	date: date
 })
 
+export const openMenuDrawer = () => ({
+	type: 'OPEN_MENU_DRAWER'
+})
+
+export const closeMenuDrawer = () => ({
+	type: 'CLOSE_MENU_DRAWER'
+})
+
 export const finishOperationPhase = (operationId, time) => ({
 	type: 'FINISH_OPERATION_PHASE',
 	operationId: operationId,

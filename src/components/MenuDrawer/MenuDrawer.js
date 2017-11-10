@@ -82,6 +82,9 @@ class MenuDrawer extends Component {
 
 MenuDrawer.propTypes = {
 	open: PropTypes.bool,
+	plans: PropTypes.array,
+	selectedPlan: PropTypes.object,
+	onSelectPlan: PropTypes.func,
 	onRequestClose: PropTypes.func,
 }
 

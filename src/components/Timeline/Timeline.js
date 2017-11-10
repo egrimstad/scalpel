@@ -6,7 +6,7 @@ import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
 
 import OperationDrawer from '../../containers/OperationDrawer'
-import MainHeader from '../../containers/MainHeader'
+import OperationPlanHeader from '../../containers/OperationPlanHeader'
 
 import { startTime, endTime, hasActivePhase } from 'utils/operationUtils'
 
@@ -417,9 +417,7 @@ class Timeline extends Component {
 			<div
 				ref = {element => this.container = element}
 			>
-				<MainHeader
-					onMenuClick={this.props.openMenu} 
-				/>
+				<OperationPlanHeader />
 				<OperationDrawer
 					showDetails
 					redirect={this.redirect}

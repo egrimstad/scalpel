@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
 import MenuDrawer from '../components/MenuDrawer/MenuDrawer'
-import { setSelectedPlan } from '../actions'
+import { setSelectedPlan, closeMenuDrawer } from '../actions'
 
 const mapStateToProps = (state, ownProps) => {
 	return {
 		...ownProps,
 		plans: state.plans,
-		selectedPlan: state.selectedPlan
+		selectedPlan: state.selectedPlan,
+		open: state.menuDrawerOpen
 	}
 }
 
@@ -14,6 +15,9 @@ const mapDispatchToProps = dispatch => {
 	return {
 		onSelectPlan: plan => {
 			dispatch(setSelectedPlan(plan))
+		},
+		onRequestClose: () => {
+			dispatch(closeMenuDrawer())
 		}
 	}
 }

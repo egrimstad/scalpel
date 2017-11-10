@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import React from 'react'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import theme from './theme/theme'
@@ -10,56 +10,31 @@ import OperationDetails from './containers/OperationDetails'
 
 import './styles/App.css'
 
-class App extends Component {
-	constructor(props) {
-		super(props)
-
-		this.state = {
-			menuOpen: false
-		}
-
-		this.openMenu = this.openMenu.bind(this)
-		this.closeMenu = this.closeMenu.bind(this)
-		this.setHeaderItems = this.setHeaderItems.bind(this)
-	}
-
-	openMenu() {
-		if (this.state.menuOpen) return
-		this.setState(() => ({menuOpen: true}))
-	}
-
-	closeMenu() {
-		if (!this.state.menuOpen) return	
-		this.setState(() => ({menuOpen: false}))
-	}
-
-	setHeaderItems(items) {
-		this.setState(() => ({headerItems: items}))
-	}
-
-	render() {
-		return (
-			<MuiThemeProvider theme={theme}>
-				<Router basename="/scalpel">
-					<div>
-						<MenuDrawer open={this.state.menuOpen} onRequestClose={this.closeMenu} />
-
-						<div className="App-content">
+const App = () => {
+	return (
+		<MuiThemeProvider theme={theme}>
+			<Router basename="/scalpel">
+				<div>
+					<MenuDrawer />
+						
+					<div className="App-content">
+						<Switch>
 							<Route exact path="/" render={props =>
-								<TodayTimeline openMenu={this.openMenu} history={props.history} />
+								<TodayTimeline {...props} />
 							} />
-							<Route exact path="/operations" render={() =>
-								<OperationList openMenu={this.openMenu} />
+							<Route exact path="/operations" render={props =>
+								<OperationList {...props} />
 							} />
 							<Route exact path="/operations/:operationId" render={props =>
 								<OperationDetails {...props} />
 							} />
-						</div>
+							<Redirect from="*" to="/" />
+						</Switch>
 					</div>
-				</Router>
-			</MuiThemeProvider>
-		)
-	}
+				</div>
+			</Router>
+		</MuiThemeProvider>
+	)
 }
 
 export default App
