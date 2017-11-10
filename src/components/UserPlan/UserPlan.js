@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import MainHeader from '../../containers/MainHeader'
+import MenuHeader from '../../containers/MenuHeader'
 import OperationDrawer from '../OperationDrawer/OperationDrawer'
 import { translate } from 'utils/d3Utils'
 import { startTime, endTime, hasActivePhase } from 'utils/operationUtils'
@@ -189,6 +189,14 @@ class UserPlan extends Component {
 		// theater
 		infoBox.append('text')
 			.attr('class', 'UserPlan-extrainfo')
+			.text(op => `Plan: ${op.theater.name}`)
+			.attr('x', PADDING)
+			.attr('y', '1.5em')
+			.attr('font-size', '0.8em')
+		
+		// theater
+		infoBox.append('text')
+			.attr('class', 'UserPlan-extrainfo')
 			.text(op => `Rom: ${op.theater.name}`)
 			.attr('x', PADDING)
 			.attr('y', '1.5em')
@@ -305,9 +313,7 @@ class UserPlan extends Component {
 			<div
 				ref = {element => this.container = element}
 			>
-				<MainHeader
-					onMenuClick={this.props.openMenu} 
-				/>
+				<MenuHeader title="Min plan" />
 				<OperationDrawer
 					showDetails
 					redirect={this.redirect}

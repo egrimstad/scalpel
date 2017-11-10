@@ -92,8 +92,6 @@ MenuDrawer.propTypes = {
 	selectedPlan: PropTypes.object,
 	onSelectPlan: PropTypes.func,
 	onRequestClose: PropTypes.func,
-	plans: PropTypes.array,
-	selectedPlan: PropTypes.object,
 	user: PropTypes.object
 }
 
