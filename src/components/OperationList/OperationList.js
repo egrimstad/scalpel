@@ -72,7 +72,8 @@ class OperationList extends React.Component {
 						</Tabs>
 					</AppBar>
 				}
-				<SwipeableViews 
+				<SwipeableViews
+					style={{height: '100vh'}}
 					index={this.state.value} 
 					onChangeIndex={this.handleChangeIndex}
 				>

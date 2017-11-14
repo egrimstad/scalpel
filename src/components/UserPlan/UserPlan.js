@@ -189,14 +189,6 @@ class UserPlan extends Component {
 		// theater
 		infoBox.append('text')
 			.attr('class', 'UserPlan-extrainfo')
-			.text(op => `Plan: ${op.theater.name}`)
-			.attr('x', PADDING)
-			.attr('y', '1.5em')
-			.attr('font-size', '0.8em')
-		
-		// theater
-		infoBox.append('text')
-			.attr('class', 'UserPlan-extrainfo')
 			.text(op => `Rom: ${op.theater.name}`)
 			.attr('x', PADDING)
 			.attr('y', '1.5em')

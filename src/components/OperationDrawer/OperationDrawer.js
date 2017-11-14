@@ -43,7 +43,7 @@ class OperationDrawer extends Component {
 
 	onTimeChange(target) {
 		const min = lastOperationEventTime(this.props.operation)
-		const max = moment().hours(16).minutes(10)
+		const max = moment()
 		const [hours, minutes] = target.value.split(':')
 		let newTime = moment().clone(this.state.time)
 			.startOf('day')

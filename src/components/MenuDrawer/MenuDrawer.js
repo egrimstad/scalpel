@@ -6,7 +6,6 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 
 import Divider from 'material-ui/Divider'
 
-import SettingsIcon from 'material-ui-icons/Settings'
 import StopIcon from 'material-ui-icons/Stop'
 import ViewList from 'material-ui-icons/ViewList'
 import ViewWeek from 'material-ui-icons/ViewWeek'
@@ -72,13 +71,6 @@ class MenuDrawer extends Component {
 								</ListItem>
 							</Link>
 						)}
-						<Divider />
-						<ListItem button>
-							<ListItemIcon>
-								<SettingsIcon />
-							</ListItemIcon>
-							<ListItemText primary="Instillinger"/>
-						</ListItem>
 					</List>
 				</div>
 			</Drawer>
