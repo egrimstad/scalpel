@@ -7,7 +7,7 @@ const operations = [
 		plannedPhases: [
 			{
 				id: 0,
-				start: '2017-11-13 14:00',
+				start: '2017-11-16 14:00',
 				duration: 30
 			},
 			{
@@ -16,38 +16,38 @@ const operations = [
 			},
 			{
 				id: 2,
-				end: '2017-11-13 15:40',
+				end: '2017-11-16 15:40',
 				duration: 10
 			}
 		],
 		patientName: 'Christian Olsen',
-		plannedStartTime: '2017-11-13 14:00',
-		plannedEndTime: '2017-11-13 14:40',
+		plannedStartTime: '2017-11-16 14:00',
+		plannedEndTime: '2017-11-16 14:40',
 		phases: [
 			{
 				id: 0,
-				start: '2017-11-13 14:37',
-				end: '2017-11-13 14:53'
+				start: '2017-11-16 14:37',
+				end: '2017-11-16 14:53'
 			},
 			{
 				id: 1,
-				start: '2017-11-13 14:55',
-				end: '2017-11-13 15:01'
+				start: '2017-11-16 14:55',
+				end: '2017-11-16 15:01'
 			},
 			{
 				id: 2,
-				start: '2017-11-13 15:03',
-				end: '2017-11-13 15:18'
+				start: '2017-11-16 15:03',
+				end: '2017-11-16 15:18'
 			},
 			{
 				id: 3,
-				start: '2017-11-13 15:19',
-				end: '2017-11-13 15:22'
+				start: '2017-11-16 15:19',
+				end: '2017-11-16 15:22'
 			},
 			{
 				id: 4,
-				start: '2017-11-13 15:23',
-				end: '2017-11-13 15:37'
+				start: '2017-11-16 15:23',
+				end: '2017-11-16 15:37'
 			}
 		],
 		crew: [
@@ -55,8 +55,8 @@ const operations = [
 			{id: 3, position: 'Assistent 1'},
 			{id: 4, position: 'Assistent 2'}],
 		careUnitName: 'KB2',
-		operatingDate: '2017-11-13 15:11',
-		arrivalTime: '2017-11-13 14:11',
+		operatingDate: '2017-11-16 15:11',
+		arrivalTime: '2017-11-16 14:11',
 		surgeonTime: 15,
 		patientBirthDate: '1957-10-22',
 		bloodType: 'B',
@@ -81,7 +81,7 @@ const operations = [
 		anesthesiaInformation: 'Hypertensjon, ellers stort sett frisk. \nOperert venstre hoft. Tannprotese. \nNakke gap uten annmerkning. Ingen allergier. Cor/pulmo ua.',
 		anesthesiaCodeComment: 'Anestesi etter kl 16',
 		premedication: 'Paracet 1,5g. Dexametason 12 mg',
-		propolDate: '2017-11-13',
+		propolDate: '2017-11-16',
 		isScreeningCompleted: false,
 		needsEpiduralAnesthetic: true,
 		needsArterialCatheter: true,
@@ -97,7 +97,7 @@ const operations = [
 		plannedPhases: [
 			{
 				id: 0,
-				start: '2017-11-13 10:27',
+				start: '2017-11-16 10:27',
 				duration: 30
 			},
 			{
@@ -106,38 +106,38 @@ const operations = [
 			},
 			{
 				id: 2,
-				end: '2017-11-13 12:07',
+				end: '2017-11-16 12:07',
 				duration: 10
 			}
 		],
 		patientName: 'Asbjørg Mong',
-		plannedStartTime: '2017-11-13 10:27',
-		plannedEndTime: '2017-11-13 11:05',
+		plannedStartTime: '2017-11-16 10:27',
+		plannedEndTime: '2017-11-16 11:05',
 		phases: [
 			{
 				id: 0,
-				start: '2017-11-13 10:21',
-				end: '2017-11-13 10:51'
+				start: '2017-11-16 10:21',
+				end: '2017-11-16 10:51'
 			},
 			{
 				id: 1,
-				start: '2017-11-13 11:01',
-				end: '2017-11-13 11:10'
+				start: '2017-11-16 11:01',
+				end: '2017-11-16 11:10'
 			},
 			{
 				id: 2,
-				start: '2017-11-13 11:12',
-				end: '2017-11-13 11:34'
+				start: '2017-11-16 11:12',
+				end: '2017-11-16 11:34'
 			},
 			{
 				id: 3,
-				start: '2017-11-13 11:35',
-				end: '2017-11-13 11:38'
+				start: '2017-11-16 11:35',
+				end: '2017-11-16 11:38'
 			},
 			{
 				id: 4,
-				start: '2017-11-13 11:38',
-				end: '2017-11-13 11:58'
+				start: '2017-11-16 11:38',
+				end: '2017-11-16 11:58'
 			}
 		],
 		crew: [
@@ -145,8 +145,8 @@ const operations = [
 			{id: 6, position: 'Assistent 1'},
 			{id: 7, position: 'Assistent 2'}],
 		careUnitName: 'OFS',
-		operatingDate: '2017-11-13 17:11',
-		arrivalTime: '2017-11-13 15:11',
+		operatingDate: '2017-11-16 17:11',
+		arrivalTime: '2017-11-16 15:11',
 		surgeonTime: 15,
 		patientBirthDate: '1995-10-22',
 		bloodType: 'AB',
@@ -171,7 +171,7 @@ const operations = [
 		anesthesiaInformation: 'Ikke info om symptomer i det siste, \nnormal EKG og klinisk noe ved innkomst.',
 		anesthesiaCodeComment: 'Anestesi etter kl 16',
 		premedication: 'Paracet 1,5g. Dexametason 12 mg',
-		propolDate: '2017-11-13',
+		propolDate: '2017-11-16',
 		isScreeningCompleted: true,
 		needsEpiduralAnesthetic: true,
 		needsArterialCatheter: false,
@@ -187,7 +187,7 @@ const operations = [
 		plannedPhases: [
 			{
 				id: 0,
-				start: '2017-11-13 14:50',
+				start: '2017-11-16 14:50',
 				duration: 30
 			},
 			{
@@ -197,37 +197,37 @@ const operations = [
 			{
 				id: 2,
 				duration: 10,
-				end: '2017-11-13 16:30'
+				end: '2017-11-16 16:30'
 			}
 		],
 		patientName: 'Maria Johansen',
-		plannedStartTime: '2017-11-13 14:50',
-		plannedEndTime: '2017-11-13 16:25',
+		plannedStartTime: '2017-11-16 14:50',
+		plannedEndTime: '2017-11-16 16:25',
 		phases: [
 			{
 				id: 0,
-				start: '2017-11-13 14:49',
-				end: '2017-11-13 15:02'
+				start: '2017-11-16 14:49',
+				end: '2017-11-16 15:02'
 			},
 			{
 				id: 1,
-				start: '2017-11-13 15:02',
-				end: '2017-11-13 15:13'
+				start: '2017-11-16 15:02',
+				end: '2017-11-16 15:13'
 			},
 			{
 				id: 2,
-				start: '2017-11-13 15:13',
-				end: '2017-11-13 15:59'
+				start: '2017-11-16 15:13',
+				end: '2017-11-16 15:59'
 			},
 			{
 				id: 3,
-				start: '2017-11-13 15:59',
-				end: '2017-11-13 16:06'
+				start: '2017-11-16 15:59',
+				end: '2017-11-16 16:06'
 			},
 			{
 				id: 4,
-				start: '2017-11-13 16:07',
-				end: '2017-11-13 16:13'
+				start: '2017-11-16 16:07',
+				end: '2017-11-16 16:13'
 			}
 		],
 		crew: [
@@ -235,8 +235,8 @@ const operations = [
 			{id: 5, position: 'Assistent 1'},
 			{id: 6, position: 'Assistent 2'}],
 		careUnitName: 'OTDP',
-		operatingDate: '2017-11-13 17:11',
-		arrivalTime: '2017-11-13 15:11',
+		operatingDate: '2017-11-16 17:11',
+		arrivalTime: '2017-11-16 15:11',
 		surgeonTime: 15,
 		patientBirthDate: '2005-10-22',
 		bloodType: 'O',
@@ -261,7 +261,7 @@ const operations = [
 		anesthesiaInformation: 'Ikke info om symptomer i det siste, \nnormal EKG og klinisk noe ved innkomst.',
 		anesthesiaCodeComment: 'Anestesi etter kl 16',
 		premedication: 'Paracet 1,5g. Dexametason 12 mg',
-		propolDate: '2017-11-13',
+		propolDate: '2017-11-16',
 		isScreeningCompleted: false,
 		needsEpiduralAnesthetic: true,
 		needsArterialCatheter: true,
@@ -277,7 +277,7 @@ const operations = [
 		plannedPhases: [
 			{
 				id: 0,
-				start: '2017-11-13 08:00',
+				start: '2017-11-16 08:00',
 				duration: 30
 			},
 			{
@@ -287,37 +287,37 @@ const operations = [
 			{
 				id: 2,
 				duration: 10,
-				end: '2017-11-13 09:40'
+				end: '2017-11-16 09:40'
 			}
 		],
 		patientName: 'Asle Seim',
-		plannedStartTime: '2017-11-13 08:00',
-		plannedEndTime: '2017-11-13 09:30',
+		plannedStartTime: '2017-11-16 08:00',
+		plannedEndTime: '2017-11-16 09:30',
 		phases: [
 			{
 				id: 0,
-				start: '2017-11-13 08:11',
-				end: '2017-11-13 08:43'
+				start: '2017-11-16 08:11',
+				end: '2017-11-16 08:43'
 			},
 			{
 				id: 1,
-				start: '2017-11-13 08:43',
-				end: '2017-11-13 09:00'
+				start: '2017-11-16 08:43',
+				end: '2017-11-16 09:00'
 			},
 			{
 				id: 2,
-				start: '2017-11-13 09:02',
-				end: '2017-11-13 09:34'
+				start: '2017-11-16 09:02',
+				end: '2017-11-16 09:34'
 			},
 			{
 				id: 3,
-				start: '2017-11-13 09:36',
-				end: '2017-11-13 09:45'
+				start: '2017-11-16 09:36',
+				end: '2017-11-16 09:45'
 			},
 			{
 				id: 4,
-				start: '2017-11-13 09:50',
-				end: '2017-11-13 10:00'
+				start: '2017-11-16 09:50',
+				end: '2017-11-16 10:00'
 			}
 		],
 		crew: [
@@ -325,8 +325,8 @@ const operations = [
 			{id: 5, position: 'Assistent 1'},
 			{id: 6, position: 'Assistent 2'}],
 		careUnitName: 'OTDP',
-		operatingDate: '2017-11-13 17:11',
-		arrivalTime: '2017-11-13 15:11',
+		operatingDate: '2017-11-16 17:11',
+		arrivalTime: '2017-11-16 15:11',
 		surgeonTime: 15,
 		patientBirthDate: '2005-10-22',
 		bloodType: 'O',
@@ -351,7 +351,7 @@ const operations = [
 		anesthesiaInformation: 'Ikke info om symptomer i det siste, \nnormal EKG og klinisk noe ved innkomst.',
 		anesthesiaCodeComment: 'Anestesi etter kl 16',
 		premedication: 'Paracet 1,5g. Dexametason 12 mg',
-		propolDate: '2017-11-13',
+		propolDate: '2017-11-16',
 		isScreeningCompleted: false,
 		needsEpiduralAnesthetic: true,
 		needsArterialCatheter: true,
@@ -367,7 +367,7 @@ const operations = [
 		plannedPhases: [
 			{
 				id: 0,
-				start: '2017-11-13 09:20',
+				start: '2017-11-16 09:20',
 				duration: 30
 			},
 			{
@@ -377,37 +377,37 @@ const operations = [
 			{
 				id: 2,
 				duration: 10,
-				end: '2017-11-13 11:00'
+				end: '2017-11-16 11:00'
 			}
 		],
 		patientName: 'Sarah Karlsen',
-		plannedStartTime: '2017-11-13 09:20',
-		plannedEndTime: '2017-11-13 10:20',
+		plannedStartTime: '2017-11-16 09:20',
+		plannedEndTime: '2017-11-16 10:20',
 		phases: [
 			{
 				id: 0,
-				start: '2017-11-13 09:30',
-				end: '2017-11-13 09:43'
+				start: '2017-11-16 09:30',
+				end: '2017-11-16 09:43'
 			},
 			{
 				id: 1,
-				start: '2017-11-13 09:43',
-				end: '2017-11-13 09:48'
+				start: '2017-11-16 09:43',
+				end: '2017-11-16 09:48'
 			},
 			{
 				id: 2,
-				start: '2017-11-13 09:48',
-				end: '2017-11-13 10:00'
+				start: '2017-11-16 09:48',
+				end: '2017-11-16 10:00'
 			},
 			{
 				id: 3,
-				start: '2017-11-13 10:01',
-				end: '2017-11-13 10:10'
+				start: '2017-11-16 10:01',
+				end: '2017-11-16 10:10'
 			},
 			{
 				id: 4,
-				start: '2017-11-13 10:11',
-				end: '2017-11-13 10:23'
+				start: '2017-11-16 10:11',
+				end: '2017-11-16 10:23'
 			}
 		],
 		crew: [
@@ -415,8 +415,8 @@ const operations = [
 			{id: 5, position: 'Assistent 1'},
 			{id: 6, position: 'Assistent 2'}],
 		careUnitName: 'ODP',
-		operatingDate: '2017-11-13 12:11',
-		arrivalTime: '2017-11-13 15:11',
+		operatingDate: '2017-11-16 12:11',
+		arrivalTime: '2017-11-16 15:11',
 		surgeonTime: 15,
 		patientBirthDate: '1982-07-16',
 		bloodType: 'A',
@@ -441,7 +441,7 @@ const operations = [
 		anesthesiaInformation: 'Ikke info om symptomer i det siste, \nnormal EKG og klinisk noe ved innkomst.',
 		anesthesiaCodeComment: 'Anestesi etter kl 16',
 		premedication: 'Paracet 1,5g. Dexametason 12 mg',
-		propolDate: '2017-11-13',
+		propolDate: '2017-11-16',
 		isScreeningCompleted: false,
 		needsEpiduralAnesthetic: true,
 		needsArterialCatheter: true,
@@ -457,7 +457,7 @@ const operations = [
 		plannedPhases: [
 			{
 				id: 0,
-				start: '2017-11-13 10:30',
+				start: '2017-11-16 10:30',
 				duration: 30
 			},
 			{
@@ -467,37 +467,37 @@ const operations = [
 			{
 				id: 2,
 				duration: 10,
-				end: '2017-11-13 12:10'
+				end: '2017-11-16 12:10'
 			}
 		],
 		patientName: 'Jarl Grøtte',
-		plannedStartTime: '2017-11-13 10:30',
-		plannedEndTime: '2017-11-13 12:00',
+		plannedStartTime: '2017-11-16 10:30',
+		plannedEndTime: '2017-11-16 12:00',
 		phases: [
 			{
 				id: 0,
-				start: '2017-11-13 10:05',
-				end: '2017-11-13 10:50'
+				start: '2017-11-16 10:05',
+				end: '2017-11-16 10:50'
 			},
 			{
 				id: 1,
-				start: '2017-11-13 10:52',
-				end: '2017-11-13 11:15'
+				start: '2017-11-16 10:52',
+				end: '2017-11-16 11:15'
 			},
 			{
 				id: 2,
-				start: '2017-11-13 11:18',
-				end: '2017-11-13 11:40'
+				start: '2017-11-16 11:18',
+				end: '2017-11-16 11:40'
 			},
 			{
 				id: 3,
-				start: '2017-11-13 11:41',
-				end: '2017-11-13 11:48'
+				start: '2017-11-16 11:41',
+				end: '2017-11-16 11:48'
 			},
 			{
 				id: 4,
-				start: '2017-11-13 11:48',
-				end: '2017-11-13 11:58'
+				start: '2017-11-16 11:48',
+				end: '2017-11-16 11:58'
 			}
 		],
 		crew: [
@@ -530,7 +530,7 @@ const operations = [
 		surveillance: true,
 		anesthesiaInformation: 'Dement. Tidl alkohol. Sykehjemsboer.',
 		anesthesiaCodeCoParacet: '1,5g. Dexametason 12 mg',
-		propolDate: '2017-11-13',
+		propolDate: '2017-11-16',
 		isScreeningCompleted: true,
 		needsEpiduralAnesthetic: true,
 		needsArterialCatheter: false,
@@ -546,7 +546,7 @@ const operations = [
 		plannedPhases: [
 			{
 				id: 0,
-				start: '2017-11-13 15:00',
+				start: '2017-11-16 15:00',
 				duration: 30
 			},
 			{
@@ -556,45 +556,45 @@ const operations = [
 			{
 				id: 2,
 				duration: 10,
-				end: '2017-11-13 16:40'
+				end: '2017-11-16 16:40'
 			}
 		],
-		plannedStartTime: '2017-11-13 15:00',
-		plannedEndTime: '2017-11-13 16:50',
+		plannedStartTime: '2017-11-16 15:00',
+		plannedEndTime: '2017-11-16 16:50',
 		patientName: 'Andreas Halvorsen',
 		phases: [
 			{
 				id: 0,
-				start: '2017-11-13 15:11',
-				end: '2017-11-13 15:23'
+				start: '2017-11-16 15:11',
+				end: '2017-11-16 15:23'
 			},
 			{
 				id: 1,
-				start: '2017-11-13 15:24',
-				end: '2017-11-13 15:38'
+				start: '2017-11-16 15:24',
+				end: '2017-11-16 15:38'
 			},
 			{
 				id: 2,
-				start: '2017-11-13 15:45',
-				end: '2017-11-13 16:15'
+				start: '2017-11-16 15:45',
+				end: '2017-11-16 16:15'
 			},
 			{
 				id: 3,
-				start: '2017-11-13 16:15',
-				end: '2017-11-13 16:20'
+				start: '2017-11-16 16:15',
+				end: '2017-11-16 16:20'
 			},
 			{
 				id: 4,
-				start: '2017-11-13 16:22',
-				end: '2017-11-13 16:35'
+				start: '2017-11-16 16:22',
+				end: '2017-11-16 16:35'
 			}
 		],
 		crew: [
 			{id: 2, position: 'Kirurg'},
 			{id: 4, position: 'Assistent 1'}],
 		careUnitName: 'OFS',
-		operatingDate: '2017-11-13 15:30',
-		arrivalTime: '2017-11-13 15:11',
+		operatingDate: '2017-11-16 15:30',
+		arrivalTime: '2017-11-16 15:11',
 		surgeonTime: 15,
 		patientBirthDate: '1982-10-22',
 		bloodType: 'A',
@@ -619,7 +619,7 @@ const operations = [
 		anesthesiaInformation: 'Dement. Sykehjemsboer.',
 		anesthesiaCodeComment: 'Anestesi etter kl 16',
 		premedication: 'Paracet 1,5g. Dexametason 12 mg',
-		propolDate: '2017-11-13',
+		propolDate: '2017-11-16',
 		isScreeningCompleted: false,
 		needsEpiduralAnesthetic: false,
 		needsArterialCatheter: false,
@@ -635,7 +635,7 @@ const operations = [
 		plannedPhases: [
 			{
 				id: 0,
-				start: '2017-11-13 14:00',
+				start: '2017-11-16 14:00',
 				duration: 30
 			},
 			{
@@ -645,44 +645,44 @@ const operations = [
 			{
 				id: 2,
 				duration: 10,
-				end: '2017-11-13 15:40'
+				end: '2017-11-16 15:40'
 			}
 		],
-		plannedStartTime: '2017-11-13 14:00',
-		plannedEndTime: '2017-11-13 15:20',
+		plannedStartTime: '2017-11-16 14:00',
+		plannedEndTime: '2017-11-16 15:20',
 		patientName: 'Lillian Andersen',
 		phases: [
 			{
 				id: 0,
-				start: '2017-11-13 14:05',
-				end: '2017-11-13 14:20'
+				start: '2017-11-16 14:05',
+				end: '2017-11-16 14:20'
 			},
 			{
 				id: 1,
-				start: '2017-11-13 14:20',
-				end: '2017-11-13 14:31'
+				start: '2017-11-16 14:20',
+				end: '2017-11-16 14:31'
 			},
 			{
 				id: 2,
-				start: '2017-11-13 14:33',
-				end: '2017-11-13 14:45'
+				start: '2017-11-16 14:33',
+				end: '2017-11-16 14:45'
 			},
 			{
 				id: 3,
-				start: '2017-11-13 14:45',
-				end: '2017-11-13 15:05'
+				start: '2017-11-16 14:45',
+				end: '2017-11-16 15:05'
 			},
 			{
 				id: 4,
-				start: '2017-11-13 15:06',
-				end: '2017-11-13 15:30'
+				start: '2017-11-16 15:06',
+				end: '2017-11-16 15:30'
 			},
 		],
 		crew: [
 			{id: 4, position: 'Kirurg'},
 			{id: 6, position: 'Assistent 1'}],
 		careUnitName: 'OFS',
-		operatingDate: '2017-11-13 11:11',
+		operatingDate: '2017-11-16 11:11',
 		arrivalTime: '2017-09-19 15:11',
 		surgeonTime: 15,
 		patientBirthDate: '2001-10-22',
@@ -708,7 +708,7 @@ const operations = [
 		anesthesiaInformation: 'Hypertensjon, ellers stort sett frisk. \nOperert venstre hoft. \nTannprotese. Nakke gap uten annmerkning. Ingen allergier. Cor/pulmo ua.',
 		anesthesiaCodeComment: 'Anestesi etter kl 16',
 		premedication: 'Paracet 1,5g. Dexametason 12 mg',
-		propolDate: '2017-11-13',
+		propolDate: '2017-11-16',
 		isScreeningCompleted: false,
 		needsEpiduralAnesthetic: true,
 		needsArterialCatheter: false,
@@ -724,7 +724,7 @@ const operations = [
 		plannedPhases: [
 			{
 				id: 0,
-				start: '2017-11-13 13:00',
+				start: '2017-11-16 13:00',
 				duration: 30
 			},
 			{
@@ -734,37 +734,37 @@ const operations = [
 			{
 				id: 2,
 				duration: 10,
-				end: '2017-11-13 14:40'
+				end: '2017-11-16 14:40'
 			}
 		],
-		plannedStartTime: '2017-11-13 13:00',
-		plannedEndTime: '2017-11-13 13:58',
+		plannedStartTime: '2017-11-16 13:00',
+		plannedEndTime: '2017-11-16 13:58',
 		patientName: 'Hannah Wilhelmsen',
 		phases: [
 			{
 				id: 0,
-				start: '2017-11-13 13:07',
-				end: '2017-11-13 13:20'
+				start: '2017-11-16 13:07',
+				end: '2017-11-16 13:20'
 			},
 			{
 				id: 1,
-				start: '2017-11-13 13:20',
-				end: '2017-11-13 13:46'
+				start: '2017-11-16 13:20',
+				end: '2017-11-16 13:46'
 			},
 			{
 				id: 2,
-				start: '2017-11-13 13:48',
-				end: '2017-11-13 14:11'
+				start: '2017-11-16 13:48',
+				end: '2017-11-16 14:11'
 			},
 			{
 				id: 3,
-				start: '2017-11-13 14:15',
-				end: '2017-11-13 14:31'
+				start: '2017-11-16 14:15',
+				end: '2017-11-16 14:31'
 			},
 			{
 				id: 4,
-				start: '2017-11-13 14:34',
-				end: '2017-11-13 14:47'
+				start: '2017-11-16 14:34',
+				end: '2017-11-16 14:47'
 			},
 		],
 		crew: [
@@ -772,8 +772,8 @@ const operations = [
 		assistant1: '',
 		assistant2: '',
 		careUnitName: 'OTDP',
-		operatingDate: '2017-11-13 17:11',
-		arrivalTime: '2017-11-13 15:11',
+		operatingDate: '2017-11-16 17:11',
+		arrivalTime: '2017-11-16 15:11',
 		surgeonTime: 10,
 		patientBirthDate: '1987-10-22',
 		bloodType: 'O',
@@ -798,7 +798,7 @@ const operations = [
 		anesthesiaInformation: 'Hypertensjon, ellers stort sett frisk. \nOperert venstre hoft. Tannprotese. \nNakke gap uten annmerkning. Ingen allergier. Cor/pulmo ua.',
 		anesthesiaCodeComment: 'Anestesi etter kl 16',
 		premedication: 'Paracet 1,5g. Dexametason 12 mg',
-		propolDate: '2017-11-13',
+		propolDate: '2017-11-16',
 		isScreeningCompleted: true,
 		needsEpiduralAnesthetic: false,
 		needsArterialCatheter: false,
@@ -815,7 +815,7 @@ const operations = [
 		plannedPhases: [
 			{
 				id: 0,
-				start: '2017-11-14 07:00',
+				start: '2017-11-17 07:00',
 				duration: 30
 			},
 			{
@@ -830,17 +830,17 @@ const operations = [
 		phases: [
 			{
 				id: 0,
-				start: '2017-11-14 07:07',
-				end: '2017-11-14 07:20'
+				start: '2017-11-17 07:07',
+				end: '2017-11-17 07:20'
 			},
 			{
 				id: 1,
-				start: '2017-11-14 07:20',
-				end: '2017-11-14 07:54'
+				start: '2017-11-17 07:20',
+				end: '2017-11-17 07:39'
 			},
 			{
 				id: 2,
-				start: '2017-11-14 07:56',
+				start: '2017-11-17 07:40',
 			},
 			{
 				id: 3
@@ -853,8 +853,8 @@ const operations = [
 			{id: 3, position: 'Kirurg'},
 			{id: 1, position: 'Assistent 1'}],
 		careUnitName: 'KB2',
-		operatingDate: '2017-11-14 07:00',
-		arrivalTime: '2017-11-14 06:00',
+		operatingDate: '2017-11-17 07:00',
+		arrivalTime: '2017-11-17 06:00',
 		surgeonTime: 15,
 		patientBirthDate: '1987-10-22',
 		bloodType: 'AA',
@@ -879,7 +879,7 @@ const operations = [
 		anesthesiaInformation: 'Hypertensjon, ellers stort sett frisk. \nOperert venstre hoft. Tannprotese. \nNakke gap uten annmerkning. Ingen allergier. Cor/pulmo ua.',
 		anesthesiaCodeComment: 'Anestesi etter kl 16',
 		premedication: 'Paracet 1,5g. Dexametason 12 mg',
-		propolDate: '2017-11-13',
+		propolDate: '2017-11-16',
 		isScreeningCompleted: true,
 		needsEpiduralAnesthetic: false,
 		needsArterialCatheter: false,
