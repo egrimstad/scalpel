@@ -1,5 +1,5 @@
 # Scalpel
->*A clean cut in medical organizing*
+>*A clean cut in surgical planning*
 ## About
 This application is made to complement the desktop program that doctors, nurses and coordinators at hospitals in Norway use to plan surgeries. It will mainly be used on a smart phone and is therefore developed with a mobile-first focus. It is developed by a team of students at NTNU for the course TDT4290.
 ## Dependencies
