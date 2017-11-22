@@ -10,7 +10,7 @@ const theaterHasOperation = (theater, operations) => operations.some(op => op.th
 
 const mapStateToProps = (state, ownProps) => {
 	const date = moment(state.date)
-	const operationsToday = state.operations.filter(op => moment(op.phases[0].start).isSame(date, 'day'))
+	const operationsToday = state.operations.filter(op => moment(op.operatingDate).isSame(date, 'day'))
 
 	let numColumns = 0
 

@@ -49,11 +49,11 @@ class MenuDrawer extends Component {
 							</ListItem>
 						</List>
 					</div>
-					<List id="testtest">
+					<List>
 						{this.props.plans.map((plan, index) =>
 							<ListItem button key={index} onClick={() => this.props.onSelectPlan(plan)}>
 								<ListItemIcon>
-									<div style={{color: '#9C639D'}}>
+									<div style={{color: plan.id === this.props.selectedPlan.id ?  '#6bf75b' : '#9C639D'}}>
 										<StopIcon size={32}/>
 									</div>
 								</ListItemIcon>

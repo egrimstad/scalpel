@@ -23,13 +23,13 @@ const smallFields = ([
 const topFields = ([
 	{
 		label: 'Diagnose',
-		key: 'procedureTypeFreeText',
-		format: procedure => procedure || '-'
+		key: 'diagnoseTypeFreeText',
+		format: diagnosis => diagnosis || '-'
 	},
 	{
 		label: 'Inngrep',
-		key: 'diagnoseTypeFreeText',
-		format: diagnosis => diagnosis || '-'
+		key: 'procedureTypeFreeText',
+		format: procedure => procedure || '-'
 	}
 ])
 

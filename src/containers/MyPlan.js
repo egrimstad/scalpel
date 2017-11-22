@@ -10,7 +10,7 @@ export const mapStateToProps = (state, ownProps) => {
 		...ownProps,
 		date: state.date,
 		operations: state.operations
-			.filter(op => moment(op.phases[0].start).isSame(state.date, 'day'))
+			.filter(op => moment(op.operatingDate).isSame(state.date, 'day'))
 			.filter(op => op.crew.some(person => person.id === state.loggedInUser))
 			.map(op => ({
 				...transformOperation(op, state),

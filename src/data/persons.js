@@ -20,7 +20,7 @@ const persons = [
 	{
 		id: 3,
 		initials: 'EG', 
-		fullName: 'Erik Grønvold', 
+		fullName: 'Eivind Grimstad', 
 		phone: '+4712345678',
 	},
 	{
@@ -52,6 +52,12 @@ const persons = [
 		initials: 'RGH', 
 		fullName: 'Roger Gran Hansen', 
 		phone: '+4712345678'
+	},
+	{
+		id: 10,
+		initials: 'SHV', 
+		fullName: 'Svenn-Helge Vatne', 
+		phone: '+4747285528'
 	}
 ]
 
