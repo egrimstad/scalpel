@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import MenuHeader from '../../containers/MenuHeader'
-import OperationDrawer from '../OperationDrawer/OperationDrawer'
+import OperationDrawer from '../../containers/OperationDrawer'
 import { translate } from 'utils/d3Utils'
 import { startTime, endTime, hasActivePhase } from 'utils/operationUtils'
 
