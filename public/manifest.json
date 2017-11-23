@@ -1,6 +1,6 @@
 {
   "short_name": "Scalpel",
-  "name": "Scalpel - A Clean Cut in Medical Organizing",
+  "name": "Scalpel - A clean cut in surgical planning",
   "icons": [
     {
       "src": "scalpelapp.ico",
@@ -10,6 +10,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#054d94",
   "background_color": "#ffffff"
 }
