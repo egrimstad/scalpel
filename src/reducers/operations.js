@@ -24,7 +24,7 @@ const finishOperationPhase = (operation, action) => {
 	const operationLastPhase = lastStartedPhase(operation)
 	const time = action.time
 
-	if(hasPhaseEnded(operationLastPhase) || moment(operationLastPhase.start).isAfter(time)) {
+	if(!operationLastPhase || hasPhaseEnded(operationLastPhase) || moment(operationLastPhase.start).isAfter(time)) {
 		return operation
 	}
 	
